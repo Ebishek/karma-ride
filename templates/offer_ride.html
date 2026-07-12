@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="mb-6">
+    <h1 class="text-3xl font-bold text-white mb-2">Offer a Ride</h1>
+    <p class="text-gray-400 text-sm">Help the community and earn Karma.</p>
+</div>
+
+<form action="/api/rides" method="POST" class="glass rounded-3xl p-6 space-y-5">
+    
+    <!-- Map Placeholder for MVP -->
+    <div class="w-full h-48 bg-gray-800 rounded-xl overflow-hidden relative z-0 border border-white/10" id="map">
+        <!-- Leaflet map injects here -->
+    </div>
+    
+    <div>
+        <label class="block text-sm font-medium text-gray-400 mb-1">Source location</label>
+        <div class="relative">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">📍</span>
+            <input type="text" name="source" required class="w-full bg-black/50 border border-gray-700 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-emerald-500 transition-colors" placeholder="e.g. Community Center">
+        </div>
+    </div>
+    
+    <div>
+        <label class="block text-sm font-medium text-gray-400 mb-1">Destination</label>
+        <div class="relative">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">🏁</span>
+            <input type="text" name="destination" required class="w-full bg-black/50 border border-gray-700 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-emerald-500 transition-colors" placeholder="e.g. Market Square">
+        </div>
+    </div>
+
+    <div>
+        <label class="block text-sm font-medium text-gray-400 mb-1">Departure Time</label>
+        <input type="datetime-local" name="date_time_str" required class="w-full bg-black/50 border border-gray-700 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-emerald-500 transition-colors">
+    </div>
+    
+    <div class="glass p-4 rounded-xl flex items-center justify-between mt-2">
+        <div>
+            <p class="text-sm font-semibold text-gray-300">Karma Reward</p>
+            <p class="text-xs text-gray-500">Points earned on completion</p>
+        </div>
+        <div class="flex items-center space-x-2">
+            <span class="text-emerald-400 text-xl font-bold">💎</span>
+            <input type="number" name="karma_reward" value="15" min="1" class="w-20 bg-black/50 border border-gray-700 rounded-lg py-2 px-3 text-white text-center font-bold focus:outline-none focus:border-emerald-500">
+        </div>
+    </div>
+
+    <button type="submit" class="w-full btn-primary text-white font-bold rounded-xl py-4 mt-6 shadow-lg">
+        Post Ride
+    </button>
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Map Base Layers
+    const cartoDark = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://carto.com/">CARTO</a>'
+    });
+    const cartoLight = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://carto.com/">CARTO</a>'
+    });
+    const osmStandard = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    });
+    const topoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data: &copy; OSM contributors | Map style: &copy; OpenTopoMap'
+    });
+    const satelliteMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+    });
+
+    // Initialize Leaflet map
+    var map = L.map('map', {
+        center: [28.6139, 77.2090], // Default location
+        zoom: 13,
+        layers: [cartoDark] // Default active layer
+    }); 
+
+    // Add Layer Control widget to top right
+    const baseMaps = {
+        "Dark Mode": cartoDark,
+        "Light Mode": cartoLight,
+        "Street View": osmStandard,
+        "Topographic": topoMap,
+        "Satellite (Houses)": satelliteMap
+    };
+    L.control.layers(baseMaps).addTo(map);
+
+    // Set default departure time to current local time
+    const now = new Date();
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+    document.querySelector('input[name="date_time_str"]').value = now.toISOString().slice(0,16);
+
+    // Map Interaction Logic
+    let sourceMarker = null;
+    let destMarker = null;
+    const sourceInput = document.querySelector('input[name="source"]');
+    const destInput = document.querySelector('input[name="destination"]');
+
+    // Try to get user's live location
+    if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(async function(position) {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            map.setView([lat, lng], 14);
+            
+            // Automatically set the source pin to the user's current location
+            if (!sourceMarker) {
+                sourceMarker = L.marker([lat, lng]).addTo(map).bindPopup("Your Location (Source)").openPopup();
+                sourceInput.value = "Fetching address...";
+                const address = await reverseGeocode(lat, lng);
+                sourceInput.value = address;
+            }
+        });
+    }
+
+    async function reverseGeocode(lat, lng) {
+        try {
+            const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`);
+            const data = await response.json();
+            return data.display_name.split(',').slice(0, 3).join(', '); // Return a shortened readable address
+        } catch (error) {
+            return `${lat.toFixed(4)}, ${lng.toFixed(4)}`; // Fallback to coordinates
+        }
+    }
+
+    map.on('click', async function(e) {
+        if (!sourceMarker) {
+            // First click: Set Source
+            sourceMarker = L.marker(e.latlng).addTo(map).bindPopup("Source").openPopup();
+            sourceInput.value = "Fetching address...";
+            const address = await reverseGeocode(e.latlng.lat, e.latlng.lng);
+            sourceInput.value = address;
+        } else if (!destMarker) {
+            // Second click: Set Destination
+            destMarker = L.marker(e.latlng).addTo(map).bindPopup("Destination").openPopup();
+            destInput.value = "Fetching address...";
+            const address = await reverseGeocode(e.latlng.lat, e.latlng.lng);
+            destInput.value = address;
+            
+            // Draw a simple line between them
+            L.polyline([sourceMarker.getLatLng(), destMarker.getLatLng()], {color: '#10b981', weight: 3, dashArray: '5, 10'}).addTo(map);
+            map.fitBounds([sourceMarker.getLatLng(), destMarker.getLatLng()], {padding: [30, 30]});
+        } else {
+            // Reset if clicked a third time
+            map.eachLayer((layer) => {
+                if (layer instanceof L.Marker || layer instanceof L.Polyline) {
+                    map.removeLayer(layer);
+                }
+            });
+            sourceMarker = null;
+            destMarker = null;
+            sourceInput.value = "";
+            destInput.value = "";
+        }
+    });
+</script>
+{% endblock %}
