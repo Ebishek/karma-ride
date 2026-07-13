@@ -40,6 +40,8 @@ app.set('view engine', 'html');
 // Sync DB
 sequelize.sync({ alter: true }).then(async () => {
     console.log("Database synced!");
+}).catch(err => {
+    console.error("Database sync failed:", err);
 });
 
 // --- AUTH MIDDLEWARE ---

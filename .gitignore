@@ -1,3 +1,4 @@
 __pycache__/
 karmaride.db
 .venv/
+*.sqlite
