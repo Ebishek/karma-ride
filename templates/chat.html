@@ -1,65 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Chat with {{ otherPerson.name }}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* Custom WhatsApp-like scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        ::-webkit-scrollbar-thumb {
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-        }
-        
-        /* Background pattern similar to WA */
-        .wa-bg {
-            background-color: #0b141a;
-            background-image: radial-gradient(circle at 100% 150%, #0b141a 24%, #111b21 24%, #111b21 28%, #0b141a 28%, #0b141a 36%, #111b21 36%, #111b21 40%, transparent 40%, transparent),
-            radial-gradient(circle at 0    150%, #0b141a 24%, #111b21 24%, #111b21 28%, #0b141a 28%, #0b141a 36%, #111b21 36%, #111b21 40%, transparent 40%, transparent),
-            radial-gradient(circle at 50%  100%, #111b21 10%, #0b141a 10%, #0b141a 23%, #111b21 23%, #111b21 30%, #0b141a 30%, #0b141a 43%, #111b21 43%, #111b21 50%, #0b141a 50%, #0b141a 63%, #111b21 63%, #111b21 71%, transparent 71%, transparent),
-            radial-gradient(circle at 100% 50%, #111b21 5%, #0b141a 5%, #0b141a 15%, #111b21 15%, #111b21 20%, #0b141a 20%, #0b141a 29%, #111b21 29%, #111b21 34%, #0b141a 34%, #0b141a 44%, #111b21 44%, #111b21 49%, transparent 49%, transparent),
-            radial-gradient(circle at 0    50%, #111b21 5%, #0b141a 5%, #0b141a 15%, #111b21 15%, #111b21 20%, #0b141a 20%, #0b141a 29%, #111b21 29%, #111b21 34%, #0b141a 34%, #0b141a 44%, #111b21 44%, #111b21 49%, transparent 49%, transparent);
-            background-size: 100px 50px;
-            opacity: 0.9;
-        }
-    </style>
-</head>
-<body class="flex flex-col h-screen overflow-hidden text-gray-200" style="background-color: #111b21;">
+{% extends "base.html" %}
+
+{% block content %}
+<main class="flex-1 px-margin-mobile md:px-margin-desktop pb-32 md:pb-32 flex flex-col w-full max-w-3xl mx-auto relative z-20 mt-4 h-[calc(100vh-4rem)]">
     
-    <!-- WhatsApp-style Header -->
-    <header class="flex items-center px-4 py-3 shrink-0" style="background-color: #202c33;">
-        <a href="/" class="flex items-center text-gray-300 hover:text-white mr-3">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
-        </a>
-        <div class="w-10 h-10 rounded-full bg-gray-600 flex items-center justify-center text-xl overflow-hidden shrink-0 mr-3">
-            👤
+    <!-- Chat Header -->
+    <div class="bg-surface-container rounded-t-2xl p-4 shadow-sm border border-outline-variant/30 flex items-center justify-between z-10 shrink-0">
+        <div class="flex items-center gap-3">
+            <a href="/" class="text-on-surface-variant hover:bg-surface-variant/50 p-2 rounded-full transition-colors flex items-center justify-center">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </a>
+            <img class="w-10 h-10 rounded-full object-cover border-2 border-secondary-container" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaOsBb7wZCkBsB3tUfT3139LQRS-OcGiAty6QD9Phaia9o9FLhvrEJQK-_dMY28a3F_OKeRi70EQ5hjRxU2s-KIxUDOv8TiIcu3KWFZ4t3mRcAPQHu8Pk86NZpP9oZYa5nqmHAqLyFkbnpGNfWlXP2hiEAnaMYxCtPFGyT0Er7GWuwTNXlRCpH52Ikq8B4avtWUo7DqRhWr2IzRJVt-VmgcemjX7EqLmNgCAM9kIh8UQs3Uj1o-bt1" alt="Profile">
+            <div>
+                <h2 class="font-headline-md text-lg text-on-surface">{{ otherPerson.name }}</h2>
+                <p class="font-body-sm text-xs text-on-surface-variant flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[14px]">call</span> {{ otherPerson.phone }}
+                </p>
+            </div>
         </div>
-        <div class="flex-1 min-w-0">
-            <h2 class="text-base font-medium text-white truncate">{{ otherPerson.name }}</h2>
-            <p class="text-xs text-gray-400 truncate">📞 {{ otherPerson.phone }}</p>
+        <div class="bg-primary/10 text-primary px-3 py-1 rounded-full border border-primary/20 text-xs font-bold flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px]">lock</span> Secure
         </div>
-    </header>
+    </div>
 
     <!-- Chat Messages Area -->
-    <main class="flex-1 overflow-y-auto p-4 flex flex-col space-y-3 wa-bg relative" id="chat-container">
+    <div class="flex-1 overflow-y-auto bg-surface-container-lowest p-4 flex flex-col space-y-4 border-x border-outline-variant/30 relative" id="chat-container">
+        
         <!-- Date Badge -->
         <div class="flex justify-center my-2">
-            <span class="text-xs text-gray-400 uppercase tracking-wide px-3 py-1 rounded-lg" style="background-color: #182229;">
+            <span class="text-xs text-on-surface-variant font-label-sm uppercase tracking-wider bg-surface-variant px-3 py-1 rounded-full border border-outline-variant/50">
                 Secure Chat Started
             </span>
         </div>
 
         {% if messages.length == 0 %}
             <div class="flex justify-center mt-4">
-                <div class="px-4 py-2 rounded-xl text-center shadow-sm text-sm text-[#ffd279]" style="background-color: #182229;">
-                    🔒 Messages are end-to-end encrypted (almost). Say hi to coordinate your pickup!
+                <div class="px-4 py-3 rounded-xl text-center bg-secondary-container/20 border border-secondary-container/30 text-on-surface text-sm max-w-sm">
+                    <span class="material-symbols-outlined text-secondary-fixed-dim block mb-1">waving_hand</span>
+                    Say hi to coordinate your pickup with {{ otherPerson.name }}!
                 </div>
             </div>
         {% endif %}
@@ -67,136 +44,130 @@
         {% for msg in messages %}
             {% if msg.sender_id == user.id %}
                 <!-- Own Message -->
-                <div class="flex justify-end relative">
-                    <div class="relative px-3 pt-2 pb-6 max-w-[85%] rounded-lg shadow-sm" style="background-color: #005c4b;">
-                        <!-- Tail -->
-                        <div class="absolute top-0 -right-2 w-3 h-3" style="background-color: #005c4b; clip-path: polygon(0 0, 0 100%, 100% 0);"></div>
-                        
-                        <p class="text-[15px] text-[#e9edef] break-words">{{ msg.content }}</p>
-                        <p class="text-[11px] text-[#ffffff99] absolute bottom-1 right-2">{{ msg.sent_at | formatDate }}</p>
+                <div class="flex justify-end group">
+                    <div class="relative px-4 py-2 max-w-[80%] rounded-2xl rounded-tr-sm bg-primary text-on-primary shadow-sm">
+                        <p class="text-[15px] break-words font-body-md">{{ msg.content }}</p>
+                        <p class="text-[10px] text-on-primary/70 text-right mt-1">{{ msg.sent_at | formatDate }}</p>
                     </div>
                 </div>
             {% else %}
                 <!-- Other Person Message -->
-                <div class="flex justify-start relative">
-                    <div class="relative px-3 pt-2 pb-6 max-w-[85%] rounded-lg shadow-sm" style="background-color: #202c33;">
-                        <!-- Tail -->
-                        <div class="absolute top-0 -left-2 w-3 h-3" style="background-color: #202c33; clip-path: polygon(100% 0, 100% 100%, 0 0);"></div>
-                        
-                        <p class="text-xs font-bold mb-0.5" style="color: #53bdeb;">{{ msg.sender.name }}</p>
-                        <p class="text-[15px] text-[#e9edef] break-words">{{ msg.content }}</p>
-                        <p class="text-[11px] text-[#ffffff99] absolute bottom-1 right-2">{{ msg.sent_at | formatDate }}</p>
+                <div class="flex justify-start group">
+                    <div class="relative px-4 py-2 max-w-[80%] rounded-2xl rounded-tl-sm bg-surface-container-high border border-outline-variant/30 text-on-surface shadow-sm">
+                        <p class="text-xs font-bold mb-1 text-secondary-container">{{ msg.sender.name }}</p>
+                        <p class="text-[15px] break-words font-body-md">{{ msg.content }}</p>
+                        <p class="text-[10px] text-on-surface-variant text-right mt-1">{{ msg.sent_at | formatDate }}</p>
                     </div>
                 </div>
             {% endif %}
         {% endfor %}
-    </main>
+    </div>
 
-    <!-- WhatsApp-style Input Footer -->
-    <footer class="shrink-0 p-2" style="background-color: #202c33;">
-        <form action="/ride/{{ ride.id }}/chat" method="POST" class="flex gap-2 items-end max-w-3xl mx-auto">
-            <div class="flex-1 rounded-2xl flex items-center px-4 py-2 min-h-[44px]" style="background-color: #2a3942;">
-                <input type="text" name="content" required autocomplete="off" placeholder="Message" 
-                       class="w-full bg-transparent text-white placeholder-[#8696a0] focus:outline-none text-[15px] border-none">
+    <!-- Chat Input Footer -->
+    <div class="bg-surface-container rounded-b-2xl p-3 shadow-[0_-4px_12px_rgba(75,61,51,0.05)] border border-outline-variant/30 shrink-0">
+        <form action="/ride/{{ ride.id }}/chat" method="POST" class="flex gap-2 items-center">
+            <div class="flex-1 bg-surface-container-lowest rounded-full flex items-center px-4 border border-outline-variant focus-within:border-primary transition-colors shadow-sm">
+                <input type="text" name="content" required autocomplete="off" placeholder="Type a message..." 
+                       class="w-full bg-transparent text-on-surface placeholder-on-surface-variant focus:outline-none text-[15px] py-3 font-body-md border-none focus:ring-0">
             </div>
-            <button type="submit" class="w-12 h-12 rounded-full flex items-center justify-center shrink-0 shadow-sm" style="background-color: #00a884; transition: transform 0.1s active:scale-95;">
-                <!-- WhatsApp Send Icon -->
-                <svg viewBox="0 0 24 24" height="24" width="24" preserveAspectRatio="xMidYMid meet" class="" version="1.1" x="0px" y="0px" enable-background="new 0 0 24 24"><path fill="#ffffff" d="M1.101,21.757L23.8,12.028L1.101,2.3l0.011,7.912l13.623,1.816L1.112,13.845 L1.101,21.757z"></path></svg>
+            <button type="submit" class="w-12 h-12 rounded-full bg-primary text-on-primary flex items-center justify-center shrink-0 shadow-md hover:bg-primary/90 transition-transform active:scale-95">
+                <span class="material-symbols-outlined">send</span>
             </button>
         </form>
-    </footer>
+    </div>
 
-    <script>
-        const chatContainer = document.getElementById('chat-container');
-        const form = document.querySelector('form');
-        const input = document.querySelector('input[name="content"]');
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const chatContainer = document.getElementById('chat-container');
+    const form = document.querySelector('form');
+    const input = document.querySelector('input[name="content"]');
+    
+    let currentMessageCount = {{ messages.length }};
+    const currentUserId = {{ user.id }};
+    const rideId = {{ ride.id }};
+
+    function scrollToBottom() {
+        if (chatContainer) chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+    
+    scrollToBottom();
+
+    function formatDate(dateStr) {
+        if (!dateStr) return '';
+        const d = new Date(dateStr);
+        return d.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+    }
+
+    function createMessageElement(msg) {
+        const div = document.createElement('div');
+        const isOwn = msg.sender_id === currentUserId;
         
-        let currentMessageCount = {{ messages.length }};
-        const currentUserId = {{ user.id }};
-        const rideId = {{ ride.id }};
-
-        function scrollToBottom() {
-            if (chatContainer) chatContainer.scrollTop = chatContainer.scrollHeight;
+        if (isOwn) {
+            div.className = "flex justify-end group";
+            div.innerHTML = `
+                <div class="relative px-4 py-2 max-w-[80%] rounded-2xl rounded-tr-sm bg-primary text-on-primary shadow-sm">
+                    <p class="text-[15px] break-words font-body-md">${msg.content}</p>
+                    <p class="text-[10px] text-on-primary/70 text-right mt-1">${formatDate(msg.createdAt)}</p>
+                </div>
+            `;
+        } else {
+            div.className = "flex justify-start group";
+            div.innerHTML = `
+                <div class="relative px-4 py-2 max-w-[80%] rounded-2xl rounded-tl-sm bg-surface-container-high border border-outline-variant/30 text-on-surface shadow-sm">
+                    <p class="text-xs font-bold mb-1 text-secondary-container">${msg.sender ? msg.sender.name : 'Unknown'}</p>
+                    <p class="text-[15px] break-words font-body-md">${msg.content}</p>
+                    <p class="text-[10px] text-on-surface-variant text-right mt-1">${formatDate(msg.createdAt)}</p>
+                </div>
+            `;
         }
+        return div;
+    }
+
+    // AJAX Form Submission
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const content = input.value.trim();
+        if (!content) return;
         
-        scrollToBottom();
-
-        function formatDate(dateStr) {
-            if (!dateStr) return '';
-            const d = new Date(dateStr);
-            return d.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-        }
-
-        function createMessageElement(msg) {
-            const div = document.createElement('div');
-            const isOwn = msg.sender_id === currentUserId;
-            
-            if (isOwn) {
-                div.className = "flex justify-end relative";
-                div.innerHTML = `
-                    <div class="relative px-3 pt-2 pb-6 max-w-[85%] rounded-lg shadow-sm" style="background-color: #005c4b;">
-                        <div class="absolute top-0 -right-2 w-3 h-3" style="background-color: #005c4b; clip-path: polygon(0 0, 0 100%, 100% 0);"></div>
-                        <p class="text-[15px] text-[#e9edef] break-words">${msg.content}</p>
-                        <p class="text-[11px] text-[#ffffff99] absolute bottom-1 right-2">${formatDate(msg.createdAt)}</p>
-                    </div>
-                `;
-            } else {
-                div.className = "flex justify-start relative";
-                div.innerHTML = `
-                    <div class="relative px-3 pt-2 pb-6 max-w-[85%] rounded-lg shadow-sm" style="background-color: #202c33;">
-                        <div class="absolute top-0 -left-2 w-3 h-3" style="background-color: #202c33; clip-path: polygon(100% 0, 100% 100%, 0 0);"></div>
-                        <p class="text-xs font-bold mb-0.5" style="color: #53bdeb;">${msg.sender ? msg.sender.name : 'Unknown'}</p>
-                        <p class="text-[15px] text-[#e9edef] break-words">${msg.content}</p>
-                        <p class="text-[11px] text-[#ffffff99] absolute bottom-1 right-2">${formatDate(msg.createdAt)}</p>
-                    </div>
-                `;
+        input.value = ''; // clear input instantly
+        
+        try {
+            const res = await fetch(`/ride/${rideId}/chat`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ content })
+            });
+            const data = await res.json();
+            if (data.success && data.message) {
+                chatContainer.appendChild(createMessageElement(data.message));
+                currentMessageCount++;
+                scrollToBottom();
             }
-            return div;
+        } catch (err) {
+            console.error("Failed to send message", err);
         }
+    });
 
-        // AJAX Form Submission
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const content = input.value.trim();
-            if (!content) return;
+    // Polling for new messages
+    setInterval(async () => {
+        try {
+            const res = await fetch(`/api/ride/${rideId}/messages`);
+            const data = await res.json();
             
-            input.value = ''; // clear input instantly
-            
-            try {
-                const res = await fetch(`/ride/${rideId}/chat`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ content })
+            if (data.messages && data.messages.length > currentMessageCount) {
+                const newMessages = data.messages.slice(currentMessageCount);
+                newMessages.forEach(msg => {
+                    chatContainer.appendChild(createMessageElement(msg));
                 });
-                const data = await res.json();
-                if (data.success && data.message) {
-                    chatContainer.appendChild(createMessageElement(data.message));
-                    currentMessageCount++;
-                    scrollToBottom();
-                }
-            } catch (err) {
-                console.error("Failed to send message", err);
+                currentMessageCount = data.messages.length;
+                scrollToBottom();
             }
-        });
-
-        // Polling for new messages
-        setInterval(async () => {
-            try {
-                const res = await fetch(`/api/ride/${rideId}/messages`);
-                const data = await res.json();
-                
-                if (data.messages && data.messages.length > currentMessageCount) {
-                    const newMessages = data.messages.slice(currentMessageCount);
-                    newMessages.forEach(msg => {
-                        chatContainer.appendChild(createMessageElement(msg));
-                    });
-                    currentMessageCount = data.messages.length;
-                    scrollToBottom();
-                }
-            } catch (err) {
-                console.error("Failed to fetch new messages", err);
-            }
-        }, 3000); // Poll every 3 seconds
-    </script>
-</body>
-</html>
+        } catch (err) {
+            console.error("Failed to fetch new messages", err);
+        }
+    }, 3000); // Poll every 3 seconds
+</script>
+{% endblock %}
