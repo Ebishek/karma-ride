@@ -19,11 +19,13 @@
     <!-- Top Navigation -->
     <header class="glass sticky top-0 z-50 p-4 border-b border-white/10 flex justify-between items-center shadow-lg">
         <div class="text-2xl font-bold tracking-tighter">
-            Karma<span class="karma-gradient">Ride</span>
+            <a href="/">Karma<span class="karma-gradient">Ride</span></a>
         </div>
+        {% if user %}
         <div class="flex items-center space-x-3 bg-white/10 px-3 py-1 rounded-full">
             <span class="text-emerald-400 font-semibold text-lg">💎 {{ user.karma_balance }}</span>
         </div>
+        {% endif %}
     </header>
 
     <!-- Main Content Area -->
@@ -32,6 +34,7 @@
     </main>
 
     <!-- Bottom Mobile Navigation -->
+    {% if user %}
     <nav class="glass fixed bottom-0 w-full z-50 border-t border-white/10 safe-area-pb">
         <div class="flex justify-around items-center h-16 max-w-md mx-auto">
             <a href="/" class="flex flex-col items-center text-gray-400 hover:text-emerald-400 transition-colors">
@@ -48,6 +51,7 @@
             </a>
         </div>
     </nav>
+    {% endif %}
     
     <!-- Leaflet JS for Maps -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>

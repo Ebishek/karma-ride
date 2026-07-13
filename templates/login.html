@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="min-h-[80vh] flex flex-col justify-center">
+    <div class="text-center mb-10">
+        <h1 class="text-4xl font-bold tracking-tighter mb-2">Karma<span class="karma-gradient">Ride</span></h1>
+        <p class="text-gray-400">Welcome back. Let's get moving.</p>
+    </div>
+
+    <form action="/login" method="POST" class="glass rounded-3xl p-6 space-y-5">
+        {% if error %}
+        <div class="bg-red-500/20 border border-red-500/50 text-red-400 p-3 rounded-xl text-center text-sm font-semibold">
+            {{ error }}
+        </div>
+        {% endif %}
+
+        <div>
+            <label class="block text-sm font-medium text-gray-400 mb-1">Phone Number</label>
+            <div class="relative">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">📱</span>
+                <input type="tel" name="phone" required class="w-full bg-black/50 border border-gray-700 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-emerald-500 transition-colors" placeholder="Enter your phone">
+            </div>
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-400 mb-1">Password</label>
+            <div class="relative">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">🔒</span>
+                <input type="password" name="password" required class="w-full bg-black/50 border border-gray-700 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-emerald-500 transition-colors" placeholder="Enter your password">
+            </div>
+        </div>
+
+        <button type="submit" class="w-full btn-primary text-white font-bold rounded-xl py-4 mt-6 shadow-lg text-lg">
+            Sign In
+        </button>
+
+        <p class="text-center text-gray-400 text-sm mt-6">
+            Don't have an account? <a href="/register" class="text-emerald-400 font-bold hover:underline">Register</a>
+        </p>
+    </form>
+</div>
+{% endblock %}

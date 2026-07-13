@@ -1,0 +1,17 @@
+{
+  "name": "karma-ride",
+  "version": "1.0.0",
+  "description": "KarmaRide MVP",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "express": "^4.19.2",
+    "express-session": "^1.19.0",
+    "nunjucks": "^3.2.4",
+    "sequelize": "^6.37.8",
+    "sqlite3": "^5.1.7"
+  }
+}
