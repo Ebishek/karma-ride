@@ -1,4 +1,12 @@
+require('dotenv').config();
 const { Sequelize, DataTypes } = require('sequelize');
+
+if (!process.env.DATABASE_URL) {
+    console.error("❌ CRITICAL ERROR: DATABASE_URL is missing!");
+    console.error("If running locally: Copy .env.example to .env and add your Supabase URL.");
+    console.error("If on Hostinger: Add DATABASE_URL to your Environment Variables.");
+    process.exit(1);
+}
 
 // Initialize Sequelize for PostgreSQL
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
