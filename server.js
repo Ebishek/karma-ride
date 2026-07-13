@@ -257,15 +257,32 @@ app.get('/ride/:ride_id/chat', requireAuth, async (req, res) => {
 
 app.post('/ride/:ride_id/chat', requireAuth, async (req, res) => {
     const { content } = req.body;
-    if (!content) return res.redirect(`/ride/${req.params.ride_id}/chat`);
+    if (!content) return res.status(400).json({ error: "Empty message" });
 
-    await Message.create({
+    const msg = await Message.create({
         ride_id: req.params.ride_id,
         sender_id: res.locals.user.id,
         content: content
     });
 
-    res.redirect(`/ride/${req.params.ride_id}/chat`);
+    const fullMsg = await Message.findByPk(msg.id, {
+        include: [{ model: User, as: 'sender' }]
+    });
+
+    res.json({ success: true, message: fullMsg });
+});
+
+app.get('/api/ride/:ride_id/messages', requireAuth, async (req, res) => {
+    const ride = await Ride.findByPk(req.params.ride_id, {
+        include: [
+            { model: Message, as: 'messages', include: [{ model: User, as: 'sender' }] }
+        ]
+    });
+    if (!ride) return res.status(404).json({ error: "Ride not found" });
+    
+    // Sort messages by creation time
+    const sortedMessages = ride.messages.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+    res.json({ messages: sortedMessages });
 });
 
 const PORT = process.env.PORT || 8000;

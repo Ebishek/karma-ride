@@ -107,11 +107,96 @@
     </footer>
 
     <script>
-        // Auto scroll to bottom
         const chatContainer = document.getElementById('chat-container');
-        if (chatContainer) {
-            chatContainer.scrollTop = chatContainer.scrollHeight;
+        const form = document.querySelector('form');
+        const input = document.querySelector('input[name="content"]');
+        
+        let currentMessageCount = {{ messages.length }};
+        const currentUserId = {{ user.id }};
+        const rideId = {{ ride.id }};
+
+        function scrollToBottom() {
+            if (chatContainer) chatContainer.scrollTop = chatContainer.scrollHeight;
         }
+        
+        scrollToBottom();
+
+        function formatDate(dateStr) {
+            if (!dateStr) return '';
+            const d = new Date(dateStr);
+            return d.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+        }
+
+        function createMessageElement(msg) {
+            const div = document.createElement('div');
+            const isOwn = msg.sender_id === currentUserId;
+            
+            if (isOwn) {
+                div.className = "flex justify-end relative";
+                div.innerHTML = `
+                    <div class="relative px-3 pt-2 pb-6 max-w-[85%] rounded-lg shadow-sm" style="background-color: #005c4b;">
+                        <div class="absolute top-0 -right-2 w-3 h-3" style="background-color: #005c4b; clip-path: polygon(0 0, 0 100%, 100% 0);"></div>
+                        <p class="text-[15px] text-[#e9edef] break-words">${msg.content}</p>
+                        <p class="text-[11px] text-[#ffffff99] absolute bottom-1 right-2">${formatDate(msg.createdAt)}</p>
+                    </div>
+                `;
+            } else {
+                div.className = "flex justify-start relative";
+                div.innerHTML = `
+                    <div class="relative px-3 pt-2 pb-6 max-w-[85%] rounded-lg shadow-sm" style="background-color: #202c33;">
+                        <div class="absolute top-0 -left-2 w-3 h-3" style="background-color: #202c33; clip-path: polygon(100% 0, 100% 100%, 0 0);"></div>
+                        <p class="text-xs font-bold mb-0.5" style="color: #53bdeb;">${msg.sender ? msg.sender.name : 'Unknown'}</p>
+                        <p class="text-[15px] text-[#e9edef] break-words">${msg.content}</p>
+                        <p class="text-[11px] text-[#ffffff99] absolute bottom-1 right-2">${formatDate(msg.createdAt)}</p>
+                    </div>
+                `;
+            }
+            return div;
+        }
+
+        // AJAX Form Submission
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const content = input.value.trim();
+            if (!content) return;
+            
+            input.value = ''; // clear input instantly
+            
+            try {
+                const res = await fetch(`/ride/${rideId}/chat`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ content })
+                });
+                const data = await res.json();
+                if (data.success && data.message) {
+                    chatContainer.appendChild(createMessageElement(data.message));
+                    currentMessageCount++;
+                    scrollToBottom();
+                }
+            } catch (err) {
+                console.error("Failed to send message", err);
+            }
+        });
+
+        // Polling for new messages
+        setInterval(async () => {
+            try {
+                const res = await fetch(`/api/ride/${rideId}/messages`);
+                const data = await res.json();
+                
+                if (data.messages && data.messages.length > currentMessageCount) {
+                    const newMessages = data.messages.slice(currentMessageCount);
+                    newMessages.forEach(msg => {
+                        chatContainer.appendChild(createMessageElement(msg));
+                    });
+                    currentMessageCount = data.messages.length;
+                    scrollToBottom();
+                }
+            } catch (err) {
+                console.error("Failed to fetch new messages", err);
+            }
+        }, 3000); // Poll every 3 seconds
     </script>
 </body>
 </html>
