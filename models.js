@@ -47,6 +47,14 @@ const RideRequest = sequelize.define('RideRequest', {
     status: { type: DataTypes.STRING, defaultValue: 'pending' }
 }, { tableName: 'ride_requests', timestamps: false });
 
+const Message = sequelize.define('Message', {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    ride_id: { type: DataTypes.INTEGER, references: { model: Ride, key: 'id' } },
+    sender_id: { type: DataTypes.INTEGER, references: { model: User, key: 'id' } },
+    content: { type: DataTypes.TEXT, allowNull: false },
+    sent_at: { type: DataTypes.DATE, defaultValue: Sequelize.NOW }
+}, { tableName: 'messages', timestamps: false });
+
 const KarmaTransaction = sequelize.define('KarmaTransaction', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     sender_id: { type: DataTypes.INTEGER, allowNull: true, references: { model: User, key: 'id' } },
@@ -67,4 +75,10 @@ RideRequest.belongsTo(User, { foreignKey: 'seeker_id', as: 'seeker' });
 Ride.hasMany(RideRequest, { foreignKey: 'ride_id', as: 'requests' });
 RideRequest.belongsTo(Ride, { foreignKey: 'ride_id', as: 'ride' });
 
-module.exports = { sequelize, User, Ride, RideRequest, KarmaTransaction };
+Ride.hasMany(Message, { foreignKey: 'ride_id', as: 'messages' });
+Message.belongsTo(Ride, { foreignKey: 'ride_id', as: 'ride' });
+
+User.hasMany(Message, { foreignKey: 'sender_id', as: 'messages_sent' });
+Message.belongsTo(User, { foreignKey: 'sender_id', as: 'sender' });
+
+module.exports = { sequelize, User, Ride, RideRequest, KarmaTransaction, Message };

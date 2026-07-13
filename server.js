@@ -117,7 +117,14 @@ app.get('/logout', (req, res) => {
 
 app.get('/', requireAuth, async (req, res) => {
     const user = res.locals.user;
-    const active_rides = await Ride.findAll({ where: { helper_id: user.id } });
+    const active_rides = await Ride.findAll({ 
+        where: { helper_id: user.id },
+        include: [{ 
+            model: RideRequest, 
+            as: 'requests',
+            include: [{ model: User, as: 'seeker' }]
+        }]
+    });
     const requests_made = await RideRequest.findAll({ 
         where: { seeker_id: user.id },
         include: [{ model: Ride, as: 'ride' }]
@@ -162,42 +169,103 @@ app.get('/find', requireAuth, async (req, res) => {
 });
 
 app.post('/api/request/:ride_id', requireAuth, async (req, res) => {
-    const user = res.locals.user;
-    const ride_id = req.params.ride_id;
-    
-    const ride = await Ride.findByPk(ride_id);
-    if (!ride || ride.status !== 'open') {
-        return res.status(400).send("Ride not available");
+    const ride = await Ride.findByPk(req.params.ride_id);
+    if (!ride) return res.status(404).send("Ride not found");
+
+    if (res.locals.user.karma_balance < ride.karma_reward) {
+        return res.status(400).send("Not enough karma");
     }
-    
-    if (user.karma_balance < ride.karma_reward) {
-        return res.status(400).send("Insufficient Karma Points");
-    }
-    
-    // Deduct Karma
-    user.karma_balance -= ride.karma_reward;
-    await user.save();
-    
-    // Create Escrow Transaction
+
+    // Deduct Karma and Create Escrow
+    const seeker = await User.findByPk(res.locals.user.id);
+    seeker.karma_balance -= ride.karma_reward;
+    await seeker.save();
+
     await KarmaTransaction.create({
-        sender_id: user.id,
+        sender_id: seeker.id,
         receiver_id: ride.helper_id,
         amount: ride.karma_reward,
         ride_id: ride.id,
-        status: "escrow"
+        status: 'escrow'
     });
-    
-    // Create Ride Request
+
     await RideRequest.create({
         ride_id: ride.id,
-        seeker_id: user.id
+        seeker_id: seeker.id
     });
-    
-    // Update ride status
-    ride.status = "matched";
-    await ride.save();
-    
+
     res.redirect('/');
+});
+
+app.post('/api/request/:request_id/accept', requireAuth, async (req, res) => {
+    const request = await RideRequest.findByPk(req.params.request_id, {
+        include: [{ model: Ride, as: 'ride' }]
+    });
+
+    if (!request) return res.status(404).send("Request not found");
+    if (request.ride.helper_id !== res.locals.user.id) return res.status(403).send("Unauthorized");
+
+    // Update request and ride status
+    request.status = 'accepted';
+    await request.save();
+
+    request.ride.status = 'matched';
+    await request.ride.save();
+
+    // Reject all other pending requests for this ride
+    await RideRequest.update(
+        { status: 'rejected' },
+        { 
+            where: { 
+                ride_id: request.ride.id, 
+                id: { [Op.ne]: request.id },
+                status: 'pending'
+            } 
+        }
+    );
+
+    res.redirect('/');
+});
+
+app.get('/ride/:ride_id/chat', requireAuth, async (req, res) => {
+    const ride = await Ride.findByPk(req.params.ride_id, {
+        include: [
+            { model: User, as: 'helper' },
+            { model: RideRequest, as: 'requests', where: { status: 'accepted' }, include: [{ model: User, as: 'seeker' }], required: false },
+            { model: Message, as: 'messages', include: [{ model: User, as: 'sender' }] }
+        ]
+    });
+
+    if (!ride) return res.status(404).send("Ride not found");
+
+    const acceptedReq = ride.requests && ride.requests.length > 0 ? ride.requests[0] : null;
+    if (!acceptedReq) return res.status(403).send("Ride is not matched yet");
+
+    const isHelper = ride.helper_id === res.locals.user.id;
+    const isSeeker = acceptedReq.seeker_id === res.locals.user.id;
+
+    if (!isHelper && !isSeeker) return res.status(403).send("Unauthorized");
+
+    const otherPerson = isHelper ? acceptedReq.seeker : ride.helper;
+
+    res.render('chat.html', {
+        ride,
+        otherPerson,
+        messages: ride.messages
+    });
+});
+
+app.post('/ride/:ride_id/chat', requireAuth, async (req, res) => {
+    const { content } = req.body;
+    if (!content) return res.redirect(`/ride/${req.params.ride_id}/chat`);
+
+    await Message.create({
+        ride_id: req.params.ride_id,
+        sender_id: res.locals.user.id,
+        content: content
+    });
+
+    res.redirect(`/ride/${req.params.ride_id}/chat`);
 });
 
 const PORT = process.env.PORT || 8000;

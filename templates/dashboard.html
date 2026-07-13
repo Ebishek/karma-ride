@@ -40,6 +40,37 @@
         </div>
         <p class="font-semibold">{{ ride.source }} ➔ {{ ride.destination }}</p>
         <p class="text-sm text-gray-400 mt-1">Status: {{ ride.status | capitalize }}</p>
+
+        {% if ride.status == 'matched' %}
+            <div class="mt-4 pt-4 border-t border-gray-600/50">
+                <a href="/ride/{{ ride.id }}/chat" class="block w-full text-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-xl transition duration-300">
+                    💬 Open Secure Chat & Details
+                </a>
+            </div>
+        {% else %}
+            {% if ride.requests and ride.requests.length > 0 %}
+                <div class="mt-4 pt-4 border-t border-gray-600/50">
+                    <p class="text-sm text-emerald-400 font-semibold mb-2">📥 Pending Requests:</p>
+                    <div class="space-y-2">
+                        {% for req in ride.requests %}
+                            {% if req.status == 'pending' %}
+                            <div class="flex justify-between items-center bg-black/30 p-3 rounded-xl">
+                                <div>
+                                    <p class="font-semibold text-white">{{ req.seeker.name }}</p>
+                                    <p class="text-xs text-gray-400">Trust: ⭐ {{ req.seeker.trust_rating }}</p>
+                                </div>
+                                <form action="/api/request/{{ req.id }}/accept" method="POST">
+                                    <button type="submit" class="bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-bold py-1 px-3 rounded-lg transition duration-300">
+                                        Accept
+                                    </button>
+                                </form>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
     </div>
     {% endfor %}
 
@@ -51,6 +82,14 @@
         </div>
         <p class="font-semibold">{{ req.ride.source }} ➔ {{ req.ride.destination }}</p>
         <p class="text-sm text-gray-400 mt-1">Status: {{ req.status | capitalize }}</p>
+
+        {% if req.status == 'accepted' %}
+        <div class="mt-4 pt-4 border-t border-gray-600/50">
+            <a href="/ride/{{ req.ride.id }}/chat" class="block w-full text-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-xl transition duration-300">
+                💬 Open Secure Chat & Details
+            </a>
+        </div>
+        {% endif %}
     </div>
     {% endfor %}
 </div>
