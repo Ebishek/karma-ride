@@ -4,8 +4,8 @@ const nunjucks = require('nunjucks');
 const path = require('path');
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
-const { sequelize, User, Ride, RideRequest, KarmaTransaction } = require('./models');
 const { Op } = require('sequelize');
+const { sequelize, User, Ride, RideRequest, KarmaTransaction, Message } = require('./models');
 
 const app = express();
 
