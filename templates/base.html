@@ -2,6 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script>
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>KarmaRide - Community Transport</title>
     
@@ -136,6 +143,10 @@
         </div>
         {% if user %}
         <div class="flex items-center gap-4 text-primary dark:text-primary-fixed-dim">
+            <button id="theme-toggle" class="hover:bg-surface-variant/50 transition-colors p-2 rounded-full scale-95 transition-transform duration-150">
+                <span class="material-symbols-outlined dark:hidden">dark_mode</span>
+                <span class="material-symbols-outlined hidden dark:block">light_mode</span>
+            </button>
             <button class="hover:bg-surface-variant/50 transition-colors p-2 rounded-full scale-95 transition-transform duration-150">
                 <span class="material-symbols-outlined">notifications</span>
             </button>
@@ -191,6 +202,23 @@
     
     <!-- Leaflet JS for Maps -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- Theme Toggle Script -->
+    <script>
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        if (themeToggleBtn) {
+            themeToggleBtn.addEventListener('click', function() {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.theme = 'light';
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.theme = 'dark';
+                }
+            });
+        }
+    </script>
+    
     {% block scripts %}{% endblock %}
 </body>
 </html>
