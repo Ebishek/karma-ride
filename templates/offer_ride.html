@@ -1,54 +1,64 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="mb-6">
-    <h1 class="text-3xl font-bold text-white mb-2">Offer a Ride</h1>
-    <p class="text-gray-400 text-sm">Help the community and earn Karma.</p>
-</div>
-
-<form action="/api/rides" method="POST" class="glass rounded-3xl p-6 space-y-5">
-    
-    <!-- Map Placeholder for MVP -->
-    <div class="w-full h-48 bg-gray-800 rounded-xl overflow-hidden relative z-0 border border-white/10" id="map">
-        <!-- Leaflet map injects here -->
-    </div>
-    
-    <div>
-        <label class="block text-sm font-medium text-gray-400 mb-1">Source location</label>
-        <div class="relative">
-            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">📍</span>
-            <input type="text" name="source" required class="w-full bg-black/50 border border-gray-700 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-emerald-500 transition-colors" placeholder="e.g. Community Center">
-        </div>
-    </div>
-    
-    <div>
-        <label class="block text-sm font-medium text-gray-400 mb-1">Destination</label>
-        <div class="relative">
-            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">🏁</span>
-            <input type="text" name="destination" required class="w-full bg-black/50 border border-gray-700 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-emerald-500 transition-colors" placeholder="e.g. Market Square">
-        </div>
+<main class="flex-1 px-margin-mobile md:px-margin-desktop pb-24 md:pb-16 flex flex-col gap-6 w-full max-w-3xl mx-auto relative z-20 mt-8">
+    <div class="mb-2">
+        <h1 class="font-headline-lg text-headline-lg text-on-surface mb-2">Offer a Ride</h1>
+        <p class="font-body-md text-on-surface-variant">Help the community and earn Karma points.</p>
     </div>
 
-    <div>
-        <label class="block text-sm font-medium text-gray-400 mb-1">Departure Time</label>
-        <input type="datetime-local" name="date_time_str" required class="w-full bg-black/50 border border-gray-700 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-emerald-500 transition-colors">
-    </div>
-    
-    <div class="glass p-4 rounded-xl flex items-center justify-between mt-2">
-        <div>
-            <p class="text-sm font-semibold text-gray-300">Karma Reward</p>
-            <p class="text-xs text-gray-500">Points earned on completion</p>
+    <form action="/api/rides" method="POST" class="bg-surface-container rounded-2xl p-6 md:p-8 shadow-[0_4px_12px_rgba(75,61,51,0.08)] border border-outline-variant/30 space-y-6">
+        
+        <!-- Map Container -->
+        <div class="w-full h-48 bg-surface-variant rounded-xl overflow-hidden relative border border-outline-variant/50" id="map">
+            <!-- Leaflet map injects here -->
         </div>
-        <div class="flex items-center space-x-2">
-            <span class="text-emerald-400 text-xl font-bold">💎</span>
-            <input type="number" name="karma_reward" value="15" min="1" class="w-20 bg-black/50 border border-gray-700 rounded-lg py-2 px-3 text-white text-center font-bold focus:outline-none focus:border-emerald-500">
-        </div>
-    </div>
+        
+        <!-- Form Fields -->
+        <div class="space-y-4">
+            <div>
+                <label class="block font-label-md text-on-surface mb-1">Source location</label>
+                <div class="relative">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-tertiary">location_on</span>
+                    <input type="text" name="source" required class="w-full bg-surface-container-lowest border-2 border-outline-variant focus:border-primary focus:ring-0 rounded-xl py-3 pl-10 pr-4 font-body-md text-on-surface placeholder-on-surface-variant transition-colors shadow-sm" placeholder="e.g. Community Center">
+                </div>
+            </div>
+            
+            <div>
+                <label class="block font-label-md text-on-surface mb-1">Destination</label>
+                <div class="relative">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-primary">flag</span>
+                    <input type="text" name="destination" required class="w-full bg-surface-container-lowest border-2 border-outline-variant focus:border-primary focus:ring-0 rounded-xl py-3 pl-10 pr-4 font-body-md text-on-surface placeholder-on-surface-variant transition-colors shadow-sm" placeholder="e.g. Market Square">
+                </div>
+            </div>
 
-    <button type="submit" class="w-full btn-primary text-white font-bold rounded-xl py-4 mt-6 shadow-lg">
-        Post Ride
-    </button>
-</form>
+            <div>
+                <label class="block font-label-md text-on-surface mb-1">Departure Time</label>
+                <div class="relative">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">schedule</span>
+                    <input type="datetime-local" name="date_time_str" required class="w-full bg-surface-container-lowest border-2 border-outline-variant focus:border-primary focus:ring-0 rounded-xl py-3 pl-10 pr-4 font-body-md text-on-surface transition-colors shadow-sm">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Karma Reward -->
+        <div class="bg-secondary-fixed rounded-xl p-4 flex items-center justify-between border border-secondary-container/30 shadow-[0_2px_8px_rgba(123,88,0,0.1)]">
+            <div>
+                <p class="font-headline-md text-lg text-on-secondary-fixed">Karma Reward</p>
+                <p class="font-body-sm text-on-secondary-fixed-variant text-sm">Points earned on completion</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-on-secondary-fixed text-2xl" style="font-variation-settings: 'FILL' 1;">spa</span>
+                <input type="number" name="karma_reward" value="15" min="1" class="w-20 bg-surface-container-lowest border-2 border-secondary-container rounded-lg py-2 px-3 text-on-surface text-center font-bold focus:outline-none focus:border-primary shadow-sm text-lg">
+            </div>
+        </div>
+
+        <button type="submit" class="w-full bg-on-secondary-fixed-variant text-on-secondary font-label-md text-lg py-4 rounded-xl shadow-md hover:bg-on-secondary-fixed-variant/90 transition-colors flex justify-center items-center gap-2 mt-4">
+            <span>Post Ride</span>
+            <span class="material-symbols-outlined">send</span>
+        </button>
+    </form>
+</main>
 {% endblock %}
 
 {% block scripts %}
@@ -63,27 +73,19 @@
     const osmStandard = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     });
-    const topoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-        attribution: 'Map data: &copy; OSM contributors | Map style: &copy; OpenTopoMap'
-    });
-    const satelliteMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
-    });
 
     // Initialize Leaflet map
     var map = L.map('map', {
         center: [28.6139, 77.2090], // Default location
         zoom: 13,
-        layers: [cartoDark] // Default active layer
+        layers: [cartoLight] // Switch to Light Mode by default for the Gramin theme
     }); 
 
     // Add Layer Control widget to top right
     const baseMaps = {
-        "Dark Mode": cartoDark,
         "Light Mode": cartoLight,
-        "Street View": osmStandard,
-        "Topographic": topoMap,
-        "Satellite (Houses)": satelliteMap
+        "Dark Mode": cartoDark,
+        "Street View": osmStandard
     };
     L.control.layers(baseMaps).addTo(map);
 
@@ -140,7 +142,7 @@
             destInput.value = address;
             
             // Draw a simple line between them
-            L.polyline([sourceMarker.getLatLng(), destMarker.getLatLng()], {color: '#10b981', weight: 3, dashArray: '5, 10'}).addTo(map);
+            L.polyline([sourceMarker.getLatLng(), destMarker.getLatLng()], {color: '#a03f28', weight: 4, dashArray: '5, 10'}).addTo(map);
             map.fitBounds([sourceMarker.getLatLng(), destMarker.getLatLng()], {padding: [30, 30]});
         } else {
             // Reset if clicked a third time

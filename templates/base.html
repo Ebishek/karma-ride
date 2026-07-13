@@ -3,53 +3,189 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>KarmaRide MVP</title>
+    <title>KarmaRide - Community Transport</title>
     
-    <!-- Tailwind CSS (CDN for MVP) -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,200..900;1,7..72,200..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary-fixed": "#271900",
+                      "secondary": "#7b5800",
+                      "on-tertiary-container": "#f7feff",
+                      "tertiary-fixed": "#a7eefc",
+                      "on-surface": "#241911",
+                      "surface-container": "#ffeadd",
+                      "primary": "#a03f28",
+                      "on-primary": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "background": "#fff8f5",
+                      "on-secondary-fixed-variant": "#5d4200",
+                      "inverse-on-surface": "#ffede3",
+                      "on-tertiary": "#ffffff",
+                      "on-secondary-container": "#6f4f00",
+                      "on-tertiary-fixed-variant": "#004e59",
+                      "primary-container": "#c0573e",
+                      "on-surface-variant": "#56423d",
+                      "on-primary-fixed": "#3d0700",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container-low": "#fff1e9",
+                      "surface-container-high": "#fae4d6",
+                      "surface-bright": "#fff8f5",
+                      "surface-variant": "#f4ded0",
+                      "on-error": "#ffffff",
+                      "surface-container-highest": "#f4ded0",
+                      "primary-fixed-dim": "#ffb4a3",
+                      "secondary-fixed": "#ffdea6",
+                      "secondary-container": "#ffbe30",
+                      "tertiary-fixed-dim": "#8bd2df",
+                      "surface-tint": "#a03f29",
+                      "tertiary": "#106571",
+                      "primary-fixed": "#ffdad2",
+                      "secondary-fixed-dim": "#fcbc2c",
+                      "on-primary-container": "#120100",
+                      "error": "#ba1a1a",
+                      "on-background": "#241911",
+                      "inverse-surface": "#3b2e24",
+                      "on-primary-fixed-variant": "#812914",
+                      "outline-variant": "#ddc0ba",
+                      "inverse-primary": "#ffb4a3",
+                      "surface": "#fff8f5",
+                      "on-tertiary-fixed": "#001f24",
+                      "on-secondary": "#ffffff",
+                      "outline": "#8a726c",
+                      "surface-dim": "#ecd6c8",
+                      "on-error-container": "#93000a",
+                      "tertiary-container": "#347e8b"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "16px",
+                      "margin-mobile": "16px",
+                      "lg": "40px",
+                      "base": "4px",
+                      "xl": "64px",
+                      "margin-desktop": "32px",
+                      "sm": "16px",
+                      "md": "24px",
+                      "xs": "8px"
+              },
+              "fontFamily": {
+                      "headline-lg": ["Literata"],
+                      "label-md": ["Plus Jakarta Sans"],
+                      "body-lg": ["Plus Jakarta Sans"],
+                      "body-md": ["Plus Jakarta Sans"],
+                      "headline-md": ["Literata"],
+                      "label-sm": ["Plus Jakarta Sans"],
+                      "headline-lg-mobile": ["Literata"]
+              },
+              "fontSize": {
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                      "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}]
+              }
+            }
+          }
+        }
+    </script>
     
     <!-- Leaflet CSS for Maps -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/static/css/style.css">
+    {% block head %}{% endblock %}
 </head>
-<body class="antialiased min-h-screen pb-20">
+<body class="bg-background text-on-background font-body-md antialiased pb-24 md:pb-0 pt-16 min-h-screen flex flex-col relative overflow-x-hidden">
     
-    <!-- Top Navigation -->
-    <header class="glass sticky top-0 z-50 p-4 border-b border-white/10 flex justify-between items-center shadow-lg">
-        <div class="text-2xl font-bold tracking-tighter">
-            <a href="/">Karma<span class="karma-gradient">Ride</span></a>
+    <!-- Top App Bar -->
+    <header class="bg-background dark:bg-background shadow-[0_4px_12px_rgba(75,61,51,0.08)] flex justify-between items-center px-margin-mobile h-16 w-full fixed top-0 z-50">
+        <div class="flex items-center gap-3">
+            <a href="/" class="flex items-center gap-3">
+                <img alt="KarmaRide Logo" class="h-10 w-10 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCP7B0g_dNrlyNqnb8mqwE4CRBp2zK4oPAWjfXUAVxt8Wrzsr4qdWB0LncrJ-NzQGBz9qQQtaPTEF3Zn8hc8OCVk22NYKN0rQ2VJBKvN_axjcZyjhbnXPk-SF3OvEIg3nqNW98icfMSYx2bNZWIZliFy-dvHYSrnPlGLLi8SUA8KTAqqWnkQaVlNuaPj4w-rSvqh9AOC9OH3GDOYBjuEmuBUDNdCiJnqE8uOiG6pfFSSIlj6Lib0JJ-"/>
+                <h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary dark:text-primary-fixed-dim">KarmaRide</h1>
+            </a>
+        </div>
+        <div class="hidden md:flex gap-6 items-center">
+            <a class="flex items-center gap-2 text-primary font-bold hover:bg-surface-variant/50 transition-colors p-2 rounded-lg" href="/">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+                <span class="font-label-md">Home</span>
+            </a>
+            <a class="flex items-center gap-2 text-on-surface-variant hover:bg-surface-variant/50 transition-colors p-2 rounded-lg" href="/find">
+                <span class="material-symbols-outlined">search_check</span>
+                <span class="font-label-md">Find</span>
+            </a>
+            <a class="flex items-center gap-2 text-on-surface-variant hover:bg-surface-variant/50 transition-colors p-2 rounded-lg" href="/offer">
+                <span class="material-symbols-outlined">motorcycle</span>
+                <span class="font-label-md">Offer</span>
+            </a>
         </div>
         {% if user %}
-        <div class="flex items-center space-x-3 bg-white/10 px-3 py-1 rounded-full">
-            <span class="text-emerald-400 font-semibold text-lg">💎 {{ user.karma_balance }}</span>
+        <div class="flex items-center gap-4 text-primary dark:text-primary-fixed-dim">
+            <button class="hover:bg-surface-variant/50 transition-colors p-2 rounded-full scale-95 transition-transform duration-150">
+                <span class="material-symbols-outlined">notifications</span>
+            </button>
+            <div class="flex items-center gap-1 bg-surface-container-high px-3 py-1 rounded-full border border-primary-container">
+                <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">spa</span>
+                <span class="font-bold text-sm">{{ user.karma_balance }}</span>
+            </div>
+            <div class="h-8 w-8 rounded-full bg-surface-container-high border-2 border-primary-container overflow-hidden hidden md:block">
+                <img class="w-full h-full object-cover" data-alt="Profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4_vW_5Gw57zaHgUrDWqmvNICUcMw712hf9-T5hIbygVp09WLlxiDGiUR4h6rGALYmiF8DOpnLVXxqdDiCV7BrXg3VDjcXTi9zZEe-Z7GlEFYfKeH9c8Kl5Hc21N6IsPTPwTyb_-mrJ0ssAjROgDVuNv0AHpv35Z7uis2_APHWbrmeAKCBqrdibZFI4Er8AC0yjHuVqlZp8DWOSyMZFsJcCWkEufh2uSQ2CEqzZa9aPTkUl915KvlI"/>
+            </div>
+        </div>
+        {% else %}
+        <div class="flex items-center gap-4">
+            <a href="/login" class="text-primary font-bold">Login</a>
         </div>
         {% endif %}
     </header>
 
     <!-- Main Content Area -->
-    <main class="p-4 max-w-md mx-auto fade-in">
-        {% block content %}{% endblock %}
-    </main>
+    {% block content %}{% endblock %}
 
-    <!-- Bottom Mobile Navigation -->
-    {% if user %}
-    <nav class="glass fixed bottom-0 w-full z-50 border-t border-white/10 safe-area-pb">
-        <div class="flex justify-around items-center h-16 max-w-md mx-auto">
-            <a href="/" class="flex flex-col items-center text-gray-400 hover:text-emerald-400 transition-colors">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-                <span class="text-xs mt-1">Profile</span>
-            </a>
-            <a href="/find" class="flex flex-col items-center text-gray-400 hover:text-emerald-400 transition-colors">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                <span class="text-xs mt-1">Seek Ride</span>
-            </a>
-            <a href="/offer" class="flex flex-col items-center text-gray-400 hover:text-emerald-400 transition-colors">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                <span class="text-xs mt-1">Offer Ride</span>
-            </a>
+    <!-- Footer -->
+    <footer class="bg-surface-container-lowest dark:bg-surface-dim border-t border-dashed border-outline-variant w-full px-margin-mobile py-8 flex flex-col items-center gap-4 mt-auto z-10">
+        <h2 class="font-headline-md text-headline-md text-primary">KarmaRide</h2>
+        <div class="flex flex-wrap justify-center gap-4">
+            <a class="text-on-surface-variant font-body-md text-body-md hover:text-primary transition-colors" href="#">Community Guidelines</a>
+            <a class="text-on-surface-variant font-body-md text-body-md hover:text-primary transition-colors" href="#">Safety Info</a>
         </div>
+        <p class="text-tertiary dark:text-tertiary-fixed font-body-md text-body-md mt-4">© 2024 KarmaRide Community</p>
+    </footer>
+
+    <!-- Bottom Navigation Bar (Mobile Only) -->
+    {% if user %}
+    <nav class="md:hidden bg-surface-container-highest dark:bg-surface-container-highest shadow-[0_-4px_12px_rgba(75,61,51,0.08)] fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-3 pb-safe rounded-t-xl">
+        <a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary-fixed/20 rounded-full px-4 py-1 transition-colors" href="/">
+            <span class="material-symbols-outlined">home</span>
+            <span class="font-label-sm text-label-sm mt-1">Home</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary-fixed/20 rounded-full px-4 py-1 transition-colors" href="/find">
+            <span class="material-symbols-outlined">search_check</span>
+            <span class="font-label-sm text-label-sm mt-1">Find</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary-fixed/20 rounded-full px-4 py-1 transition-colors" href="/offer">
+            <span class="material-symbols-outlined">motorcycle</span>
+            <span class="font-label-sm text-label-sm mt-1">Offer</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary-fixed/20 rounded-full px-4 py-1 transition-colors" href="#">
+            <span class="material-symbols-outlined">account_circle</span>
+            <span class="font-label-sm text-label-sm mt-1">Profile</span>
+        </a>
     </nav>
     {% endif %}
     

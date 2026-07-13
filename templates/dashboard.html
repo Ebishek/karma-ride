@@ -1,96 +1,180 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="space-y-6">
-    <!-- User Profile Card -->
-    <div class="glass rounded-3xl p-6 text-center relative overflow-hidden">
-        <div class="absolute -right-10 -top-10 w-32 h-32 bg-emerald-500 rounded-full blur-3xl opacity-20"></div>
-        
-        <div class="w-24 h-24 bg-gray-700 rounded-full mx-auto mb-4 border-4 border-emerald-500 shadow-lg flex items-center justify-center text-4xl">
-            👤
-        </div>
-        <h2 class="text-2xl font-bold text-white">{{ user.name }}</h2>
-        <p class="text-gray-400 mb-4">Trust Rating: ⭐ {{ user.trust_rating }}</p>
-        
-        <div class="bg-black/30 rounded-2xl p-4 inline-block mb-4">
-            <p class="text-sm text-gray-400 uppercase tracking-wider mb-1">Available Karma</p>
-            <p class="text-4xl font-black karma-gradient">💎 {{ user.karma_balance }}</p>
-        </div>
-        
-        <div>
-            <a href="/logout" class="text-red-400 text-sm font-semibold hover:underline">Log Out</a>
-        </div>
-    </div>
-
-    <!-- Active Rides / Escrow -->
-    <h3 class="text-xl font-semibold mt-8 mb-4">Active Activity</h3>
-    
-    {% if not active_rides and not requests_made %}
-        <div class="glass rounded-2xl p-6 text-center text-gray-400 border border-dashed border-gray-600">
-            <p>No active rides or requests.</p>
-            <p class="text-sm mt-2">Help the community to earn Karma!</p>
-        </div>
-    {% endif %}
-
-    {% for ride in active_rides %}
-    <div class="glass rounded-2xl p-5 border-l-4 border-emerald-500 mb-4">
-        <div class="flex justify-between items-start mb-2">
-            <span class="bg-emerald-500/20 text-emerald-400 text-xs px-2 py-1 rounded font-bold uppercase">Offering Ride</span>
-            <span class="text-emerald-400 font-bold">+{{ ride.karma_reward }} 💎</span>
-        </div>
-        <p class="font-semibold">{{ ride.source }} ➔ {{ ride.destination }}</p>
-        <p class="text-sm text-gray-400 mt-1">Status: {{ ride.status | capitalize }}</p>
-
-        {% if ride.status == 'matched' %}
-            <div class="mt-4 pt-4 border-t border-gray-600/50">
-                <a href="/ride/{{ ride.id }}/chat" class="block w-full text-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-xl transition duration-300">
-                    💬 Open Secure Chat & Details
-                </a>
+<main class="max-w-7xl mx-auto md:px-margin-desktop">
+    <!-- Hero Section -->
+    <section class="relative w-full h-[50vh] md:h-[60vh] md:rounded-b-2xl overflow-hidden shadow-[0_4px_12px_rgba(75,61,51,0.08)] mb-8 md:mb-12">
+        <img alt="Rural Indian Village Scene" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAi_Q1DR9ONZwwY9wuvSEmT-aSukbeMFOM79l0kjoJk2v0RT0btpt2CBWALUoKr9dyY6JnEsdQI4ZSop8iMrxRYTLLWKnHdcmHUFkJor81kZUhWTOWOky3rcu4rlti-QF4vrACNySb05U9BP9C6o17H6NDZHHEsMFQgFGw2SeUb0MdVBdz7iiBHo79CUmR1lHAbGXnmjbRnBt4420NCHtSH7O9Q5iczTvdU2RuuLbcPfwyQxzhESOtZ"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-on-background/80 via-on-background/30 to-transparent flex flex-col justify-end p-margin-mobile md:p-lg">
+            <div class="max-w-2xl">
+                <h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-primary mb-4 shadow-sm">Welcome back, {{ user.name }}</h2>
+                <p class="font-body-lg text-body-lg text-on-primary/90 mb-8 max-w-lg">Connect with neighbors heading your way. Save time, reduce costs, and build a tighter village.</p>
             </div>
-        {% else %}
-            {% if ride.requests and ride.requests.length > 0 %}
-                <div class="mt-4 pt-4 border-t border-gray-600/50">
-                    <p class="text-sm text-emerald-400 font-semibold mb-2">📥 Pending Requests:</p>
-                    <div class="space-y-2">
-                        {% for req in ride.requests %}
-                            {% if req.status == 'pending' %}
-                            <div class="flex justify-between items-center bg-black/30 p-3 rounded-xl">
-                                <div>
-                                    <p class="font-semibold text-white">{{ req.seeker.name }}</p>
-                                    <p class="text-xs text-gray-400">Trust: ⭐ {{ req.seeker.trust_rating }}</p>
-                                </div>
-                                <form action="/api/request/{{ req.id }}/accept" method="POST">
-                                    <button type="submit" class="bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-bold py-1 px-3 rounded-lg transition duration-300">
-                                        Accept
-                                    </button>
-                                </form>
+        </div>
+    </section>
+
+    <!-- Active Activity Section -->
+    <section class="px-margin-mobile md:px-0 mb-12">
+        <h3 class="font-headline-md text-headline-md text-on-surface mb-6">Active Activity</h3>
+        
+        {% if not active_rides and not requests_made %}
+            <div class="bg-surface-container rounded-xl p-md border border-dashed border-outline-variant text-center">
+                <span class="material-symbols-outlined text-4xl text-on-surface-variant mb-2">directions_walk</span>
+                <p class="font-body-md text-on-surface">No active rides or requests.</p>
+                <p class="font-body-sm text-on-surface-variant mt-2">Help the community to earn Karma!</p>
+            </div>
+        {% endif %}
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Rides Offered -->
+            {% for ride in active_rides %}
+            <div class="bg-surface-container-low rounded-xl p-md border border-outline-variant shadow-sm flex flex-col relative overflow-hidden transition-transform">
+                <div class="flex justify-between items-start mb-4">
+                    <span class="bg-primary/10 text-primary text-xs px-2 py-1 rounded font-bold uppercase tracking-wide">Offering Ride</span>
+                    <span class="text-secondary-container font-bold flex items-center gap-1">
+                        +{{ ride.karma_reward }} <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">spa</span>
+                    </span>
+                </div>
+                <h4 class="font-headline-md text-lg text-on-surface mb-1">{{ ride.source }} <span class="material-symbols-outlined text-sm mx-1">arrow_forward</span> {{ ride.destination }}</h4>
+                <p class="text-sm text-on-surface-variant mb-4">Status: {{ ride.status | capitalize }}</p>
+
+                {% if ride.status == 'matched' %}
+                    <div class="mt-auto pt-4 border-t border-outline-variant/30">
+                        <a href="/ride/{{ ride.id }}/chat" class="w-full bg-primary text-on-primary font-label-md py-3 rounded-lg shadow-sm flex justify-center items-center gap-2 hover:bg-primary/90 transition-colors">
+                            <span class="material-symbols-outlined text-sm">chat</span> Open Secure Chat
+                        </a>
+                    </div>
+                {% else %}
+                    {% if ride.requests and ride.requests.length > 0 %}
+                        <div class="mt-auto pt-4 border-t border-outline-variant/30">
+                            <p class="text-sm text-on-surface font-semibold mb-3">📥 Pending Requests:</p>
+                            <div class="space-y-3">
+                                {% for req in ride.requests %}
+                                    {% if req.status == 'pending' %}
+                                    <div class="flex justify-between items-center bg-surface-container p-3 rounded-xl border border-outline-variant/50">
+                                        <div>
+                                            <p class="font-semibold text-on-surface">{{ req.seeker.name }}</p>
+                                            <p class="text-xs text-on-surface-variant">Trust: ⭐ {{ req.seeker.trust_rating }}</p>
+                                        </div>
+                                        <form action="/api/request/{{ req.id }}/accept" method="POST">
+                                            <button type="submit" class="bg-secondary-container text-on-secondary-container text-sm font-bold py-2 px-4 rounded-lg hover:bg-secondary-container/90 transition-colors shadow-sm">
+                                                Accept
+                                            </button>
+                                        </form>
+                                    </div>
+                                    {% endif %}
+                                {% endfor %}
                             </div>
-                            {% endif %}
-                        {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            <!-- Rides Sought -->
+            {% for req in requests_made %}
+            <div class="bg-surface-container-low rounded-xl p-md border border-outline-variant shadow-sm flex flex-col relative overflow-hidden transition-transform">
+                <div class="flex justify-between items-start mb-4">
+                    <span class="bg-tertiary/10 text-tertiary text-xs px-2 py-1 rounded font-bold uppercase tracking-wide">Seeking Ride</span>
+                    <span class="text-primary font-bold flex items-center gap-1">
+                        -{{ req.ride.karma_reward }} <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">spa</span> (Escrow)
+                    </span>
+                </div>
+                <h4 class="font-headline-md text-lg text-on-surface mb-1">{{ req.ride.source }} <span class="material-symbols-outlined text-sm mx-1">arrow_forward</span> {{ req.ride.destination }}</h4>
+                <p class="text-sm text-on-surface-variant mb-4">Status: {{ req.status | capitalize }}</p>
+
+                {% if req.status == 'accepted' %}
+                <div class="mt-auto pt-4 border-t border-outline-variant/30">
+                    <a href="/ride/{{ req.ride.id }}/chat" class="w-full bg-primary text-on-primary font-label-md py-3 rounded-lg shadow-sm flex justify-center items-center gap-2 hover:bg-primary/90 transition-colors">
+                        <span class="material-symbols-outlined text-sm">chat</span> Open Secure Chat
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Core Actions (Chaupal Cards) -->
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-margin-mobile px-margin-mobile md:px-0 mb-12">
+        <!-- Find a Ride Card -->
+        <a href="/find" class="block">
+            <div class="bg-surface-container rounded-xl p-md shadow-[0_4px_12px_rgba(75,61,51,0.08)] border border-outline-variant/30 relative overflow-hidden group hover:scale-[1.01] transition-transform duration-200 h-full">
+                <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <span class="material-symbols-outlined text-[120px] text-primary" style="font-variation-settings: 'FILL' 1;">search_check</span>
+                </div>
+                <div class="relative z-10 flex flex-col h-full">
+                    <div class="bg-primary/10 w-12 h-12 rounded-full flex items-center justify-center mb-4 text-primary">
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">search_check</span>
+                    </div>
+                    <h3 class="font-headline-md text-headline-md text-on-surface mb-2">Find a Ride</h3>
+                    <p class="font-body-md text-body-md text-on-surface-variant mb-6 flex-grow">Need to get to the market or the next town? See who's heading that way.</p>
+                    <button class="bg-primary text-on-primary font-label-md text-label-md py-3 px-6 rounded-lg w-full shadow-sm flex justify-center items-center gap-2 pointer-events-none">
+                        <span>Search Routes</span>
+                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                    </button>
+                </div>
+            </div>
+        </a>
+        
+        <!-- Offer a Ride Card -->
+        <a href="/offer" class="block">
+            <div class="bg-secondary-fixed rounded-xl p-md shadow-[0_4px_12px_rgba(75,61,51,0.08)] border border-secondary-container/30 relative overflow-hidden group hover:scale-[1.01] transition-transform duration-200 h-full">
+                <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <span class="material-symbols-outlined text-[120px] text-on-secondary-fixed-variant" style="font-variation-settings: 'FILL' 1;">motorcycle</span>
+                </div>
+                <div class="relative z-10 flex flex-col h-full">
+                    <div class="bg-on-secondary-fixed-variant/10 w-12 h-12 rounded-full flex items-center justify-center mb-4 text-on-secondary-fixed-variant">
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">motorcycle</span>
+                    </div>
+                    <h3 class="font-headline-md text-headline-md text-on-secondary-fixed mb-2">Offer a Ride</h3>
+                    <p class="font-body-md text-body-md text-on-secondary-fixed-variant mb-6 flex-grow">Have an empty seat on your bike or tractor? Offer it to a neighbor and earn Karma.</p>
+                    <button class="bg-on-secondary-fixed-variant text-on-secondary font-label-md text-label-md py-3 px-6 rounded-lg w-full shadow-sm flex justify-center items-center gap-2 border border-on-secondary-fixed-variant pointer-events-none">
+                        <span>Post Your Route</span>
+                        <span class="material-symbols-outlined text-sm">add</span>
+                    </button>
+                </div>
+            </div>
+        </a>
+    </section>
+
+    <!-- What is Karma Section -->
+    <section class="bg-surface-container-high mx-margin-mobile md:mx-0 rounded-xl p-md md:p-lg mb-12 border border-outline-variant/50 relative overflow-hidden">
+        <div class="absolute -bottom-10 -right-10 opacity-5">
+            <span class="material-symbols-outlined text-[200px] text-secondary">local_florist</span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center relative z-10">
+            <div class="md:col-span-7">
+                <div class="flex items-center gap-2 mb-2 text-secondary-container">
+                    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">stars</span>
+                    <span class="font-label-md tracking-wider uppercase">Karma Rewards</span>
+                </div>
+                <h3 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-4">What is Karma?</h3>
+                <p class="font-body-lg text-body-lg text-on-surface-variant mb-6 leading-relaxed">
+                    In KarmaRide, your goodwill is recognized. Earn 'Karma Points' every time you offer a ride, help a neighbor carry goods, or maintain a reliable schedule. 
+                </p>
+                <ul class="space-y-3 mb-6">
+                    <li class="flex items-start gap-3">
+                        <span class="material-symbols-outlined text-primary mt-1">check_circle</span>
+                        <span class="font-body-md text-body-md text-on-surface">Build a trustworthy reputation in your village.</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="material-symbols-outlined text-primary mt-1">check_circle</span>
+                        <span class="font-body-md text-body-md text-on-surface">Redeem points for priority ride requests.</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="md:col-span-5 flex justify-center">
+                <div class="relative w-48 h-48 rounded-full bg-secondary-container shadow-[0_8px_24px_rgba(123,88,0,0.3)] flex items-center justify-center border-4 border-secondary-fixed animate-pulse">
+                    <div class="absolute inset-0 rounded-full border-2 border-secondary-fixed-dim/50 border-dashed m-2"></div>
+                    <div class="text-center">
+                        <span class="material-symbols-outlined text-6xl text-on-secondary-container mb-1" style="font-variation-settings: 'FILL' 1;">spa</span>
+                        <div class="font-headline-md text-headline-md text-on-secondary-container">Karma</div>
                     </div>
                 </div>
-            {% endif %}
-        {% endif %}
-    </div>
-    {% endfor %}
-
-    {% for req in requests_made %}
-    <div class="glass rounded-2xl p-5 border-l-4 border-blue-500 mb-4">
-        <div class="flex justify-between items-start mb-2">
-            <span class="bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded font-bold uppercase">Seeking Ride</span>
-            <span class="text-red-400 font-bold">-{{ req.ride.karma_reward }} 💎 (Escrow)</span>
+            </div>
         </div>
-        <p class="font-semibold">{{ req.ride.source }} ➔ {{ req.ride.destination }}</p>
-        <p class="text-sm text-gray-400 mt-1">Status: {{ req.status | capitalize }}</p>
+    </section>
 
-        {% if req.status == 'accepted' %}
-        <div class="mt-4 pt-4 border-t border-gray-600/50">
-            <a href="/ride/{{ req.ride.id }}/chat" class="block w-full text-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-xl transition duration-300">
-                💬 Open Secure Chat & Details
-            </a>
-        </div>
-        {% endif %}
-    </div>
-    {% endfor %}
-</div>
+</main>
 {% endblock %}

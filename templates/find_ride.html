@@ -1,61 +1,100 @@
 {% extends "base.html" %}
 
+{% block head %}
+<style>
+    .map-texture {
+        background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="mb-6">
-    <h1 class="text-3xl font-bold text-white mb-2">Find a Ride</h1>
-    <p class="text-gray-400 text-sm">Spend Karma to request rides from helpers.</p>
-</div>
+<main class="flex-1 px-margin-mobile md:px-margin-desktop pb-24 md:pb-16 flex flex-col gap-6 w-full max-w-7xl mx-auto relative z-20 mt-8">
+    <!-- Search & Filter Bar -->
+    <section class="bg-surface-container rounded-xl p-4 shadow-[0_4px_12px_rgba(75,61,51,0.08)] border border-outline-variant/30 flex flex-col md:flex-row gap-4 items-center">
+        <div class="relative w-full md:w-2/3">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">location_on</span>
+            <input class="w-full bg-surface-container-lowest border-b-2 border-outline-variant focus:border-primary focus:ring-0 rounded-t-md pl-10 pr-4 py-3 font-body-md text-on-surface placeholder-on-surface-variant" placeholder="Where to?" type="text" />
+        </div>
+        <div class="flex gap-2 w-full md:w-auto overflow-x-auto pb-2 md:pb-0">
+            <button class="bg-secondary-container text-on-secondary-container px-4 py-2 rounded-full font-label-md flex items-center gap-2 whitespace-nowrap shadow-[0_2px_4px_rgba(75,61,51,0.08)] border border-secondary-container/50">
+                <span class="material-symbols-outlined text-[18px]">two_wheeler</span>
+                Any Ride
+            </button>
+        </div>
+    </section>
 
-<div class="space-y-4">
-    {% if not rides %}
-    <div class="glass rounded-3xl p-8 text-center border border-dashed border-gray-600">
-        <div class="text-4xl mb-4">🚷</div>
-        <h3 class="text-xl font-bold text-gray-300 mb-2">No rides available</h3>
-        <p class="text-gray-500 text-sm">Check back later or offer a ride yourself.</p>
-    </div>
-    {% endif %}
-
-    {% for ride in rides %}
-    <div class="glass rounded-3xl p-5 fade-in hover:border-emerald-500/50 transition-colors border border-white/10 group">
-        <div class="flex justify-between items-start mb-3">
-            <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center text-xl">👤</div>
-                <div>
-                    <p class="font-bold text-white leading-tight">{{ ride.helper.name }}</p>
-                    <p class="text-xs text-emerald-400 font-semibold">⭐ {{ ride.helper.trust_rating }}</p>
+    <div class="flex flex-col lg:flex-row gap-6 h-full">
+        <!-- Map View -->
+        <section class="w-full lg:w-3/5 h-64 md:h-[500px] bg-surface-variant rounded-xl overflow-hidden relative shadow-[0_4px_12px_rgba(75,61,51,0.08)] border border-outline-variant/50">
+            <div class="absolute inset-0 bg-cover bg-center w-full h-full opacity-80 mix-blend-multiply" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB9cYdqvHetpXYeXFSYtoa7_rdhe5MIa5BAKav-Nw4h2KdG2YSR5LT1HcR955ezS6tSzVy-gP-e2VnmORJhCGQJr1bDF_V4imB0qzSgVtz_pqMPXT4CjMx5O5y4hkj_ndTmPKFN2mlqPqaY_lHJoDYQAaWVSTLhZWiu-uxR7KcOPdwMbI9Ym_1jL-xpjoUDcxGFiVSRShnke76zq8zrV_Xj3GzwtWuxjPu5pLwuXAuS3BqqJYN8_pF_')"></div>
+            <div class="absolute inset-0 map-texture opacity-30"></div>
+            
+            <div class="absolute bottom-4 left-4 right-4 bg-surface-container-lowest/90 backdrop-blur-sm p-3 rounded-lg flex items-center justify-between border border-outline-variant shadow-sm">
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-tertiary">near_me</span>
+                    <span class="font-label-md text-on-surface">{{ rides.length }} rides available</span>
                 </div>
             </div>
-            <div class="bg-black/40 px-3 py-1.5 rounded-xl border border-gray-700 flex items-center space-x-1">
-                <span class="text-xs text-gray-400">Cost:</span>
-                <span class="text-emerald-400 font-bold">💎 {{ ride.karma_reward }}</span>
-            </div>
-        </div>
+        </section>
 
-        <div class="pl-2 ml-3 border-l-2 border-gray-700 space-y-3 py-2 my-2">
-            <div class="relative">
-                <span class="absolute -left-[23px] top-1 w-3 h-3 bg-blue-500 rounded-full ring-4 ring-[#0f172a]"></span>
-                <p class="text-sm font-semibold text-gray-300">{{ ride.source }}</p>
-            </div>
-            <div class="relative">
-                <span class="absolute -left-[23px] top-1 w-3 h-3 bg-red-500 rounded-full ring-4 ring-[#0f172a]"></span>
-                <p class="text-sm font-semibold text-gray-300">{{ ride.destination }}</p>
-            </div>
-        </div>
-        
-        <div class="flex justify-between items-center mt-4">
-            <div class="text-xs text-gray-400 bg-black/30 px-2 py-1 rounded">
-                🕒 {{ ride.date_time | formatDate }}
-            </div>
+        <!-- Ride List -->
+        <section class="w-full lg:w-2/5 flex flex-col gap-4 overflow-y-auto pr-2 pb-8">
+            <h2 class="font-headline-md text-headline-md text-on-surface">Available Rides</h2>
             
-            <form action="/api/request/{{ ride.id }}" method="POST">
-                <button type="submit" class="btn-primary px-5 py-2 rounded-xl text-sm font-bold shadow-lg 
-                    {% if user.karma_balance < ride.karma_reward %}opacity-50 cursor-not-allowed{% endif %}"
-                    {% if user.karma_balance < ride.karma_reward %}disabled{% endif %}>
-                    Request Ride
-                </button>
-            </form>
-        </div>
+            {% if not rides or rides.length == 0 %}
+            <div class="bg-surface-container-low rounded-xl p-8 border border-dashed border-outline-variant flex flex-col items-center justify-center text-center">
+                <span class="material-symbols-outlined text-5xl text-on-surface-variant mb-4">no_transfer</span>
+                <p class="font-body-lg text-on-surface mb-2">No rides found right now.</p>
+                <p class="font-body-sm text-on-surface-variant">Please check back later.</p>
+            </div>
+            {% endif %}
+
+            {% for ride in rides %}
+            <article class="bg-surface-container-low rounded-xl p-4 border border-outline-variant shadow-[0_2px_8px_rgba(75,61,51,0.05)] flex flex-col gap-3 relative overflow-hidden transition-transform active:scale-95 duration-150">
+                <div class="flex justify-between items-start">
+                    <div class="flex items-center gap-3">
+                        <img class="w-10 h-10 rounded-full object-cover border-2 border-secondary-container" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaOsBb7wZCkBsB3tUfT3139LQRS-OcGiAty6QD9Phaia9o9FLhvrEJQK-_dMY28a3F_OKeRi70EQ5hjRxU2s-KIxUDOv8TiIcu3KWFZ4t3mRcAPQHu8Pk86NZpP9oZYa5nqmHAqLyFkbnpGNfWlXP2hiEAnaMYxCtPFGyT0Er7GWuwTNXlRCpH52Ikq8B4avtWUo7DqRhWr2IzRJVt-VmgcemjX7EqLmNgCAM9kIh8UQs3Uj1o-bt1" alt="Driver">
+                        <div>
+                            <h3 class="font-label-md text-label-md text-on-surface">{{ ride.helper.name }}</h3>
+                            <div class="flex items-center gap-1 text-secondary-container">
+                                <span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+                                <span class="text-xs font-bold">{{ ride.helper.trust_rating }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-end">
+                        <span class="bg-surface-container-high text-on-surface px-2 py-1 rounded-md text-xs font-bold border border-outline-variant">
+                            💎 {{ ride.karma_reward }}
+                        </span>
+                        <span class="text-xs text-on-surface-variant mt-1">{{ ride.date_time | formatDate }}</span>
+                    </div>
+                </div>
+
+                <!-- Route Timeline -->
+                <div class="relative pl-4 py-2 mt-2">
+                    <div class="absolute left-[7px] top-4 bottom-4 w-0.5 bg-outline-variant border-dashed"></div>
+                    <div class="relative flex items-center gap-3 mb-4">
+                        <div class="w-4 h-4 rounded-full bg-surface-container-lowest border-4 border-tertiary absolute -left-[23px]"></div>
+                        <p class="font-body-md text-on-surface">{{ ride.source }}</p>
+                    </div>
+                    <div class="relative flex items-center gap-3">
+                        <div class="w-4 h-4 rounded-full bg-primary absolute -left-[23px]"></div>
+                        <p class="font-body-md text-on-surface font-semibold">{{ ride.destination }}</p>
+                    </div>
+                </div>
+                
+                <form action="/api/request/{{ ride.id }}" method="POST" class="w-full mt-2">
+                    <button type="submit" class="w-full py-2.5 rounded-lg font-label-md flex justify-center items-center gap-2 transition-colors 
+                        {% if user.karma_balance < ride.karma_reward %}bg-surface-container-high text-on-surface-variant cursor-not-allowed{% else %}bg-primary text-on-primary hover:bg-primary/90 shadow-sm{% endif %}"
+                        {% if user.karma_balance < ride.karma_reward %}disabled{% endif %}>
+                        <span>Request Ride</span>
+                        <span class="material-symbols-outlined text-sm">hail</span>
+                    </button>
+                </form>
+            </article>
+            {% endfor %}
+        </section>
     </div>
-    {% endfor %}
-</div>
+</main>
 {% endblock %}

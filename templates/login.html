@@ -1,42 +1,42 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="min-h-[80vh] flex flex-col justify-center">
-    <div class="text-center mb-10">
-        <h1 class="text-4xl font-bold tracking-tighter mb-2">Karma<span class="karma-gradient">Ride</span></h1>
-        <p class="text-gray-400">Welcome back. Let's get moving.</p>
+<main class="flex-1 px-margin-mobile md:px-margin-desktop pb-24 md:pb-16 flex flex-col justify-center items-center w-full max-w-lg mx-auto relative z-20 mt-8 min-h-[70vh]">
+    <div class="text-center mb-8">
+        <h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-2">Welcome Back</h1>
+        <p class="font-body-md text-on-surface-variant">Sign in to coordinate your next ride.</p>
     </div>
 
-    <form action="/login" method="POST" class="glass rounded-3xl p-6 space-y-5">
+    <form action="/login" method="POST" class="w-full bg-surface-container rounded-2xl p-6 md:p-8 shadow-[0_4px_12px_rgba(75,61,51,0.08)] border border-outline-variant/30 space-y-5">
         {% if error %}
-        <div class="bg-red-500/20 border border-red-500/50 text-red-400 p-3 rounded-xl text-center text-sm font-semibold">
+        <div class="bg-error-container text-on-error-container p-4 rounded-xl text-center text-sm font-label-md border border-error-container">
             {{ error }}
         </div>
         {% endif %}
 
         <div>
-            <label class="block text-sm font-medium text-gray-400 mb-1">Phone Number</label>
+            <label class="block font-label-md text-on-surface mb-1">Phone Number</label>
             <div class="relative">
-                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">📱</span>
-                <input type="tel" name="phone" required class="w-full bg-black/50 border border-gray-700 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-emerald-500 transition-colors" placeholder="Enter your phone">
+                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-tertiary">phone_iphone</span>
+                <input type="tel" name="phone" required class="w-full bg-surface-container-lowest border-2 border-outline-variant focus:border-primary focus:ring-0 rounded-xl py-3 pl-10 pr-4 font-body-md text-on-surface placeholder-on-surface-variant transition-colors shadow-sm" placeholder="Enter your phone">
             </div>
         </div>
 
         <div>
-            <label class="block text-sm font-medium text-gray-400 mb-1">Password</label>
+            <label class="block font-label-md text-on-surface mb-1">Password</label>
             <div class="relative">
-                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">🔒</span>
-                <input type="password" name="password" required class="w-full bg-black/50 border border-gray-700 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-emerald-500 transition-colors" placeholder="Enter your password">
+                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-tertiary">lock</span>
+                <input type="password" name="password" required class="w-full bg-surface-container-lowest border-2 border-outline-variant focus:border-primary focus:ring-0 rounded-xl py-3 pl-10 pr-4 font-body-md text-on-surface placeholder-on-surface-variant transition-colors shadow-sm" placeholder="Enter your password">
             </div>
         </div>
 
-        <button type="submit" class="w-full btn-primary text-white font-bold rounded-xl py-4 mt-6 shadow-lg text-lg">
+        <button type="submit" class="w-full bg-primary text-on-primary font-label-md text-lg py-4 rounded-xl shadow-md hover:bg-primary/90 transition-colors mt-6">
             Sign In
         </button>
 
-        <p class="text-center text-gray-400 text-sm mt-6">
-            Don't have an account? <a href="/register" class="text-emerald-400 font-bold hover:underline">Register</a>
+        <p class="text-center text-on-surface-variant text-sm mt-6 font-body-md">
+            Don't have an account? <a href="/register" class="text-primary font-bold hover:underline">Register</a>
         </p>
     </form>
-</div>
+</main>
 {% endblock %}
