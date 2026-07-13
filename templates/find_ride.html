@@ -44,7 +44,7 @@
         
         <div class="flex justify-between items-center mt-4">
             <div class="text-xs text-gray-400 bg-black/30 px-2 py-1 rounded">
-                🕒 {{ ride.date_time.strftime('%b %d, %H:%M') }}
+                🕒 {{ ride.date_time | formatDate }}
             </div>
             
             <form action="/api/request/{{ ride.id }}" method="POST">

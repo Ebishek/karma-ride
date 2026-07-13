@@ -24,10 +24,17 @@ app.use(session({
 app.use('/static', express.static(path.join(__dirname, 'static')));
 
 // Setup Nunjucks
-nunjucks.configure('templates', {
+const env = nunjucks.configure('templates', {
     autoescape: true,
     express: app
 });
+
+env.addFilter('formatDate', function(dateStr) {
+    if (!dateStr) return '';
+    const d = new Date(dateStr);
+    return d.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+});
+
 app.set('view engine', 'html');
 
 // Sync DB
