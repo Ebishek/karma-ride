@@ -157,6 +157,9 @@
             <div class="h-8 w-8 rounded-full bg-surface-container-high border-2 border-primary-container overflow-hidden hidden md:block">
                 <img class="w-full h-full object-cover" data-alt="Profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4_vW_5Gw57zaHgUrDWqmvNICUcMw712hf9-T5hIbygVp09WLlxiDGiUR4h6rGALYmiF8DOpnLVXxqdDiCV7BrXg3VDjcXTi9zZEe-Z7GlEFYfKeH9c8Kl5Hc21N6IsPTPwTyb_-mrJ0ssAjROgDVuNv0AHpv35Z7uis2_APHWbrmeAKCBqrdibZFI4Er8AC0yjHuVqlZp8DWOSyMZFsJcCWkEufh2uSQ2CEqzZa9aPTkUl915KvlI"/>
             </div>
+            <a href="/logout" title="Logout" class="hover:bg-error/20 text-error transition-colors p-2 rounded-full scale-95 transition-transform duration-150 flex items-center justify-center">
+                <span class="material-symbols-outlined">logout</span>
+            </a>
         </div>
         {% else %}
         <div class="flex items-center gap-4">
@@ -196,6 +199,10 @@
         <a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary-fixed/20 rounded-full px-4 py-1 transition-colors" href="#">
             <span class="material-symbols-outlined">account_circle</span>
             <span class="font-label-sm text-label-sm mt-1">Profile</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-error hover:bg-error/20 rounded-full px-4 py-1 transition-colors" href="/logout">
+            <span class="material-symbols-outlined">logout</span>
+            <span class="font-label-sm text-label-sm mt-1">Logout</span>
         </a>
     </nav>
     {% endif %}
