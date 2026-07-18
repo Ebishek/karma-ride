@@ -1,115 +1,475 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Village Chaupal Dashboard - KarmaRide</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 
-{% block content %}
-<main class="max-w-7xl mx-auto p-4 md:p-8">
-    <div class="mb-8">
-        <h1 class="text-3xl font-bold text-on-surface mb-2">Secret Admin Dashboard</h1>
-        <p class="text-on-surface-variant">Manage Users, Rides, and Karma Transactions</p>
-    </div>
+<script id="tailwind-config">
+tailwind.config = {
+    darkMode: "class",
+    theme: {
+        extend: {
+            "colors": {
+                "tertiary-container": "#347e8b",
+                "primary-fixed-dim": "#ffb4a3",
+                "on-primary-fixed-variant": "#812914",
+                "secondary": "#7b5800",
+                "error": "#ba1a1a",
+                "surface-variant": "#f4ded0",
+                "surface-dim": "#ecd6c8",
+                "tertiary": "#106571",
+                "on-primary-fixed": "#3d0700",
+                "surface-bright": "#fff8f5",
+                "secondary-fixed-dim": "#fcbc2c",
+                "error-container": "#ffdad6",
+                "inverse-on-surface": "#ffede3",
+                "on-secondary-fixed-variant": "#5d4200",
+                "on-tertiary": "#ffffff",
+                "surface-container-lowest": "#ffffff",
+                "surface-container-high": "#fae4d6",
+                "secondary-container": "#ffbe30",
+                "on-secondary": "#ffffff",
+                "on-error-container": "#93000a",
+                "surface-container-highest": "#f4ded0",
+                "primary-fixed": "#ffdad2",
+                "secondary-fixed": "#ffdea6",
+                "on-tertiary-container": "#f7feff",
+                "on-surface": "#241911",
+                "on-tertiary-fixed-variant": "#004e59",
+                "surface": "#fff8f5",
+                "on-surface-variant": "#56423d",
+                "surface-tint": "#a03f29",
+                "inverse-primary": "#ffb4a3",
+                "on-primary": "#ffffff",
+                "inverse-surface": "#3b2e24",
+                "outline-variant": "#ddc0ba",
+                "tertiary-fixed-dim": "#8bd2df",
+                "on-secondary-container": "#6f4f00",
+                "on-background": "#241911",
+                "primary-container": "#c0573e",
+                "on-tertiary-fixed": "#001f24",
+                "tertiary-fixed": "#a7eefc",
+                "on-error": "#ffffff",
+                "outline": "#8a726c",
+                "on-secondary-fixed": "#271900",
+                "surface-container-low": "#fff1e9",
+                "primary": "#a03f28",
+                "on-primary-container": "#120100",
+                "background": "#fff8f5",
+                "surface-container": "#ffeadd"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "gutter": "16px",
+                "margin-mobile": "16px",
+                "xs": "8px",
+                "margin-desktop": "32px",
+                "sm": "16px",
+                "md": "24px",
+                "lg": "40px",
+                "xl": "64px",
+                "base": "4px"
+            },
+            "fontFamily": {
+                "body-md": ["Plus Jakarta Sans"],
+                "label-md": ["Plus Jakarta Sans"],
+                "headline-lg": ["Literata"],
+                "body-lg": ["Plus Jakarta Sans"],
+                "headline-lg-mobile": ["Literata"],
+                "headline-md": ["Literata"],
+                "label-sm": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}],
+                "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}]
+            }
+        }
+    }
+}
+</script>
+<style>
+    body {
+        background-color: theme('colors.background');
+        color: theme('colors.on-background');
+    }
+    .rustic-shadow {
+        box-shadow: 4px 0 12px rgba(75, 61, 51, 0.08);
+    }
+    .rustic-card {
+        border: 1px solid theme('colors.outline-variant');
+        background-color: theme('colors.surface');
+        box-shadow: 0 4px 12px rgba(75, 61, 51, 0.05);
+        border-radius: theme('borderRadius.lg');
+        position: relative;
+        overflow: hidden;
+    }
+    .rustic-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.03"/></svg>');
+        pointer-events: none;
+        z-index: 0;
+    }
+    .rustic-card > * {
+        position: relative;
+        z-index: 1;
+    }
+    .dashed-divider {
+        border-bottom: 1px dashed theme('colors.outline-variant');
+    }
+</style>
+</head>
+<body class="antialiased overflow-x-hidden flex h-screen font-body-md text-body-md bg-background">
+<!-- SideNavBar -->
+<nav class="hidden md:flex h-screen w-64 fixed left-0 top-0 bg-surface-container-low shadow-[4px_0_12px_rgba(75,61,51,0.08)] flex-col p-md gap-sm z-50">
+<!-- Brand -->
+<div class="flex items-center gap-sm mb-md px-4">
+<img alt="Brand logo" class="w-10 h-10 rounded-md object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLsuVwV5b-hLk3VPrRGw34AgYvAhjAtwYY7ExcD6Qv8cZ-4dBLcuq7tdeKGK-7kVqy_yR7jEetxwKRk3Mdb1XNUIWTR_IYQxc_aHa4wxbKmPxB7N77f3Mg1UKuXGpAdj533jvHoH1vyCF49uK47qx60Hy73gUM4goo3xBW31XzrnrYQP5dD_cimm2s6xv-AC29RKZzc3kwOZPAZU0bdzDjmEiqvBtQcbAYR1oeYBDYlH5dJgJwteC0Jl-iw"/>
+<div class="flex flex-col">
+<span class="font-headline-md text-headline-md font-bold text-primary">KarmaRide Admin</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Village Sector</span>
+</div>
+</div>
+<!-- CTA -->
+<button class="w-full bg-primary-container text-on-primary-container font-label-md text-label-md py-3 px-4 rounded-lg flex items-center justify-center gap-2 hover:bg-primary hover:text-on-primary transition-colors mb-md">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+            New Announcement
+        </button>
+<!-- Navigation Links -->
+<div class="flex-1 flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 bg-secondary-container text-on-secondary-container rounded-lg font-bold hover:bg-surface-container-high transition-colors scale-95 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-label-md text-label-md">Chaupal Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#members">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-label-md text-label-md">Sangh Members</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">local_taxi</span>
+<span class="font-label-md text-label-md">Yatra Tracking</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">notifications_active</span>
+<span class="font-label-md text-label-md">Karma Alerts</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Village Settings</span>
+</a>
+</div>
+<!-- Footer Links -->
+<div class="mt-auto flex flex-col gap-2 border-t border-outline-variant pt-4">
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="/">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-md text-label-md">Return to App</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="/logout">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-md text-label-md">Logout</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Wrapper -->
+<div class="flex-1 ml-0 md:ml-64 flex flex-col h-screen overflow-hidden">
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 w-full md:w-[calc(100%-16rem)] h-16 bg-surface border-b border-outline-variant z-40 flex justify-between items-center px-margin-desktop">
+<div class="flex items-center gap-sm">
+<!-- Mobile Menu Button (Hidden on Desktop) -->
+<button class="md:hidden text-on-surface-variant p-2 rounded-lg hover:bg-surface-container-high">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<span class="font-headline-md text-headline-md font-bold text-primary hidden md:block">KarmaRide Admin</span>
+</div>
+<div class="flex items-center gap-4">
+<!-- Search (Placeholder for layout) -->
+<div class="hidden sm:flex items-center bg-surface-container-low rounded-full px-4 py-2 border border-outline-variant focus-within:border-primary transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant mr-2">search</span>
+<input class="bg-transparent border-none outline-none text-body-md font-body-md text-on-surface placeholder:text-on-surface-variant w-48 focus:ring-0" placeholder="Search village activity..." type="text"/>
+</div>
+<!-- Trailing Actions -->
+<div class="flex items-center gap-2">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors rounded-full hover:bg-surface-container-high relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors rounded-full hover:bg-surface-container-high">
+<span class="material-symbols-outlined">history_edu</span>
+</button>
+<button class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant overflow-hidden ml-2 flex items-center justify-center text-primary hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined">person</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-1 overflow-y-auto pt-24 p-margin-mobile md:p-margin-desktop bg-surface-container-lowest">
+<!-- Page Header -->
+<div class="mb-lg">
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-xs">Village Chaupal Dashboard</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">High-level overview of community health and transportation harmony.</p>
+</div>
 
-    <!-- Users Section -->
-    <section class="mb-12">
-        <h2 class="text-2xl font-bold text-on-surface mb-4">Users</h2>
-        <div class="overflow-x-auto bg-surface-container rounded-xl border border-outline-variant shadow-sm">
-            <table class="w-full text-left border-collapse">
-                <thead>
-                    <tr class="border-b border-outline-variant bg-surface-container-high">
-                        <th class="p-4 font-semibold text-on-surface">ID</th>
-                        <th class="p-4 font-semibold text-on-surface">Name</th>
-                        <th class="p-4 font-semibold text-on-surface">Phone</th>
-                        <th class="p-4 font-semibold text-on-surface">Karma Balance</th>
-                        <th class="p-4 font-semibold text-on-surface">Trust Rating</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for u in all_users %}
-                    <tr class="border-b border-outline-variant hover:bg-surface-container-high/50">
-                        <td class="p-4 text-on-surface">{{ u.id }}</td>
-                        <td class="p-4 text-on-surface font-medium">{{ u.name }}</td>
-                        <td class="p-4 text-on-surface-variant">{{ u.phone }}</td>
-                        <td class="p-4 text-primary font-bold">{{ u.karma_balance }}</td>
-                        <td class="p-4 text-on-surface-variant">{{ u.trust_rating }} ⭐</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </section>
+{% set total_karma = 0 %}
+{% for u in all_users %}
+  {% set total_karma = total_karma + u.karma_balance %}
+{% endfor %}
 
-    <!-- Rides Section -->
-    <section class="mb-12">
-        <h2 class="text-2xl font-bold text-on-surface mb-4">All Rides</h2>
-        <div class="overflow-x-auto bg-surface-container rounded-xl border border-outline-variant shadow-sm">
-            <table class="w-full text-left border-collapse">
-                <thead>
-                    <tr class="border-b border-outline-variant bg-surface-container-high">
-                        <th class="p-4 font-semibold text-on-surface">ID</th>
-                        <th class="p-4 font-semibold text-on-surface">Helper</th>
-                        <th class="p-4 font-semibold text-on-surface">Route</th>
-                        <th class="p-4 font-semibold text-on-surface">Date</th>
-                        <th class="p-4 font-semibold text-on-surface">Reward</th>
-                        <th class="p-4 font-semibold text-on-surface">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for r in all_rides %}
-                    <tr class="border-b border-outline-variant hover:bg-surface-container-high/50">
-                        <td class="p-4 text-on-surface">{{ r.id }}</td>
-                        <td class="p-4 text-on-surface">{{ r.helper.name }}</td>
-                        <td class="p-4 text-on-surface-variant">{{ r.source }} &rarr; {{ r.destination }}</td>
-                        <td class="p-4 text-on-surface-variant">{{ r.date_time | formatDate }}</td>
-                        <td class="p-4 text-primary">{{ r.karma_reward }}</td>
-                        <td class="p-4 text-on-surface font-semibold">
-                            <span class="px-2 py-1 rounded text-xs uppercase tracking-wide
-                                {% if r.status == 'cancelled' %}bg-error/10 text-error
-                                {% elif r.status == 'matched' %}bg-primary/10 text-primary
-                                {% else %}bg-secondary/10 text-secondary{% endif %}">
-                                {{ r.status }}
-                            </span>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </section>
+{% set active_rides_count = 0 %}
+{% for r in all_rides %}
+  {% if r.status != 'completed' and r.status != 'cancelled' %}
+    {% set active_rides_count = active_rides_count + 1 %}
+  {% endif %}
+{% endfor %}
 
-    <!-- Transactions Section -->
-    <section class="mb-12">
-        <h2 class="text-2xl font-bold text-on-surface mb-4">Recent Karma Transactions</h2>
-        <div class="overflow-x-auto bg-surface-container rounded-xl border border-outline-variant shadow-sm">
-            <table class="w-full text-left border-collapse">
-                <thead>
-                    <tr class="border-b border-outline-variant bg-surface-container-high">
-                        <th class="p-4 font-semibold text-on-surface">ID</th>
-                        <th class="p-4 font-semibold text-on-surface">Date</th>
-                        <th class="p-4 font-semibold text-on-surface">Sender</th>
-                        <th class="p-4 font-semibold text-on-surface">Receiver</th>
-                        <th class="p-4 font-semibold text-on-surface">Amount</th>
-                        <th class="p-4 font-semibold text-on-surface">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for t in recent_transactions %}
-                    <tr class="border-b border-outline-variant hover:bg-surface-container-high/50">
-                        <td class="p-4 text-on-surface">{{ t.id }}</td>
-                        <td class="p-4 text-on-surface-variant">{{ t.timestamp | formatDate }}</td>
-                        <td class="p-4 text-on-surface">{{ t.sender.name if t.sender else 'System' }}</td>
-                        <td class="p-4 text-on-surface">{{ t.receiver.name }}</td>
-                        <td class="p-4 text-primary font-bold">{{ t.amount }}</td>
-                        <td class="p-4 text-on-surface">
-                            <span class="px-2 py-1 rounded text-xs uppercase tracking-wide
-                                {% if t.status == 'refunded' %}bg-error/10 text-error
-                                {% elif t.status == 'escrow' %}bg-secondary-container text-on-secondary-container
-                                {% else %}bg-primary/10 text-primary{% endif %}">
-                                {{ t.status }}
-                            </span>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </section>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-md mb-12">
+<!-- KPI Cards (Row 1) -->
+<div class="md:col-span-4 rustic-card p-md flex flex-col gap-sm border-t-4 border-t-secondary-container">
+<div class="flex justify-between items-start">
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Total Good Karma</p>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mt-1">{{ total_karma }}</h2>
+</div>
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">spa</span>
+</div>
+</div>
+<div class="flex items-center gap-1 text-tertiary-container mt-auto">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span class="font-label-sm text-label-sm">Community wealth</span>
+</div>
+</div>
+<div class="md:col-span-4 rustic-card p-md flex flex-col gap-sm border-t-4 border-t-tertiary">
+<div class="flex justify-between items-start">
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Active Rides</p>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mt-1">{{ active_rides_count }}</h2>
+</div>
+<div class="w-12 h-12 rounded-full bg-tertiary-container flex items-center justify-center text-on-tertiary-container">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">motorcycle</span>
+</div>
+</div>
+<div class="flex items-center gap-1 text-on-surface-variant mt-auto">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span class="font-label-sm text-label-sm">Currently moving in the sector</span>
+</div>
+</div>
+<div class="md:col-span-4 rustic-card p-md flex flex-col gap-sm border-t-4 border-t-primary">
+<div class="flex justify-between items-start">
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Verified Members</p>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mt-1">{{ all_users | length }}</h2>
+</div>
+<div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">how_to_reg</span>
+</div>
+</div>
+<div class="flex items-center gap-1 text-tertiary-container mt-auto">
+<span class="material-symbols-outlined text-sm">people</span>
+<span class="font-label-sm text-label-sm">Total users registered</span>
+</div>
+</div>
+
+<!-- Main Content Row -->
+<!-- Village Activity Chart (Simplified UI Representation) -->
+<div class="md:col-span-8 rustic-card p-md flex flex-col">
+<div class="flex justify-between items-center mb-md">
+<h3 class="font-headline-md text-headline-md text-on-surface">Village Activity Trends</h3>
+<button class="text-primary font-label-md text-label-md hover:underline flex items-center gap-1">
+                            This Week <span class="material-symbols-outlined text-sm">arrow_drop_down</span>
+</button>
+</div>
+<div class="flex-1 bg-surface-container-low rounded-lg border border-outline-variant p-4 flex items-end gap-2 h-64 relative">
+<!-- Abstract Chart Bars -->
+<div class="w-full flex justify-around items-end h-full">
+<div class="w-8 md:w-12 bg-surface-variant rounded-t-sm h-[30%] relative group">
+<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-inverse-surface text-inverse-on-surface text-label-sm px-2 py-1 rounded">120</div>
+</div>
+<div class="w-8 md:w-12 bg-surface-variant rounded-t-sm h-[45%] relative group">
+<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-inverse-surface text-inverse-on-surface text-label-sm px-2 py-1 rounded">180</div>
+</div>
+<div class="w-8 md:w-12 bg-secondary-container rounded-t-sm h-[80%] relative group">
+<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-inverse-surface text-inverse-on-surface text-label-sm px-2 py-1 rounded">320</div>
+</div>
+<div class="w-8 md:w-12 bg-surface-variant rounded-t-sm h-[60%] relative group">
+<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-inverse-surface text-inverse-on-surface text-label-sm px-2 py-1 rounded">240</div>
+</div>
+<div class="w-8 md:w-12 bg-primary-container opacity-80 rounded-t-sm h-[50%] relative group">
+<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-inverse-surface text-inverse-on-surface text-label-sm px-2 py-1 rounded">200</div>
+</div>
+<div class="w-8 md:w-12 bg-surface-variant rounded-t-sm h-[70%] relative group">
+<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-inverse-surface text-inverse-on-surface text-label-sm px-2 py-1 rounded">280</div>
+</div>
+<div class="w-8 md:w-12 bg-tertiary-container opacity-60 rounded-t-sm h-[90%] relative group">
+<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-inverse-surface text-inverse-on-surface text-label-sm px-2 py-1 rounded">360</div>
+</div>
+</div>
+<!-- Axis Labels -->
+<div class="absolute bottom-0 left-0 w-full flex justify-around text-label-sm text-on-surface-variant pt-2 border-t border-outline-variant mt-2">
+<span>Mon</span>
+<span>Tue</span>
+<span class="font-bold text-on-surface">Wed</span>
+<span>Thu</span>
+<span>Fri</span>
+<span>Sat</span>
+<span>Sun</span>
+</div>
+</div>
+</div>
+<!-- Recent Karma Alerts -->
+<div class="md:col-span-4 rustic-card flex flex-col">
+<div class="p-md border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+<h3 class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">campaign</span>
+                            Recent Karma Alerts
+                        </h3>
+</div>
+<div class="flex-1 overflow-y-auto p-md flex flex-col gap-4">
+<!-- Alert Item 1 -->
+<div class="flex gap-3 dashed-divider pb-4">
+<div class="mt-1 w-8 h-8 rounded-full bg-error-container text-on-error-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-sm">construction</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface">Road Closure near Panchayat</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1 text-sm">Main road blocked for repairs. Divert via East fields.</p>
+<span class="font-label-sm text-label-sm text-outline mt-2 block">10 mins ago • Reported by Ramesh</span>
+</div>
+</div>
+<!-- Alert Item 2 -->
+<div class="flex gap-3 dashed-divider pb-4">
+<div class="mt-1 w-8 h-8 rounded-full bg-tertiary-container text-on-tertiary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-sm">rainy</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface">Heavy Rain Alert</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1 text-sm">Expect delays. Ride carefully on mud paths.</p>
+<span class="font-label-sm text-label-sm text-outline mt-2 block">1 hour ago • System Alert</span>
+</div>
+</div>
+<!-- Alert Item 3 -->
+<div class="flex gap-3">
+<div class="mt-1 w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-sm">festival</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface">Local Mela Crowd</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1 text-sm">High demand expected near the temple square this evening.</p>
+<span class="font-label-sm text-label-sm text-outline mt-2 block">3 hours ago • Community Board</span>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-outline-variant bg-surface-container-lowest mt-auto">
+<button class="w-full text-center text-primary font-label-md text-label-md hover:underline">View All Alerts</button>
+</div>
+</div>
+</div>
+
+<!-- Sangh Members Directory Section -->
+<div id="members" class="mb-lg mt-12">
+<div class="flex justify-between items-end mb-lg">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary mb-1">Sangh Members</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Manage and verify village directory participants.</p>
+</div>
+<!-- Filters -->
+<div class="flex gap-sm">
+<select class="bg-surface-container border border-outline-variant rounded-lg px-4 py-2 font-label-md text-label-md text-on-surface focus:border-primary focus:ring-0 cursor-pointer">
+<option value="">All Locations</option>
+<option value="varanasi">Varanasi</option>
+<option value="chamba">Chamba</option>
+<option value="mirzapur">Mirzapur</option>
+</select>
+<select class="bg-surface-container border border-outline-variant rounded-lg px-4 py-2 font-label-md text-label-md text-on-surface focus:border-primary focus:ring-0 cursor-pointer">
+<option value="">All Statuses</option>
+<option value="verified">Verified</option>
+<option value="pending">Pending</option>
+</select>
+</div>
+</div>
+
+<!-- Members Table -->
+<div class="bg-surface rounded-xl shadow-[0_2px_8px_rgba(75,61,51,0.05)] border border-outline-variant border-opacity-50 overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low border-b border-outline-variant border-opacity-50">
+<tr>
+<th class="py-4 px-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Member Details</th>
+<th class="py-4 px-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Contact</th>
+<th class="py-4 px-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Karma Level</th>
+<th class="py-4 px-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Status</th>
+<th class="py-4 px-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant divide-opacity-30 divide-dashed">
+
+{% for u in all_users %}
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="py-4 px-md">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container-high border border-outline-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-outline">person</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">{{ u.name }}</p>
+<p class="font-body-md text-sm text-on-surface-variant">User #{{ u.id }}</p>
+</div>
+</div>
+</td>
+<td class="py-4 px-md font-body-md text-body-md text-on-surface-variant">{{ u.phone }}</td>
+<td class="py-4 px-md">
+<div class="flex items-center gap-1 text-secondary-container {% if u.karma_balance == 0 %}opacity-50{% endif %}">
+<span class="material-symbols-outlined text-[18px]">spa</span>
+<span class="font-label-md text-label-md text-on-surface font-bold">{{ u.karma_balance }}</span>
+</div>
+</td>
+<td class="py-4 px-md">
+<span class="inline-flex items-center px-2 py-1 rounded-md bg-[#e6f4ea] text-[#137333] font-label-sm text-label-sm gap-1 border border-[#ceead6]">
+<span class="material-symbols-outlined text-[14px]">verified</span> Verified
+</span>
+</td>
+<td class="py-4 px-md text-right">
+<button class="text-tertiary hover:text-tertiary-container font-label-md text-label-md px-3 py-1 rounded border border-outline-variant opacity-0 group-hover:opacity-100 transition-opacity mr-2">
+    View History
+</button>
+</td>
+</tr>
+{% endfor %}
+
+</tbody>
+</table>
+<!-- Pagination -->
+<div class="bg-surface-container-low px-md py-3 flex items-center justify-between border-t border-outline-variant border-opacity-50">
+<p class="font-body-md text-sm text-on-surface-variant">Showing all {{ all_users | length }} members</p>
+<div class="flex gap-2">
+<button class="p-1 rounded text-on-surface-variant hover:bg-surface-variant disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="p-1 rounded text-on-surface hover:bg-surface-variant transition-colors disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+
 </main>
-{% endblock %}
+</div>
+</body></html>
