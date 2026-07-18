@@ -84,6 +84,7 @@ const RideAlert = sequelize.define('RideAlert', {
     source: { type: DataTypes.STRING, allowNull: false },
     destination: { type: DataTypes.STRING, allowNull: false },
     date_time: { type: DataTypes.DATE, allowNull: false },
+    route_waypoints: { type: DataTypes.JSON },
     karma_reward: { type: DataTypes.INTEGER, allowNull: false },
     status: { type: DataTypes.STRING, defaultValue: 'open' } // open, fulfilled, cancelled
 }, { tableName: 'ride_alerts', timestamps: true });

@@ -207,13 +207,14 @@ app.get('/offer', requireAuth, (req, res) => {
 
 app.post('/api/rides', requireAuth, async (req, res) => {
     const user = res.locals.user;
-    const { source, destination, date_time_str, karma_reward } = req.body;
+    const { source, destination, date_time_str, karma_reward, source_lat, source_lng, dest_lat, dest_lng } = req.body;
     
     await Ride.create({
         helper_id: user.id,
         source: source,
         destination: destination,
         date_time: new Date(date_time_str),
+        route_waypoints: { source_lat, source_lng, dest_lat, dest_lng },
         karma_reward: parseInt(karma_reward)
     });
     
@@ -226,7 +227,7 @@ app.get('/request-ride', requireAuth, (req, res) => {
 
 app.post('/api/ride-alerts', requireAuth, async (req, res) => {
     const user = res.locals.user;
-    const { source, destination, date_time_str, karma_reward } = req.body;
+    const { source, destination, date_time_str, karma_reward, source_lat, source_lng, dest_lat, dest_lng } = req.body;
     
     const reward = parseInt(karma_reward);
     if (user.karma_balance < reward) {
@@ -242,6 +243,7 @@ app.post('/api/ride-alerts', requireAuth, async (req, res) => {
         source: source,
         destination: destination,
         date_time: new Date(date_time_str),
+        route_waypoints: { source_lat, source_lng, dest_lat, dest_lng },
         karma_reward: reward
     });
 
@@ -274,6 +276,7 @@ app.post('/api/ride-alerts/:id/fulfill', requireAuth, async (req, res) => {
         source: alert.source,
         destination: alert.destination,
         date_time: alert.date_time,
+        route_waypoints: alert.route_waypoints,
         karma_reward: alert.karma_reward,
         status: 'open'
     });

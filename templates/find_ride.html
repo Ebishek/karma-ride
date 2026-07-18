@@ -26,9 +26,8 @@
 
     <div class="flex flex-col lg:flex-row gap-6 h-full">
         <!-- Map View -->
-        <section class="w-full lg:w-3/5 h-64 md:h-[500px] bg-surface-variant rounded-xl overflow-hidden relative shadow-[0_4px_12px_rgba(75,61,51,0.08)] border border-outline-variant/50">
-            <div class="absolute inset-0 bg-cover bg-center w-full h-full opacity-80 mix-blend-multiply" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB9cYdqvHetpXYeXFSYtoa7_rdhe5MIa5BAKav-Nw4h2KdG2YSR5LT1HcR955ezS6tSzVy-gP-e2VnmORJhCGQJr1bDF_V4imB0qzSgVtz_pqMPXT4CjMx5O5y4hkj_ndTmPKFN2mlqPqaY_lHJoDYQAaWVSTLhZWiu-uxR7KcOPdwMbI9Ym_1jL-xpjoUDcxGFiVSRShnke76zq8zrV_Xj3GzwtWuxjPu5pLwuXAuS3BqqJYN8_pF_')"></div>
-            <div class="absolute inset-0 map-texture opacity-30"></div>
+        <section class="w-full lg:w-3/5 h-64 md:h-[500px] bg-surface-variant rounded-xl overflow-hidden relative shadow-[0_4px_12px_rgba(75,61,51,0.08)] border border-outline-variant/50" id="map">
+            <!-- Leaflet map injects here -->
             
             <div class="absolute bottom-4 left-4 right-4 bg-surface-container-lowest/90 backdrop-blur-sm p-3 rounded-lg flex items-center justify-between border border-outline-variant shadow-sm">
                 <div class="flex items-center gap-2">
@@ -153,4 +152,107 @@
         </section>
     </div>
 </main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const ridesData = [
+        {% for ride in rides %}
+        {
+            id: {{ ride.id }},
+            source: "{{ ride.source }}",
+            destination: "{{ ride.destination }}",
+            lat: {{ ride.route_waypoints.source_lat | default('null') }},
+            lng: {{ ride.route_waypoints.source_lng | default('null') }},
+            helperName: "{{ ride.helper.name }}",
+            type: "offer"
+        },
+        {% endfor %}
+    ];
+
+    const alertsData = [
+        {% for alert in alerts %}
+        {
+            id: {{ alert.id }},
+            source: "{{ alert.source }}",
+            destination: "{{ alert.destination }}",
+            lat: {{ alert.route_waypoints.source_lat | default('null') }},
+            lng: {{ alert.route_waypoints.source_lng | default('null') }},
+            seekerName: "{{ alert.seeker.name }}",
+            type: "alert"
+        },
+        {% endfor %}
+    ];
+
+    // Map Base Layers
+    const cartoLight = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://carto.com/">CARTO</a>'
+    });
+
+    var map = L.map('map', {
+        center: [28.6139, 77.2090], 
+        zoom: 13,
+        layers: [cartoLight]
+    }); 
+
+    // Custom Icons
+    const userIcon = L.divIcon({
+        className: 'custom-div-icon',
+        html: `<div class="w-4 h-4 bg-primary rounded-full border-2 border-white shadow-md animate-pulse"></div>`,
+        iconSize: [16, 16],
+        iconAnchor: [8, 8]
+    });
+
+    const offerIcon = L.divIcon({
+        className: 'custom-div-icon',
+        html: `<div class="w-6 h-6 bg-secondary-container text-on-secondary-container rounded-full flex items-center justify-center border border-white shadow-md"><span class="material-symbols-outlined text-[14px]">motorcycle</span></div>`,
+        iconSize: [24, 24],
+        iconAnchor: [12, 12]
+    });
+
+    const alertIcon = L.divIcon({
+        className: 'custom-div-icon',
+        html: `<div class="w-6 h-6 bg-tertiary text-on-tertiary rounded-full flex items-center justify-center border border-white shadow-md"><span class="material-symbols-outlined text-[14px]">person</span></div>`,
+        iconSize: [24, 24],
+        iconAnchor: [12, 12]
+    });
+
+    const bounds = [];
+
+    // Get User Location
+    if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            L.marker([lat, lng], {icon: userIcon}).addTo(map).bindPopup("You are here");
+            map.setView([lat, lng], 13);
+            bounds.push([lat, lng]);
+        });
+    }
+
+    // Plot Rides
+    ridesData.forEach(ride => {
+        if (ride.lat && ride.lng) {
+            L.marker([ride.lat, ride.lng], {icon: offerIcon})
+             .addTo(map)
+             .bindPopup(`<b>${ride.helperName}</b><br>Going to: ${ride.destination}`);
+            bounds.push([ride.lat, ride.lng]);
+        }
+    });
+
+    // Plot Alerts
+    alertsData.forEach(alert => {
+        if (alert.lat && alert.lng) {
+            L.marker([alert.lat, alert.lng], {icon: alertIcon})
+             .addTo(map)
+             .bindPopup(`<b>${alert.seekerName}</b><br>Needs a ride to: ${alert.destination}`);
+            bounds.push([alert.lat, alert.lng]);
+        }
+    });
+
+    if (bounds.length > 0) {
+        map.fitBounds(bounds, {padding: [30, 30]});
+    }
+
+</script>
 {% endblock %}

@@ -41,6 +41,10 @@
                     <input type="datetime-local" name="date_time_str" required class="w-full bg-surface-container-lowest border-2 border-outline-variant focus:border-primary focus:ring-0 rounded-xl py-3 pl-10 pr-4 font-body-md text-on-surface transition-colors shadow-sm">
                 </div>
             </div>
+            <input type="hidden" id="source_lat" name="source_lat">
+            <input type="hidden" id="source_lng" name="source_lng">
+            <input type="hidden" id="dest_lat" name="dest_lat">
+            <input type="hidden" id="dest_lng" name="dest_lng">
         </div>
         
         <!-- Karma Reward -->
@@ -139,12 +143,16 @@
         if (!sourceMarker) {
             // First click: Set Source
             sourceMarker = L.marker(e.latlng).addTo(map).bindPopup("Source").openPopup();
+            document.getElementById('source_lat').value = e.latlng.lat;
+            document.getElementById('source_lng').value = e.latlng.lng;
             sourceInput.value = "Fetching address...";
             const address = await reverseGeocode(e.latlng.lat, e.latlng.lng);
             sourceInput.value = address;
         } else if (!destMarker) {
             // Second click: Set Destination
             destMarker = L.marker(e.latlng).addTo(map).bindPopup("Destination").openPopup();
+            document.getElementById('dest_lat').value = e.latlng.lat;
+            document.getElementById('dest_lng').value = e.latlng.lng;
             destInput.value = "Fetching address...";
             const address = await reverseGeocode(e.latlng.lat, e.latlng.lng);
             destInput.value = address;
@@ -163,6 +171,10 @@
             destMarker = null;
             sourceInput.value = "";
             destInput.value = "";
+            document.getElementById('source_lat').value = "";
+            document.getElementById('source_lng').value = "";
+            document.getElementById('dest_lat').value = "";
+            document.getElementById('dest_lng').value = "";
         }
     });
 
@@ -203,9 +215,13 @@
                                 if (isSource) {
                                     if (sourceMarker) map.removeLayer(sourceMarker);
                                     sourceMarker = L.marker([lat, lon]).addTo(map).bindPopup("Source").openPopup();
+                                    document.getElementById('source_lat').value = lat;
+                                    document.getElementById('source_lng').value = lon;
                                 } else {
                                     if (destMarker) map.removeLayer(destMarker);
                                     destMarker = L.marker([lat, lon]).addTo(map).bindPopup("Destination").openPopup();
+                                    document.getElementById('dest_lat').value = lat;
+                                    document.getElementById('dest_lng').value = lon;
                                 }
                                 
                                 map.setView([lat, lon], 14);
