@@ -1,83 +1,201 @@
 {% extends "base.html" %}
 
+{% block head %}
+<style>
+    body {
+        background-color: #fff8f5; /* fallback */
+    }
+    .grain-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        opacity: 0.03;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<main class="w-full">
-    <!-- Hero Section -->
-    <section class="w-full bg-primary-container text-on-primary-container py-20 px-6 relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
-        <div class="max-w-4xl mx-auto relative z-10 text-center">
-            <h1 class="font-headline-lg text-4xl md:text-6xl font-bold mb-6">Community Transport for Rural Villages</h1>
-            <p class="font-body-lg text-lg md:text-xl mb-10 max-w-2xl mx-auto text-on-primary-container/80">KarmaRide connects neighbors to share journeys. Offer a ride to earn Karma, or use your Karma to get where you need to go.</p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="/register" class="bg-primary text-on-primary px-8 py-4 rounded-full font-label-lg font-bold shadow-lg hover:bg-primary/90 transition-transform transform hover:scale-105">Join the Community</a>
-                <a href="/login" class="bg-surface text-primary px-8 py-4 rounded-full font-label-lg font-bold shadow hover:bg-surface-variant transition-colors border border-primary/20">Log In</a>
-            </div>
-        </div>
-    </section>
+<div class="grain-overlay z-0"></div>
 
-    <!-- About Us Section -->
-    <section class="max-w-7xl mx-auto py-20 px-6">
-        <div class="text-center mb-16">
-            <h2 class="font-headline-md text-3xl font-bold text-on-surface mb-4">How KarmaRide Works</h2>
-            <p class="text-on-surface-variant max-w-2xl mx-auto font-body-md">We believe in a sharing economy. Instead of money, we use "Karma" to ensure everyone contributes and benefits equally.</p>
-        </div>
-
-        <div class="grid md:grid-cols-3 gap-12">
-            <!-- Step 1 -->
-            <div class="bg-surface-container-low p-8 rounded-2xl shadow-sm border border-outline-variant/30 text-center hover:-translate-y-2 transition-transform duration-300">
-                <div class="w-16 h-16 bg-secondary-container text-on-secondary-container rounded-full flex items-center justify-center mx-auto mb-6">
-                    <span class="material-symbols-outlined text-3xl">motorcycle</span>
-                </div>
-                <h3 class="font-headline-sm text-xl font-bold mb-3">1. Offer a Ride</h3>
-                <p class="text-on-surface-variant font-body-md">Heading to town? Post your journey on the app and help a neighbor get there too.</p>
-            </div>
-
-            <!-- Step 2 -->
-            <div class="bg-surface-container-low p-8 rounded-2xl shadow-sm border border-outline-variant/30 text-center hover:-translate-y-2 transition-transform duration-300">
-                <div class="w-16 h-16 bg-tertiary-container text-on-tertiary-container rounded-full flex items-center justify-center mx-auto mb-6">
-                    <span class="material-symbols-outlined text-3xl">spa</span>
-                </div>
-                <h3 class="font-headline-sm text-xl font-bold mb-3">2. Earn Karma</h3>
-                <p class="text-on-surface-variant font-body-md">When you successfully drop off a passenger, you earn Karma points directly to your wallet.</p>
-            </div>
-
-            <!-- Step 3 -->
-            <div class="bg-surface-container-low p-8 rounded-2xl shadow-sm border border-outline-variant/30 text-center hover:-translate-y-2 transition-transform duration-300">
-                <div class="w-16 h-16 bg-primary-container text-on-primary-container rounded-full flex items-center justify-center mx-auto mb-6">
-                    <span class="material-symbols-outlined text-3xl">search_check</span>
-                </div>
-                <h3 class="font-headline-sm text-xl font-bold mb-3">3. Find a Ride</h3>
-                <p class="text-on-surface-variant font-body-md">Need to go somewhere? Spend your earned Karma to request a ride from other community helpers.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Trust Section -->
-    <section class="bg-surface-container-highest py-16 px-6">
-        <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-12">
-            <div class="flex-1 text-center md:text-left">
-                <h2 class="font-headline-md text-3xl font-bold text-on-surface mb-4">Built on Trust</h2>
-                <p class="text-on-surface-variant font-body-md mb-6">Safety and reliability are our top priorities. After every ride, passengers rate their driver. Consistently great helpers earn community badges and higher Trust Ratings.</p>
-                <a href="/register" class="text-primary font-bold hover:underline flex items-center justify-center md:justify-start gap-1">
-                    Sign up today <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                </a>
-            </div>
-            <div class="flex-1 flex justify-center">
-                <div class="bg-surface p-6 rounded-2xl shadow-lg border border-outline-variant/20 flex flex-col items-center rotate-3 transform">
-                    <div class="w-20 h-20 bg-primary text-on-primary rounded-full flex items-center justify-center text-3xl font-bold mb-4">
-                        A
-                    </div>
-                    <div class="flex items-center gap-1 text-secondary font-bold text-lg mb-2">
-                        5.0 <span class="material-symbols-outlined">star</span>
-                    </div>
-                    <div class="flex gap-2">
-                        <span class="bg-tertiary-container text-on-tertiary-container text-xs px-2 py-1 rounded-full flex items-center gap-1">
-                            <span class="material-symbols-outlined text-[12px]">verified</span> Stellar Rider
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<main class="flex-grow pt-16 z-10 w-full">
+<!-- 1. Hero Section -->
+<section class="relative w-full min-h-[80vh] flex items-center justify-center px-margin-mobile md:px-margin-desktop py-xl overflow-hidden">
+<!-- Background Image Placeholder using https://lh3.googleusercontent.com/aida/AP1WRLtdGZDGjSI5PH_39djtOCXuOlOr6ilKvj-VsF0z2WpOrBmrMJy1P2ISabgmTR_MoGC-GWPPzCIPqf06zhPXLA2nadHEv_PWD2B8-VQYPe-LsmTM9brU1i6VH8IfKpvU-Q7rxuqBxK31heZxewhuKxNdu_UgndNYzIiCyONjbAVrEQYeRds086dY5JHOZFIbNv-EMNydrcgsg1d4Y4jMonXcPDtVcKlJHSl0PR8XoBNqv6NN1CwNc0w7Duo -->
+<div class="absolute inset-0 w-full h-full z-[-1]" style="background-image: url('https://lh3.googleusercontent.com/aida/AP1WRLtdGZDGjSI5PH_39djtOCXuOlOr6ilKvj-VsF0z2WpOrBmrMJy1P2ISabgmTR_MoGC-GWPPzCIPqf06zhPXLA2nadHEv_PWD2B8-VQYPe-LsmTM9brU1i6VH8IfKpvU-Q7rxuqBxK31heZxewhuKxNdu_UgndNYzIiCyONjbAVrEQYeRds086dY5JHOZFIbNv-EMNydrcgsg1d4Y4jMonXcPDtVcKlJHSl0PR8XoBNqv6NN1CwNc0w7Duo'); background-size: cover; background-position: center;">
+<div class="absolute inset-0 bg-gradient-to-b from-background/40 to-background/90 md:bg-gradient-to-r md:from-background/90 md:to-background/30"></div>
+</div>
+<div class="max-w-4xl mx-auto text-center md:text-left flex flex-col items-center md:items-start gap-md">
+<h2 class="font-headline-lg text-headline-lg md:text-[48px] md:leading-[56px] text-on-background tracking-tight">
+                    Shared Journeys,<br/>
+<span class="text-primary italic">Stronger Bonds</span>
+</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+                    Discover a new way to travel where neighbors help neighbors. No money involved—just goodwill, mutual trust, and a shared journey on the rural roads we all call home.
+                </p>
+<div class="flex flex-col sm:flex-row gap-sm mt-sm w-full sm:w-auto">
+<a href="/register" class="bg-primary text-on-primary font-label-md text-label-md px-6 py-3 rounded-full shadow-[0_4px_12px_rgba(75,61,51,0.15)] hover:scale-95 transition-transform duration-150 flex items-center justify-center gap-xs">
+                        Join the Village
+                        <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+<a href="/login" class="border-2 border-tertiary text-tertiary font-label-md text-label-md px-6 py-3 rounded-full hover:bg-tertiary-container/20 transition-colors flex items-center justify-center gap-xs">
+                        Log In
+</a>
+</div>
+</div>
+</section>
+<!-- 2. The Mission Section -->
+<section class="py-xl px-margin-mobile md:px-margin-desktop bg-surface-container-low relative">
+<div class="max-w-6xl mx-auto">
+<div class="text-center mb-lg">
+<h3 class="font-headline-md text-headline-md text-on-background">The Heart of KarmaRide</h3>
+<div class="h-1 w-16 bg-secondary-container mx-auto mt-2 rounded-full"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+<!-- Chaupal Card 1 -->
+<div class="bg-surface rounded-xl p-md shadow-[0_4px_12px_rgba(75,61,51,0.05)] border border-outline-variant/30 flex flex-col items-center text-center gap-sm transform transition-transform hover:-translate-y-1">
+<div class="w-16 h-16 rounded-full bg-primary-container/20 flex items-center justify-center text-primary mb-2">
+<span class="material-symbols-outlined text-[32px]">diversity_3</span>
+</div>
+<h4 class="font-headline-md text-[20px] text-on-surface">Community First</h4>
+<p class="font-body-md text-on-surface-variant">
+                            Strengthening local ties by connecting those going the same way. It's about being a good neighbor before being a commuter.
+                        </p>
+</div>
+<!-- Chaupal Card 2 -->
+<div class="bg-surface rounded-xl p-md shadow-[0_4px_12px_rgba(75,61,51,0.05)] border border-outline-variant/30 flex flex-col items-center text-center gap-sm transform transition-transform hover:-translate-y-1">
+<div class="w-16 h-16 rounded-full bg-secondary-container/20 flex items-center justify-center text-secondary mb-2">
+<span class="material-symbols-outlined text-[32px]">spa</span>
+</div>
+<h4 class="font-headline-md text-[20px] text-on-surface">The Karma Economy</h4>
+<p class="font-body-md text-on-surface-variant">
+                            Leave your wallet behind. Earn Karma points for giving rides, and spend them when you need one. A true shared economy.
+                        </p>
+</div>
+<!-- Chaupal Card 3 -->
+<div class="bg-surface rounded-xl p-md shadow-[0_4px_12px_rgba(75,61,51,0.05)] border border-outline-variant/30 flex flex-col items-center text-center gap-sm transform transition-transform hover:-translate-y-1">
+<div class="w-16 h-16 rounded-full bg-tertiary-container/20 flex items-center justify-center text-tertiary mb-2">
+<span class="material-symbols-outlined text-[32px]">verified_user</span>
+</div>
+<h4 class="font-headline-md text-[20px] text-on-surface">Safe &amp; Trusted</h4>
+<p class="font-body-md text-on-surface-variant">
+                            Travel with peace of mind. Every rider and driver is a verified member of the village network, building a secure travel web.
+                        </p>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. How it Works (Bento Layout) -->
+<section class="py-xl px-margin-mobile md:px-margin-desktop bg-surface-container-highest">
+<div class="max-w-6xl mx-auto">
+<h3 class="font-headline-md text-headline-md text-on-background mb-lg text-center md:text-left">How the Journey Unfolds</h3>
+<div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-sm md:h-[500px]">
+<!-- Step 1: Offer -->
+<div class="md:col-span-2 md:row-span-2 bg-surface rounded-xl overflow-hidden relative group shadow-[0_4px_12px_rgba(75,61,51,0.08)] border border-outline-variant/50">
+<div class="absolute inset-0 bg-gradient-to-t from-surface-tint/90 to-transparent z-10 flex flex-col justify-end p-md">
+<div class="w-10 h-10 rounded-full bg-surface text-primary flex items-center justify-center font-bold text-lg mb-xs">1</div>
+<h4 class="font-headline-lg text-[24px] text-on-primary">Offer a Ride</h4>
+<p class="font-body-md text-on-primary/80 mt-1">Got an empty seat on your scooter? Post your route to the village board.</p>
+</div>
+<img alt="Scooter on rural road" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A warm, cinematic wide shot of a classic rustic scooter parked on a dusty rural Indian path at golden hour, surrounded by tall golden wheat fields. Terracotta and mustard tones, soft natural lighting, light mode aesthetic, inviting and authentic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKYtGmrW12L3TR1y89xW-a0ue60MEUlkAZYtmKKtuiBTBGFOcZdPdMcvD61WmK5eole84BVNVsHcSC33iS0IJi0qG8q4R479JqWRRkt4zcTudrCfxFrs7KDkHjTirVsmSlL1HgWkgkuS0C4zTDTUvJSHpv6D-mQduPE-jlhLA5HCm_UOKBk42VX43YhumbAK8bbD8A0qLul24Aw5TElFOB9uwerwgRmJv22YobzYM6cohKZtTnn-n3"/>
+</div>
+<!-- Step 2: Earn -->
+<div class="md:col-span-2 md:row-span-1 bg-secondary-container rounded-xl p-md flex items-center gap-md shadow-[0_4px_12px_rgba(75,61,51,0.08)]">
+<div class="w-12 h-12 rounded-full bg-surface/50 text-on-secondary-container flex items-center justify-center font-bold text-lg shrink-0">2</div>
+<div>
+<h4 class="font-headline-md text-[20px] text-on-secondary-container flex items-center gap-2">
+                                Earn Karma
+                                <span class="material-symbols-outlined text-secondary-fixed">generating_tokens</span>
+</h4>
+<p class="font-body-md text-on-secondary-container/80 mt-1">Help a neighbor reach the market or clinic, and watch your Karma pool grow.</p>
+</div>
+</div>
+<!-- Step 3: Build Rep -->
+<div class="md:col-span-2 md:row-span-1 bg-tertiary-container rounded-xl p-md flex flex-col justify-center relative overflow-hidden shadow-[0_4px_12px_rgba(75,61,51,0.08)]">
+<div class="absolute right-[-20px] bottom-[-20px] opacity-10">
+<span class="material-symbols-outlined text-[120px]">military_tech</span>
+</div>
+<div class="w-12 h-12 rounded-full bg-surface/20 text-on-tertiary flex items-center justify-center font-bold text-lg mb-xs relative z-10">3</div>
+<h4 class="font-headline-md text-[20px] text-on-tertiary relative z-10">Build Reputation</h4>
+<p class="font-body-md text-on-tertiary-container mt-1 relative z-10 text-white/80">Become a pillar of your community. Higher karma means prioritized ride requests.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. Karma Rewards (Illustrative) -->
+<section class="py-xl px-margin-mobile md:px-margin-desktop bg-surface relative overflow-hidden">
+<div class="absolute top-0 right-0 w-64 h-64 bg-secondary-container/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
+<div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-lg">
+<div class="flex-1 space-y-md">
+<h3 class="font-headline-lg text-headline-lg text-on-background">Rise to <span class="text-secondary">Karma Hero</span></h3>
+<p class="font-body-lg text-on-surface-variant">
+                        Karma isn't just points; it's gratitude materialized. The more you give, the brighter your status shines on the village leaderboard. 
+                    </p>
+<div class="flex flex-col gap-sm">
+<div class="flex items-center gap-sm bg-surface-container p-sm rounded-lg border border-outline-variant/30">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container shadow-sm">
+<span class="material-symbols-outlined">emoji_events</span>
+</div>
+<div>
+<h5 class="font-label-md text-on-surface">Weekly Honors</h5>
+<p class="font-body-md text-sm text-on-surface-variant">Top contributors get featured on the community board.</p>
+</div>
+</div>
+<div class="flex items-center gap-sm bg-surface-container p-sm rounded-lg border border-outline-variant/30">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container shadow-sm">
+<span class="material-symbols-outlined">favorite</span>
+</div>
+<div>
+<h5 class="font-label-md text-on-surface">Priority Requests</h5>
+<p class="font-body-md text-sm text-on-surface-variant">Karma Heroes get their ride requests answered first.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Leaderboard Illustration Mockup -->
+<div class="flex-1 w-full max-w-sm">
+<div class="bg-surface-container-low p-sm rounded-xl border-2 border-outline-variant/50 shadow-[0_8px_24px_rgba(75,61,51,0.12)] relative">
+<div class="absolute -top-4 -left-4 bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full font-label-sm shadow-md transform -rotate-6">Live Leaderboard</div>
+<h4 class="font-headline-md text-center text-on-surface mb-sm mt-2">Village Top Samaritans</h4>
+<div class="space-y-xs">
+<div class="flex items-center gap-xs p-2 bg-surface rounded-md border border-secondary-container/30">
+<span class="font-bold text-secondary w-4">1</span>
+<div class="w-8 h-8 rounded-full bg-gray-300 overflow-hidden"><img alt="User 1" class="w-full h-full object-cover" data-alt="A small circular avatar placeholder image of a smiling elderly Indian man wearing a turban, bathed in warm sunlight, earthy background colors." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAom7vZ01FfPbmi6Nwj-seiHQxiHQpdnJdg8s5iweBvZYgkhnUBeqIhqqYWiYPKsIv5I8QbEKZ5R9DNDX9fadNr4z6V99zTAuSdbrCxPfxWFVuxYJXKxajNd4aVV-FcelhnwAexL9jUvlYiMZJa_H2XOTFOTep5PoEFHaw1DVuuCdW09ppipB0s8qQEgDJhlDIlRqOeiUeNZOEYeM6CMAeXtcIuPR-YdOM9uUR0FDks7M3y_vbl5trT"/></div>
+<span class="font-label-md flex-1">Ramu K.</span>
+<span class="font-label-md text-secondary flex items-center"><span class="material-symbols-outlined text-[16px] mr-1">spa</span> 450</span>
+</div>
+<div class="flex items-center gap-xs p-2 bg-surface rounded-md border border-outline-variant/20">
+<span class="font-bold text-on-surface-variant w-4">2</span>
+<div class="w-8 h-8 rounded-full bg-gray-300 overflow-hidden"><img alt="User 2" class="w-full h-full object-cover" data-alt="A small circular avatar placeholder image of a middle-aged Indian woman with a warm smile, wearing a traditional sari, soft focus earthy background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3jn3MK-KeiRod3jOQIpwiqfOjpNx4jU-yMw-WNPElQFBqGRoZO70WaUxiURmK2-KvERQ9wyRceTX0LX1Ub9Ypek5e4UpqKHtHofuffgZ6J6KlEbNgFq7Rv_fNCQ_wVeHGHi1yteLTt-Q8iXi1g0EHfcQBDDmn5yWMjrcJwfVtA5l_Ux0KUeVR_03xPsxsNNoaqJAilMm68zoMLNmAN4Kls76nbt1mFa895b-8NfDOJ69wqLdbo_pY"/></div>
+<span class="font-label-md flex-1 text-on-surface-variant">Sita M.</span>
+<span class="font-label-md text-on-surface-variant flex items-center"><span class="material-symbols-outlined text-[16px] mr-1">spa</span> 380</span>
+</div>
+<div class="flex items-center gap-xs p-2 bg-surface rounded-md border border-outline-variant/20 opacity-70">
+<span class="font-bold text-on-surface-variant w-4">3</span>
+<div class="w-8 h-8 rounded-full bg-gray-300 overflow-hidden"><img alt="User 3" class="w-full h-full object-cover" data-alt="A small circular avatar placeholder image of a young Indian man looking optimistic, wearing a simple collared shirt, warm rural lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQ4LGtcXiYseEwbYvWTOofOH4ysCMDEPgjEjDtA-14_o6BHkHXJmXhohYy-MFsom8EnEMH1Er_GKDNufOma4jDWnoa0xX9bM0HxFDvduS1A1XRzCADQN0oOfXPF1-cfetzfbbiY_l_4lEbHY_ervqXaSm3mmFUgt6KFICbIiuddM9zf7FN5gPOevKrtfo5wPXENphv-XoJbnpq0nM38PKy9m953WZdb2P0tkW7aq-FWGqOD6LKcnp9"/></div>
+<span class="font-label-md flex-1 text-on-surface-variant">Amit P.</span>
+<span class="font-label-md text-on-surface-variant flex items-center"><span class="material-symbols-outlined text-[16px] mr-1">spa</span> 310</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 5. Join the Movement CTA -->
+<section class="py-xl px-margin-mobile md:px-margin-desktop bg-surface-container text-center mb-8">
+<div class="max-w-2xl mx-auto space-y-md">
+<span class="material-symbols-outlined text-[48px] text-primary">signpost</span>
+<h3 class="font-headline-lg text-headline-lg text-on-surface">Ready to share the road?</h3>
+<p class="font-body-lg text-on-surface-variant">Whether you have an empty seat or need a lift to the nearest town, the village is waiting for you.</p>
+<div class="flex justify-center gap-sm pt-sm">
+<a href="/register" class="bg-primary text-on-primary font-label-md px-8 py-4 rounded-full shadow-[0_4px_12px_rgba(75,61,51,0.15)] hover:scale-95 transition-transform duration-150">
+                        Start Offering Rides
+</a>
+</div>
+</div>
+</section>
 </main>
 {% endblock %}
