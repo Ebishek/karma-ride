@@ -49,25 +49,71 @@
 </section>
 
 <!-- 1.5 Our Story Section -->
-<section class="py-xl px-margin-mobile md:px-margin-desktop bg-surface relative border-b border-outline-variant/30">
-<div class="max-w-4xl mx-auto text-center space-y-md">
+<section class="py-xl px-margin-mobile md:px-margin-desktop bg-surface relative border-b border-outline-variant/30 overflow-hidden">
+<div class="max-w-4xl mx-auto text-center space-y-md relative min-h-[400px] md:min-h-[300px]">
 <div class="inline-block p-4 rounded-full bg-primary/10 text-primary mb-2">
 <span class="material-symbols-outlined text-[32px]">menu_book</span>
 </div>
-<h3 class="font-headline-lg text-headline-lg text-on-background">Why We Built KarmaRide</h3>
-<div class="font-body-lg text-on-surface-variant leading-relaxed text-left md:text-center space-y-4">
-<p>
-    In many of our villages, owning a personal vehicle is a luxury, and public transport is often sparse or non-existent. For many, the places they call home are beautiful but disconnected, connected only by roads that are sometimes tough to navigate.
-</p>
-<p>
-    Every day, neighbors face urgent situations—needing to reach a clinic, a market, or family—but find themselves stranded simply because there is no reliable commute. We realized that while not everyone has a vehicle, <strong class="text-primary">someone in the village is often heading that way.</strong>
-</p>
-<p class="font-headline-sm text-secondary italic border-l-4 border-secondary-container pl-6 py-2 md:border-none md:pl-0 md:py-0">
-    "KarmaRide was created to bridge this gap. By sharing the empty seats on our vehicles, we turn every everyday journey into a lifeline for a neighbor in need."
-</p>
+
+<!-- English Content -->
+<div id="story-en" class="absolute w-full transition-opacity duration-1000 opacity-100">
+    <h3 class="font-headline-lg text-headline-lg text-on-background mb-6">Why We Built KarmaRide</h3>
+    <div class="font-body-lg text-on-surface-variant leading-relaxed text-left md:text-center space-y-4">
+    <p>
+        In many of our villages, owning a personal vehicle is a luxury, and public transport is often sparse or non-existent. For many, the places they call home are beautiful but disconnected, connected only by roads that are sometimes tough to navigate.
+    </p>
+    <p>
+        Every day, neighbors face urgent situations—needing to reach a clinic, a market, or family—but find themselves stranded simply because there is no reliable commute. We realized that while not everyone has a vehicle, <strong class="text-primary">someone in the village is often heading that way.</strong>
+    </p>
+    <p class="font-headline-sm text-secondary italic border-l-4 border-secondary-container pl-6 py-2 md:border-none md:pl-0 md:py-0">
+        "KarmaRide was created to bridge this gap. By sharing the empty seats on our vehicles, we turn every everyday journey into a lifeline for a neighbor in need."
+    </p>
+    </div>
 </div>
+
+<!-- Hindi Content -->
+<div id="story-hi" class="absolute w-full transition-opacity duration-1000 opacity-0 pointer-events-none">
+    <h3 class="font-headline-lg text-headline-lg text-on-background mb-6">हमने कर्मा-राइड क्यों बनाया?</h3>
+    <div class="font-body-lg text-on-surface-variant leading-relaxed text-left md:text-center space-y-4">
+    <p>
+        हमारे कई गाँवों में, अपना निजी वाहन होना एक विलासिता है, और सार्वजनिक परिवहन अक्सर बहुत कम या न के बराबर होता है। बहुत से लोगों के लिए, उनका सुंदर घर बाकी दुनिया से कटा हुआ है, जो केवल उन रास्तों से जुड़ा है जिन पर चलना कभी-कभी बहुत मुश्किल होता है।
+    </p>
+    <p>
+        हर दिन, लोगों को कई बार आपात स्थिति का सामना करना पड़ता है - जैसे क्लिनिक, बाज़ार, या परिवार तक पहुँचना - लेकिन वे फँसे रह जाते हैं क्योंकि यात्रा का कोई साधन नहीं होता। हमने महसूस किया कि भले ही हर किसी के पास वाहन न हो, लेकिन <strong class="text-primary">गाँव में कोई न कोई अक्सर उसी दिशा में जा रहा होता है।</strong>
+    </p>
+    <p class="font-headline-sm text-secondary italic border-l-4 border-secondary-container pl-6 py-2 md:border-none md:pl-0 md:py-0">
+        "कर्मा-राइड को इसी दूरी को मिटाने के लिए बनाया गया था। अपने वाहनों की खाली सीटों को साझा करके, हम हर रोज़ की यात्रा को किसी जरूरतमंद पड़ोसी के लिए जीवनरेखा में बदल देते हैं।"
+    </p>
+    </div>
+</div>
+
 </div>
 </section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const enStory = document.getElementById('story-en');
+        const hiStory = document.getElementById('story-hi');
+        let showEnglish = true;
+
+        setInterval(() => {
+            showEnglish = !showEnglish;
+            if (showEnglish) {
+                hiStory.classList.replace('opacity-100', 'opacity-0');
+                hiStory.classList.add('pointer-events-none');
+                
+                enStory.classList.replace('opacity-0', 'opacity-100');
+                enStory.classList.remove('pointer-events-none');
+            } else {
+                enStory.classList.replace('opacity-100', 'opacity-0');
+                enStory.classList.add('pointer-events-none');
+                
+                hiStory.classList.replace('opacity-0', 'opacity-100');
+                hiStory.classList.remove('pointer-events-none');
+            }
+        }, 12000); // 12 seconds
+    });
+</script>
 
 <!-- 2. The Mission Section -->
 <section class="py-xl px-margin-mobile md:px-margin-desktop bg-surface-container-low relative">
