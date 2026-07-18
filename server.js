@@ -171,9 +171,13 @@ app.get('/logout', (req, res) => {
 
 // --- MAIN ROUTES (Protected) ---
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
     if (req.session.userId) return res.redirect('/dashboard');
-    res.render('landing.html');
+    const topHeroes = await User.findAll({
+        order: [['karma_balance', 'DESC']],
+        limit: 3
+    });
+    res.render('landing.html', { topHeroes });
 });
 
 app.get('/dashboard', requireAuth, async (req, res) => {
