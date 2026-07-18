@@ -298,5 +298,40 @@
     {% endif %}
 
     {% block scripts %}{% endblock %}
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Global Scroll Animations using IntersectionObserver
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.remove('opacity-0', 'translate-y-8');
+                        entry.target.classList.add('opacity-100', 'translate-y-0');
+                        observer.unobserve(entry.target); // Only animate once
+                    }
+                });
+            }, { threshold: 0.15 });
+
+            const animatableElements = document.querySelectorAll(`
+                .animate-on-scroll,
+                section h2, 
+                section h3, 
+                section p.max-w-2xl,
+                section p.font-body-lg,
+                section .grid.md\\:grid-cols-3 > div,
+                section .grid.md\\:grid-cols-4 > div,
+                section .max-w-5xl > div
+            `);
+
+            animatableElements.forEach((el, index) => {
+                // Only add classes if not already animated by something else
+                if (!el.id.startsWith('story-') && !el.classList.contains('no-animate')) {
+                    el.classList.add('opacity-0', 'translate-y-8', 'transition-all', 'duration-700', 'ease-out');
+                    el.style.transitionDelay = `${(index % 3) * 100}ms`;
+                    observer.observe(el);
+                }
+            });
+        });
+    </script>
 </body>
 </html>
