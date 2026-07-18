@@ -68,6 +68,16 @@ const KarmaTransaction = sequelize.define('KarmaTransaction', {
     timestamp: { type: DataTypes.DATE, defaultValue: Sequelize.NOW }
 }, { tableName: 'karma_transactions', timestamps: false });
 
+const Notification = sequelize.define('Notification', {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    user_id: { type: DataTypes.INTEGER, references: { model: User, key: 'id' } },
+    type: { type: DataTypes.STRING, allowNull: false },
+    content: { type: DataTypes.STRING, allowNull: false },
+    link: { type: DataTypes.STRING, allowNull: true },
+    is_read: { type: DataTypes.BOOLEAN, defaultValue: false },
+    timestamp: { type: DataTypes.DATE, defaultValue: Sequelize.NOW }
+}, { tableName: 'notifications', timestamps: false });
+
 // Relationships
 User.hasMany(Ride, { foreignKey: 'helper_id', as: 'rides_offered' });
 Ride.belongsTo(User, { foreignKey: 'helper_id', as: 'helper' });
@@ -87,4 +97,7 @@ Message.belongsTo(User, { foreignKey: 'sender_id', as: 'sender' });
 KarmaTransaction.belongsTo(User, { foreignKey: 'sender_id', as: 'sender' });
 KarmaTransaction.belongsTo(User, { foreignKey: 'receiver_id', as: 'receiver' });
 
-module.exports = { sequelize, User, Ride, RideRequest, KarmaTransaction, Message };
+User.hasMany(Notification, { foreignKey: 'user_id', as: 'notifications' });
+Notification.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
+
+module.exports = { sequelize, User, Ride, RideRequest, KarmaTransaction, Message, Notification };

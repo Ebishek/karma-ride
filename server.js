@@ -5,7 +5,7 @@ const path = require('path');
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
 const { Op } = require('sequelize');
-const { sequelize, User, Ride, RideRequest, KarmaTransaction, Message } = require('./models');
+const { sequelize, User, Ride, RideRequest, KarmaTransaction, Message, Notification } = require('./models');
 
 const app = express();
 
@@ -82,6 +82,33 @@ async function getCurrentUser(req) {
 app.use(async (req, res, next) => {
     res.locals.user = await getCurrentUser(req);
     next();
+});
+
+// --- NOTIFICATION ROUTES ---
+app.get('/api/notifications', requireAuth, async (req, res) => {
+    const notifications = await Notification.findAll({
+        where: { user_id: req.session.userId },
+        order: [['timestamp', 'DESC']],
+        limit: 20
+    });
+    res.json(notifications);
+});
+
+app.post('/api/notifications/:id/read', requireAuth, async (req, res) => {
+    const notif = await Notification.findByPk(req.params.id);
+    if (notif && notif.user_id === req.session.userId) {
+        notif.is_read = true;
+        await notif.save();
+    }
+    res.sendStatus(200);
+});
+
+app.post('/api/notifications/read_all', requireAuth, async (req, res) => {
+    await Notification.update(
+        { is_read: true },
+        { where: { user_id: req.session.userId, is_read: false } }
+    );
+    res.sendStatus(200);
 });
 
 // --- AUTH ROUTES ---
@@ -243,6 +270,13 @@ app.post('/api/rides/:id/complete', requireAuth, async (req, res) => {
                 
                 request.status = 'completed';
                 await request.save();
+                
+                await Notification.create({
+                    user_id: request.seeker_id,
+                    type: 'ride_update',
+                    content: `Your ride to ${ride.destination} is complete. Please rate your helper!`,
+                    link: `/`
+                });
             } else if (request.status === 'pending') {
                 const seeker = await User.findByPk(request.seeker_id);
                 if (seeker) {
@@ -369,6 +403,13 @@ app.post('/api/request/:request_id/accept', requireAuth, async (req, res) => {
     request.ride.status = 'matched';
     await request.ride.save();
 
+    await Notification.create({
+        user_id: request.seeker_id,
+        type: 'ride_update',
+        content: `Your ride request to ${request.ride.destination} was accepted!`,
+        link: `/ride/${request.ride.id}/chat`
+    });
+
     // Reject all other pending requests for this ride
     await RideRequest.update(
         { status: 'rejected' },
@@ -424,6 +465,26 @@ app.post('/ride/:ride_id/chat', requireAuth, async (req, res) => {
         sender_id: res.locals.user.id,
         content: content
     });
+
+    const ride = await Ride.findByPk(req.params.ride_id, {
+        include: [{ model: RideRequest, as: 'requests' }]
+    });
+    let receiverId = null;
+    if (res.locals.user.id === ride.helper_id) {
+        const activeReq = ride.requests.find(r => r.status === 'accepted') || ride.requests.find(r => r.status === 'pending');
+        if (activeReq) receiverId = activeReq.seeker_id;
+    } else {
+        receiverId = ride.helper_id;
+    }
+
+    if (receiverId) {
+        await Notification.create({
+            user_id: receiverId,
+            type: 'message',
+            content: `New message from ${res.locals.user.name}`,
+            link: `/ride/${ride.id}/chat`
+        });
+    }
 
     const fullMsg = await Message.findByPk(msg.id, {
         include: [{ model: User, as: 'sender' }]
