@@ -55,12 +55,20 @@ function requireAuth(req, res, next) {
 
 async function requireAdmin(req, res, next) {
     if (!req.session.userId) {
-        return res.status(403).send("Unauthorized");
+        console.log("Admin Panel Blocked: User is not logged in.");
+        return res.status(403).send("Unauthorized: Please log in first.");
     }
     const user = await User.findByPk(req.session.userId);
     const adminPhone = process.env.ADMIN_PHONE;
-    if (!user || !adminPhone || user.phone !== adminPhone) {
-        return res.status(403).send("Unauthorized");
+
+    if (!adminPhone) {
+        console.log("Admin Panel Blocked: ADMIN_PHONE is not set in environment variables.");
+        return res.status(403).send("Unauthorized: Admin is not configured. Did you forget to set ADMIN_PHONE?");
+    }
+
+    if (!user || user.phone !== adminPhone) {
+        console.log(`Admin Panel Blocked: Logged in phone (${user ? user.phone : 'unknown'}) does not match ADMIN_PHONE.`);
+        return res.status(403).send("Unauthorized: Your phone number does not match the Admin phone number.");
     }
     next();
 }
