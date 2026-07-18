@@ -53,6 +53,18 @@ function requireAuth(req, res, next) {
     next();
 }
 
+async function requireAdmin(req, res, next) {
+    if (!req.session.userId) {
+        return res.status(403).send("Unauthorized");
+    }
+    const user = await User.findByPk(req.session.userId);
+    const adminPhone = process.env.ADMIN_PHONE;
+    if (!user || !adminPhone || user.phone !== adminPhone) {
+        return res.status(403).send("Unauthorized");
+    }
+    next();
+}
+
 async function getCurrentUser(req) {
     if (!req.session.userId) return null;
     return await User.findByPk(req.session.userId);
@@ -152,6 +164,43 @@ app.post('/api/rides', requireAuth, async (req, res) => {
         karma_reward: parseInt(karma_reward)
     });
     
+    res.redirect('/');
+});
+
+app.post('/api/rides/:ride_id/cancel', requireAuth, async (req, res) => {
+    const ride = await Ride.findByPk(req.params.ride_id, {
+        include: [{ model: RideRequest, as: 'requests' }]
+    });
+
+    if (!ride) return res.status(404).send("Ride not found");
+    if (ride.helper_id !== res.locals.user.id) return res.status(403).send("Unauthorized");
+
+    if (ride.status === 'cancelled') return res.redirect('/');
+
+    // Refund Karma for any pending or accepted requests
+    if (ride.requests) {
+        for (const request of ride.requests) {
+            if (request.status === 'pending' || request.status === 'accepted') {
+                const seeker = await User.findByPk(request.seeker_id);
+                if (seeker) {
+                    seeker.karma_balance += ride.karma_reward;
+                    await seeker.save();
+                }
+                
+                await KarmaTransaction.update(
+                    { status: 'refunded' },
+                    { where: { ride_id: ride.id, sender_id: request.seeker_id, status: 'escrow' } }
+                );
+
+                request.status = 'cancelled';
+                await request.save();
+            }
+        }
+    }
+
+    ride.status = 'cancelled';
+    await ride.save();
+
     res.redirect('/');
 });
 
@@ -281,8 +330,31 @@ app.get('/api/ride/:ride_id/messages', requireAuth, async (req, res) => {
     if (!ride) return res.status(404).json({ error: "Ride not found" });
     
     // Sort messages by creation time
-    const sortedMessages = ride.messages.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+    const sortedMessages = ride.messages.sort((a, b) => new Date(a.sent_at) - new Date(b.sent_at));
     res.json({ messages: sortedMessages });
+});
+
+// --- ADMIN ROUTES ---
+app.get('/secret-admin-panel', requireAdmin, async (req, res) => {
+    const users = await User.findAll({ order: [['id', 'DESC']] });
+    const rides = await Ride.findAll({ 
+        include: [{ model: User, as: 'helper' }],
+        order: [['id', 'DESC']] 
+    });
+    const transactions = await KarmaTransaction.findAll({
+        include: [
+            { model: User, as: 'sender' },
+            { model: User, as: 'receiver' }
+        ],
+        order: [['timestamp', 'DESC']],
+        limit: 50
+    });
+
+    res.render('admin.html', {
+        all_users: users,
+        all_rides: rides,
+        recent_transactions: transactions
+    });
 });
 
 const PORT = process.env.PORT || 8000;

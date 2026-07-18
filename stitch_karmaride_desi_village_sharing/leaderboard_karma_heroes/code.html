@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>KarmaRide - Ranks</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,600;7..72,700&amp;family=Plus+Jakarta+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary-fixed": "#271900",
+                      "secondary": "#7b5800",
+                      "on-tertiary-container": "#f7feff",
+                      "tertiary-fixed": "#a7eefc",
+                      "on-surface": "#241911",
+                      "surface-container": "#ffeadd",
+                      "primary": "#a03f28",
+                      "on-primary": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "background": "#fff8f5",
+                      "on-secondary-fixed-variant": "#5d4200",
+                      "inverse-on-surface": "#ffede3",
+                      "on-tertiary": "#ffffff",
+                      "on-secondary-container": "#6f4f00",
+                      "on-tertiary-fixed-variant": "#004e59",
+                      "primary-container": "#c0573e",
+                      "on-surface-variant": "#56423d",
+                      "on-primary-fixed": "#3d0700",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container-low": "#fff1e9",
+                      "surface-container-high": "#fae4d6",
+                      "surface-bright": "#fff8f5",
+                      "surface-variant": "#f4ded0",
+                      "on-error": "#ffffff",
+                      "surface-container-highest": "#f4ded0",
+                      "primary-fixed-dim": "#ffb4a3",
+                      "secondary-fixed": "#ffdea6",
+                      "secondary-container": "#ffbe30",
+                      "tertiary-fixed-dim": "#8bd2df",
+                      "surface-tint": "#a03f29",
+                      "tertiary": "#106571",
+                      "primary-fixed": "#ffdad2",
+                      "secondary-fixed-dim": "#fcbc2c",
+                      "on-primary-container": "#120100",
+                      "error": "#ba1a1a",
+                      "on-background": "#241911",
+                      "inverse-surface": "#3b2e24",
+                      "on-primary-fixed-variant": "#812914",
+                      "outline-variant": "#ddc0ba",
+                      "inverse-primary": "#ffb4a3",
+                      "surface": "#fff8f5",
+                      "on-tertiary-fixed": "#001f24",
+                      "on-secondary": "#ffffff",
+                      "outline": "#8a726c",
+                      "surface-dim": "#ecd6c8",
+                      "on-error-container": "#93000a",
+                      "tertiary-container": "#347e8b"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "16px",
+                      "margin-mobile": "16px",
+                      "lg": "40px",
+                      "base": "4px",
+                      "xl": "64px",
+                      "margin-desktop": "32px",
+                      "sm": "16px",
+                      "md": "24px",
+                      "xs": "8px"
+              },
+              "fontFamily": {
+                      "headline-lg": [
+                              "Literata"
+                      ],
+                      "label-md": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "body-lg": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "body-md": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "headline-md": [
+                              "Literata"
+                      ],
+                      "label-sm": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "headline-lg-mobile": [
+                              "Literata"
+                      ]
+              },
+              "fontSize": {
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "26px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        .rustic-texture {
+            background-color: #fff8f5;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+        }
+        
+        /* Block-print numbers simulation */
+        .block-print-num {
+            font-family: 'Literata', serif;
+            font-weight: 700;
+            color: #a03f28; /* Primary */
+            position: relative;
+            display: inline-block;
+            text-shadow: 1px 1px 0px rgba(138, 114, 108, 0.3); /* Outline color for rustic feel */
+        }
+        .block-print-num::before {
+            content: '';
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            border: 1px dashed #ddc0ba; /* outline-variant */
+            border-radius: 4px;
+            z-index: -1;
+            background: #ffeadd; /* surface-container */
+            transform: rotate(-2deg);
+        }
+        .block-print-num-gold::before {
+            background: #ffbe30; /* secondary-container */
+            border-color: #7b5800; /* secondary */
+        }
+
+        .dashed-divider {
+            border-bottom: 1px dashed #ddc0ba; /* outline-variant */
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background rustic-texture min-h-screen flex flex-col font-body-md pb-[80px] md:pb-0">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center px-margin-mobile h-16 w-full fixed top-0 z-50 bg-background shadow-[0_4px_12px_rgba(75,61,51,0.08)] bg-surface-container-low md:hidden">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-tight">KarmaRide</h1>
+<div class="flex items-center gap-4">
+<button aria-label="Notifications" class="text-on-surface-variant hover:bg-surface-variant/50 transition-colors p-2 rounded-full">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button aria-label="History" class="text-on-surface-variant hover:bg-surface-variant/50 transition-colors p-2 rounded-full">
+<span class="material-symbols-outlined">history</span>
+</button>
+<img alt="User profile showing karma level" class="w-8 h-8 rounded-full border-2 border-primary object-cover" data-alt="A warm, earthy-toned portrait of a rural Indian user, wearing a simple cotton shirt, smiling warmly against a background of a village field. Sunlight is soft and diffuse. A subtle 'Karma level' badge or glow surrounds the portrait edge." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_gprNgA42tRlRInACdJ_NQBeruKTjXCTOe35FuKo5pb5Q_Uiyw7Cmhx7MHJCu3QV-lX0Rcd9kqAMWtrIvMkHXswY_5y5JpROx47O5yO_JR3qSPTfq0wdtcWA2v2YHp0RTOzwf6sEMyeyWHmYx9CfsCekEEuDycvi0-EYhXCsYzXXWsi5VcvV5qHgCRhFHFQkpWQDorUZH4WPKmBKeHa8janoPDccoHaSqS5qIAgLlH_se-iDbAf15"/>
+</div>
+</header>
+<!-- Desktop Nav (Hidden on Mobile) -->
+<header class="hidden md:flex justify-between items-center px-margin-desktop py-4 bg-surface-container-low shadow-[0_4px_12px_rgba(75,61,51,0.08)] sticky top-0 z-50">
+<h1 class="font-headline-lg text-headline-lg text-primary tracking-tight">KarmaRide</h1>
+<nav class="flex gap-8">
+<a class="text-on-surface-variant font-label-md text-label-md hover:bg-surface-variant/50 px-4 py-2 rounded-full transition-colors flex items-center gap-2" href="#">
+<span class="material-symbols-outlined">search_check</span> Find
+            </a>
+<a class="text-on-surface-variant font-label-md text-label-md hover:bg-surface-variant/50 px-4 py-2 rounded-full transition-colors flex items-center gap-2" href="#">
+<span class="material-symbols-outlined">motorcycle</span> Offer
+            </a>
+<a class="text-primary font-bold font-label-md text-label-md bg-secondary-container text-on-secondary-container px-4 py-2 rounded-full flex items-center gap-2" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">leaderboard</span> Ranks
+            </a>
+<a class="text-on-surface-variant font-label-md text-label-md hover:bg-surface-variant/50 px-4 py-2 rounded-full transition-colors flex items-center gap-2" href="#">
+<span class="material-symbols-outlined">account_circle</span> Profile
+            </a>
+</nav>
+<div class="flex items-center gap-4">
+<button aria-label="Notifications" class="text-on-surface-variant hover:bg-surface-variant/50 transition-colors p-2 rounded-full">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<img alt="User profile showing karma level" class="w-10 h-10 rounded-full border-2 border-primary object-cover" data-alt="A warm, earthy-toned portrait of a rural Indian user, wearing a simple cotton shirt, smiling warmly against a background of a village field. Sunlight is soft and diffuse. A subtle 'Karma level' badge or glow surrounds the portrait edge." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6enh3vn4cTEDwmmoS5ggBBaHFwPK40z7AHHYOLX6cOihwZcpM5rlQ8-TQWaVCPbB3Bb39SKynZNvzbRV01Us9LVRPMJHSA3cJbN6Ua8dozZDkHOZ--6y0i10jLmbN86iKtQMCiCcQArAxZpOrkg-fYUl9qK1rgX2gnUQgzlj6Wu5Ey4irq2RxvbE3kCBWocwwTgMknJGUJaiiEbfXxBPioSfGI-xhL69QTJY9BIinqfC8-Imzl7Un"/>
+</div>
+</header>
+<main class="flex-grow px-margin-mobile md:px-margin-desktop pt-24 md:pt-10 pb-32 max-w-4xl mx-auto w-full">
+<!-- Header Section -->
+<div class="mb-8 text-center md:text-left">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface mb-2">Community Leaders</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Celebrating our top riders sharing journeys.</p>
+</div>
+<!-- Time Tabs -->
+<div class="flex justify-center md:justify-start gap-4 mb-8">
+<button class="px-6 py-2 rounded-full bg-surface-variant text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-high transition-colors">Today</button>
+<button class="px-6 py-2 rounded-full bg-secondary-container text-on-secondary-container font-label-md text-label-md font-bold shadow-sm">This Week</button>
+<button class="px-6 py-2 rounded-full bg-surface-variant text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-high transition-colors">This Month</button>
+</div>
+<!-- Top 3 Podium (Bento/Card Layout) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+<!-- Rank 2 -->
+<div class="bg-surface-container rounded-xl p-6 flex flex-col items-center justify-center border border-outline-variant/50 shadow-[0_4px_12px_rgba(75,61,51,0.08)] order-2 md:order-1 transform md:translate-y-4">
+<div class="w-16 h-16 rounded-full overflow-hidden border-4 border-outline mb-3 relative">
+<img class="w-full h-full object-cover" data-alt="Close up portrait of an older Indian farmer with a warm smile, wearing a turban. Earthy warm lighting, textured rural background. High-quality rustic minimalism style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCM2GtnOCLwZ8EQzaoDJ-CQn_RcK3cMddwm7k9n_l7tXVoCI2wGC9dhnCuSIaJCVLUJOLPa-cjKtrZ0WnN0FditYK52ERksYDno6MA419MJhZBF176zxMraPyPJgG4rWHws0nwENN09aZEcrn8GCbd-vmjXpBESrj5AP5JsQdJ3V5b_kxblwUtCG_EDqHmvPl08SyAAcC6N4ERq06SIynO505vO8u3QRWQA_NEJRHpbwnN93rqOKfr-"/>
+</div>
+<h3 class="font-label-md text-label-md text-on-surface font-bold text-center">Ramesh K.</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-2">Palampur</p>
+<div class="flex items-center gap-1 text-primary-container font-label-md text-label-md">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">spa</span> 840
+                </div>
+<div class="mt-4 text-center">
+<span class="block-print-num text-2xl w-10 h-10 flex items-center justify-center">2</span>
+</div>
+</div>
+<!-- Rank 1 -->
+<div class="bg-secondary-fixed rounded-xl p-6 flex flex-col items-center justify-center border border-secondary/30 shadow-[0_8px_16px_rgba(75,61,51,0.12)] order-1 md:order-2 z-10">
+<div class="w-20 h-20 rounded-full overflow-hidden border-4 border-secondary-container mb-3 relative">
+<div class="absolute -top-2 -right-2 bg-primary text-on-primary rounded-full p-1 shadow-sm z-20">
+<span class="material-symbols-outlined text-xs">local_fire_department</span>
+</div>
+<img class="w-full h-full object-cover" data-alt="Portrait of a young Indian woman in a vibrant yellow sari, smiling confidently next to a scooter. Soft afternoon sunlight, village pathway background. Earthy warm tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6eNhyGgmv-9QXJdlhvC3eydgCQ-cuTxMqxZK9KDwBDEx66Jp3KlZh5oe0cKt6TTa_ZvDWQIm1jofNNO5pomwQS7OXEeKuDIzal15CX3SxqyQRiX6nN13-wfQ6ta0FrSRA5XhNIII1jUWcX_naUlPnF_8MfS3_CiPcnFLyVdcfLpJypKaqVjpdDgmqOhsEFeNaTbSlD5Q9J2xlgORH8WBDfAWhZRg4vJQdn7y7c97VHQtaCQ9t67XG"/>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface font-bold text-center">Sunita D.</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-2">Chamba</p>
+<div class="flex items-center gap-1 text-primary font-headline-md text-headline-md">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">spa</span> 1,250
+                </div>
+<div class="mt-4 text-center">
+<span class="block-print-num block-print-num-gold text-3xl w-12 h-12 flex items-center justify-center">1</span>
+</div>
+</div>
+<!-- Rank 3 -->
+<div class="bg-surface-container rounded-xl p-6 flex flex-col items-center justify-center border border-outline-variant/50 shadow-[0_4px_12px_rgba(75,61,51,0.08)] order-3 transform md:translate-y-6">
+<div class="w-16 h-16 rounded-full overflow-hidden border-4 border-outline mb-3">
+<img class="w-full h-full object-cover" data-alt="Portrait of a middle-aged Indian man in a simple shirt, looking friendly. Background shows green terraced fields. Warm, earthy color palette, soft lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuALGev7xW3LCHn5b6GuijYw4fSmTf1p7pfI7L5SIo-iSCgD_OYn_F52zBR2x_pfOQuSqV9nz9Bt2-4ZLQQ16cgs5cu8rN5RPvSVXTsb7-5G61vy53h4h7OXAzffgjwqDNs5s8galRrsxXQZiKGGYgBOAtLHFO58sAQkVg4xFO9to5CFBOkNH0X2sxK2aQ9Qx3Wm1EIzSXxbSiUNoR9ak1OFFjeZWxsnhfAbhOsPKEcS2ULhAu-HLtjT"/>
+</div>
+<h3 class="font-label-md text-label-md text-on-surface font-bold text-center">Anil S.</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-2">Dharamshala</p>
+<div class="flex items-center gap-1 text-primary-container font-label-md text-label-md">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">spa</span> 720
+                </div>
+<div class="mt-4 text-center">
+<span class="block-print-num text-2xl w-10 h-10 flex items-center justify-center">3</span>
+</div>
+</div>
+</div>
+<!-- List 4-10 -->
+<div class="bg-surface-container-low rounded-xl border border-outline-variant shadow-sm overflow-hidden mb-8">
+<ul class="flex flex-col">
+<!-- List Item 4 -->
+<li class="flex items-center p-4 dashed-divider hover:bg-surface-variant/30 transition-colors">
+<div class="w-10 text-center mr-4">
+<span class="font-headline-md text-headline-md text-on-surface-variant opacity-70">4</span>
+</div>
+<img class="w-10 h-10 rounded-full object-cover mr-4" data-alt="Small thumbnail portrait of an Indian villager smiling. Warm lighting, earthy tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpFUsar4GrvQ5UYgl8ADjGW6fqtGrtE47Ii10YajkmHplh9H-DQWijKX6vLe7EClt9NJsUe5tYtrffjsgmArwtlaaWmaP065bmv4cqFCGj90LCVCXyLMsOs-hHRJeI4C-aCzEOd2Kwixe5BKFp5nZE4RM43WeaJvdtN-4F4JjVsmALIiYJBMyzNsN023ZO-8qUgu0qNM7lZUf5q-NDTCGpbp_nqVNTWC-_ZH4wUZ1M-jbqrLbJCmsa"/>
+<div class="flex-grow">
+<h4 class="font-label-md text-label-md text-on-surface">Pooja M.</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Kangra</p>
+</div>
+<div class="flex items-center gap-1 text-on-surface font-label-md text-label-md bg-surface-container-highest px-3 py-1 rounded-full">
+                        610 <span class="material-symbols-outlined text-sm text-primary" style="font-variation-settings: 'FILL' 1;">spa</span>
+</div>
+</li>
+<!-- List Item 5 -->
+<li class="flex items-center p-4 dashed-divider hover:bg-surface-variant/30 transition-colors">
+<div class="w-10 text-center mr-4">
+<span class="font-headline-md text-headline-md text-on-surface-variant opacity-70">5</span>
+</div>
+<img class="w-10 h-10 rounded-full object-cover mr-4" data-alt="Small thumbnail portrait of an Indian villager smiling. Warm lighting, earthy tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpLU81zBVdLteV4c1OEGWASJDoX86zyHAviQU-KQxq4EVMRL6QXSsIKhOOPdbQVHudrKGY_LVUCfRTaQjyE2wPh8aztVCBUg4ZDep8h9DD8IqjBJPf6NBYIoIyQFX_eNb1eXfy0daL4yuWk0gb5CVkQdMShnlMjrXxUTKQCqpL3SDbj02Nzpnr5B_1ekpU-2gL0TvTztCxmtDaoKi4SPE5_ogATNb8CBgWxh4Fpun3dw2uML9KkYa7"/>
+<div class="flex-grow">
+<h4 class="font-label-md text-label-md text-on-surface">Vikram Singh</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Mandi</p>
+</div>
+<div class="flex items-center gap-1 text-on-surface font-label-md text-label-md bg-surface-container-highest px-3 py-1 rounded-full">
+                        580 <span class="material-symbols-outlined text-sm text-primary" style="font-variation-settings: 'FILL' 1;">spa</span>
+</div>
+</li>
+<!-- List Item 6 -->
+<li class="flex items-center p-4 dashed-divider hover:bg-surface-variant/30 transition-colors">
+<div class="w-10 text-center mr-4">
+<span class="font-headline-md text-headline-md text-on-surface-variant opacity-70">6</span>
+</div>
+<div class="w-10 h-10 rounded-full bg-tertiary-container text-on-tertiary-container flex items-center justify-center font-label-md text-label-md mr-4">
+                        K
+                    </div>
+<div class="flex-grow">
+<h4 class="font-label-md text-label-md text-on-surface">Kavita R.</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Kullu</p>
+</div>
+<div class="flex items-center gap-1 text-on-surface font-label-md text-label-md bg-surface-container-highest px-3 py-1 rounded-full">
+                        545 <span class="material-symbols-outlined text-sm text-primary" style="font-variation-settings: 'FILL' 1;">spa</span>
+</div>
+</li>
+<!-- List Item 7 -->
+<li class="flex items-center p-4 dashed-divider hover:bg-surface-variant/30 transition-colors">
+<div class="w-10 text-center mr-4">
+<span class="font-headline-md text-headline-md text-on-surface-variant opacity-70">7</span>
+</div>
+<img class="w-10 h-10 rounded-full object-cover mr-4" data-alt="Small thumbnail portrait of an Indian villager smiling. Warm lighting, earthy tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFBcOPberSWTIhq3SsyCW_xhKJw6YB3PJk_kIkXOfjQwy1LsVMMjwdFKQf3ZoE6j5demkJLyXUMg1jjlJLtygo24g-ozF_vmahwAyQhHD-wdxhVh9i-7YH4ZDIAYE9Hwtfg-nQjlk4O7UhnINFUQ2spBuBo1cAHnPyQkLVMMdvAqD9-SK1a0llwLhhnZem5ijdfu0gZM3TYRcsYreTU5yJ178xem8ZzdqB559Q1ZICQa3JTrhEf5nr"/>
+<div class="flex-grow">
+<h4 class="font-label-md text-label-md text-on-surface">Deepak C.</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Shimla</p>
+</div>
+<div class="flex items-center gap-1 text-on-surface font-label-md text-label-md bg-surface-container-highest px-3 py-1 rounded-full">
+                        510 <span class="material-symbols-outlined text-sm text-primary" style="font-variation-settings: 'FILL' 1;">spa</span>
+</div>
+</li>
+<!-- List Item 8 -->
+<li class="flex items-center p-4 dashed-divider hover:bg-surface-variant/30 transition-colors">
+<div class="w-10 text-center mr-4">
+<span class="font-headline-md text-headline-md text-on-surface-variant opacity-70">8</span>
+</div>
+<div class="w-10 h-10 rounded-full bg-secondary text-on-secondary flex items-center justify-center font-label-md text-label-md mr-4">
+                        N
+                    </div>
+<div class="flex-grow">
+<h4 class="font-label-md text-label-md text-on-surface">Neha G.</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Solan</p>
+</div>
+<div class="flex items-center gap-1 text-on-surface font-label-md text-label-md bg-surface-container-highest px-3 py-1 rounded-full">
+                        490 <span class="material-symbols-outlined text-sm text-primary" style="font-variation-settings: 'FILL' 1;">spa</span>
+</div>
+</li>
+<!-- List Item 9 -->
+<li class="flex items-center p-4 dashed-divider hover:bg-surface-variant/30 transition-colors">
+<div class="w-10 text-center mr-4">
+<span class="font-headline-md text-headline-md text-on-surface-variant opacity-70">9</span>
+</div>
+<img class="w-10 h-10 rounded-full object-cover mr-4" data-alt="Small thumbnail portrait of an Indian villager smiling. Warm lighting, earthy tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbztk0OYuR3gf2HevZIh0pkETaFTtYwHcCANzshJiOuDJvmNbdsT54s40w-YxBHDV6qyNLMJRC40FrIPcYUyoQfrBzJdwuyu8a_aD4leyejV_kdXeo59EhXR_Fxb4feUjxX-QP_PfJBD6mLduLnmjkZeJiIkw7FXZP3Ozzx2Tv99MIU5m_8enSgvAxYrCXffYQmj9pVXkwW1fKM5k8UNtS4VNmrO7BSyqXvf0h_2c_os-HQEKnbQjC"/>
+<div class="flex-grow">
+<h4 class="font-label-md text-label-md text-on-surface">Rajesh T.</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Bilaspur</p>
+</div>
+<div class="flex items-center gap-1 text-on-surface font-label-md text-label-md bg-surface-container-highest px-3 py-1 rounded-full">
+                        460 <span class="material-symbols-outlined text-sm text-primary" style="font-variation-settings: 'FILL' 1;">spa</span>
+</div>
+</li>
+<!-- List Item 10 -->
+<li class="flex items-center p-4 hover:bg-surface-variant/30 transition-colors">
+<div class="w-10 text-center mr-4">
+<span class="font-headline-md text-headline-md text-on-surface-variant opacity-70">10</span>
+</div>
+<div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-label-md text-label-md mr-4">
+                        A
+                    </div>
+<div class="flex-grow">
+<h4 class="font-label-md text-label-md text-on-surface">Amit K.</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Una</p>
+</div>
+<div class="flex items-center gap-1 text-on-surface font-label-md text-label-md bg-surface-container-highest px-3 py-1 rounded-full">
+                        430 <span class="material-symbols-outlined text-sm text-primary" style="font-variation-settings: 'FILL' 1;">spa</span>
+</div>
+</li>
+</ul>
+</div>
+<!-- Your Rank Section -->
+<div class="fixed bottom-[72px] md:bottom-0 left-0 w-full bg-inverse-surface text-inverse-on-surface p-4 shadow-[0_-8px_16px_rgba(75,61,51,0.15)] z-40 md:relative md:rounded-xl md:mb-8">
+<div class="max-w-4xl mx-auto flex items-center justify-between">
+<div class="flex items-center">
+<div class="w-12 h-12 rounded-full border-2 border-primary mr-4 overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="A warm, earthy-toned portrait of a rural Indian user, wearing a simple cotton shirt, smiling warmly against a background of a village field. Sunlight is soft and diffuse." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvcYE1qpWNM_r97ImeBWCoTqMKVbaWqh_JK-iftgNe-f2Tkx6S1xedn0p8avBqzkKT4-0Ncf62-lViBrsKnpFJDvTFB-fN_9z3wcEPziOxdi_w6BV-yDe352KipjXcEPCNGVNcuXrKbXLqakR5P2vIyAtebONjDQ7wW4_8r9nxNeLMskzE41iCNxO5VwIz4CTRYqgMlAUm9nVFghJYDf7zce7kkMgYNfvCGPEizozhFP8ZPdaCxiLO"/>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-outline-variant uppercase tracking-wider mb-1">Your Rank</p>
+<h4 class="font-headline-md text-headline-md font-bold">#42</h4>
+</div>
+</div>
+<div class="text-right">
+<p class="font-label-sm text-label-sm text-outline-variant mb-1">Karma Points</p>
+<div class="flex items-center justify-end gap-1 font-label-md text-label-md text-inverse-primary">
+                        185 <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">spa</span>
+</div>
+<p class="font-label-sm text-label-sm mt-1 text-outline-variant opacity-80 text-[10px]">245 pts to top 10</p>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-3 pb-safe bg-surface-container-highest dark:bg-surface-container-highest shadow-[0_-4px_12px_rgba(75,61,51,0.08)] rounded-t-xl md:hidden">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary-fixed/20 rounded-lg p-2 transition-all" href="#">
+<span class="material-symbols-outlined mb-1">search_check</span>
+<span class="font-label-sm text-label-sm">Find</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary-fixed/20 rounded-lg p-2 transition-all" href="#">
+<span class="material-symbols-outlined mb-1">motorcycle</span>
+<span class="font-label-sm text-label-sm">Offer</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">leaderboard</span>
+<span class="font-label-sm text-label-sm font-bold">Ranks</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary-fixed/20 rounded-lg p-2 transition-all" href="#">
+<span class="material-symbols-outlined mb-1">account_circle</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</a>
+</nav>
+<!-- Footer (Desktop Only) -->
+<footer class="hidden md:flex w-full px-margin-mobile py-8 flex-col items-center gap-4 mt-auto bg-surface-container-lowest border-t border-dashed border-outline-variant">
+<h2 class="font-headline-md text-headline-md text-primary">KarmaRide</h2>
+<div class="flex gap-6">
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Community Guidelines</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Safety Info</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a>
+</div>
+<p class="font-body-md text-body-md text-tertiary">© 2024 KarmaRide Community</p>
+</footer>
+</body></html>

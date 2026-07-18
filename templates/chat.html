@@ -130,7 +130,7 @@
                         ${msg.content}
                     </div>
                     <div class="font-label-sm text-label-sm text-on-surface-variant mr-2 flex items-center gap-1">
-                        ${formatDate(msg.createdAt)} <span class="material-symbols-outlined text-[14px] text-tertiary">done_all</span>
+                        ${formatDate(msg.sent_at)} <span class="material-symbols-outlined text-[14px] text-tertiary">done_all</span>
                     </div>
                 </div>
             `;
@@ -142,7 +142,7 @@
                     <div class="bg-surface-container p-4 rounded-2xl rounded-bl-none text-on-surface font-body-md text-body-md shadow-[0_2px_8px_rgba(75,61,51,0.04)] border border-outline-variant/30 break-words">
                         ${msg.content}
                     </div>
-                    <div class="font-label-sm text-label-sm text-on-surface-variant ml-2">${formatDate(msg.createdAt)}</div>
+                    <div class="font-label-sm text-label-sm text-on-surface-variant ml-2">${formatDate(msg.sent_at)}</div>
                 </div>
             `;
         }

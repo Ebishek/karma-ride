@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>KarmaRide - Find a Ride</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,200..900;1,7..72,200..900&amp;family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary-fixed": "#271900",
+                      "secondary": "#7b5800",
+                      "on-tertiary-container": "#f7feff",
+                      "tertiary-fixed": "#a7eefc",
+                      "on-surface": "#241911",
+                      "surface-container": "#ffeadd",
+                      "primary": "#a03f28",
+                      "on-primary": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "background": "#fff8f5",
+                      "on-secondary-fixed-variant": "#5d4200",
+                      "inverse-on-surface": "#ffede3",
+                      "on-tertiary": "#ffffff",
+                      "on-secondary-container": "#6f4f00",
+                      "on-tertiary-fixed-variant": "#004e59",
+                      "primary-container": "#c0573e",
+                      "on-surface-variant": "#56423d",
+                      "on-primary-fixed": "#3d0700",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container-low": "#fff1e9",
+                      "surface-container-high": "#fae4d6",
+                      "surface-bright": "#fff8f5",
+                      "surface-variant": "#f4ded0",
+                      "on-error": "#ffffff",
+                      "surface-container-highest": "#f4ded0",
+                      "primary-fixed-dim": "#ffb4a3",
+                      "secondary-fixed": "#ffdea6",
+                      "secondary-container": "#ffbe30",
+                      "tertiary-fixed-dim": "#8bd2df",
+                      "surface-tint": "#a03f29",
+                      "tertiary": "#106571",
+                      "primary-fixed": "#ffdad2",
+                      "secondary-fixed-dim": "#fcbc2c",
+                      "on-primary-container": "#120100",
+                      "error": "#ba1a1a",
+                      "on-background": "#241911",
+                      "inverse-surface": "#3b2e24",
+                      "on-primary-fixed-variant": "#812914",
+                      "outline-variant": "#ddc0ba",
+                      "inverse-primary": "#ffb4a3",
+                      "surface": "#fff8f5",
+                      "on-tertiary-fixed": "#001f24",
+                      "on-secondary": "#ffffff",
+                      "outline": "#8a726c",
+                      "surface-dim": "#ecd6c8",
+                      "on-error-container": "#93000a",
+                      "tertiary-container": "#347e8b"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "16px",
+                      "margin-mobile": "16px",
+                      "lg": "40px",
+                      "base": "4px",
+                      "xl": "64px",
+                      "margin-desktop": "32px",
+                      "sm": "16px",
+                      "md": "24px",
+                      "xs": "8px"
+              },
+              "fontFamily": {
+                      "headline-lg": [
+                              "Literata"
+                      ],
+                      "label-md": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "body-lg": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "body-md": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "headline-md": [
+                              "Literata"
+                      ],
+                      "label-sm": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "headline-lg-mobile": [
+                              "Literata"
+                      ]
+              },
+              "fontSize": {
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "26px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        .map-texture {
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+        }
+        .grainy-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            z-index: 10;
+        }
+      </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col relative overflow-x-hidden">
+<div class="grainy-overlay"></div>
+<!-- TopAppBar -->
+<header class="flex justify-between items-center px-margin-mobile h-16 w-full fixed top-0 z-50 bg-background bg-surface-container-low shadow-[0_4px_12px_rgba(75,61,51,0.08)]">
+<div class="flex items-center">
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-primary md:hidden">KarmaRide</span>
+<span class="font-headline-lg text-headline-lg text-primary hidden md:block">KarmaRide</span>
+</div>
+<div class="flex gap-4 items-center">
+<button aria-label="Notifications" class="text-on-surface-variant hover:bg-surface-variant/50 transition-colors p-2 rounded-full">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button aria-label="History" class="text-on-surface-variant hover:bg-surface-variant/50 transition-colors p-2 rounded-full">
+<span class="material-symbols-outlined">history</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border-2 border-secondary-container">
+<img alt="User profile showing karma level" class="w-full h-full object-cover" data-alt="A small, stylized profile portrait of a smiling user, warm colors, simple lines, fitting the Gramin Modernism aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnSUvV7_STzlSrD8qCJwFdrfWN7lJfOyMYlrevXg44BwJSm-GpEjaEEcCJ25AWIgld-KMA_JuiiBg1j4qN_WgIP-m5cbUNt9Nbq_AUWizYDW7KgvjDSa5TwHSlUg7V97rGTE7IfdbaC66trPQuc2It2IhMe0Pt2DAaSZUqPrrkYEnkYyiMCXCG7gkM41VAmHYuSLrZFSoTtTMfXVRP95mndGIFq8Zh5w730_el3Iy2F0sSTqZqPFBp"/>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 mt-16 md:mt-20 px-margin-mobile md:px-margin-desktop pb-24 md:pb-16 flex flex-col gap-6 w-full max-w-7xl mx-auto relative z-20">
+<!-- Search & Filter Bar (Chaupal Card) -->
+<section class="bg-surface-container rounded-xl p-4 shadow-[0_4px_12px_rgba(75,61,51,0.08)] border border-outline-variant/30 flex flex-col md:flex-row gap-4 items-center">
+<div class="relative w-full md:w-2/3">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">location_on</span>
+<input class="w-full bg-surface-container-lowest border-b-2 border-outline-variant focus:border-primary focus:ring-0 rounded-t-md pl-10 pr-4 py-3 font-body-md text-on-surface placeholder-on-surface-variant" placeholder="Where to?" type="text" value="Village Square to River Market"/>
+</div>
+<div class="flex gap-2 w-full md:w-auto overflow-x-auto pb-2 md:pb-0 scrollbar-hide">
+<button class="bg-secondary-container text-on-secondary-container px-4 py-2 rounded-full font-label-md flex items-center gap-2 whitespace-nowrap shadow-[0_2px_4px_rgba(75,61,51,0.08)] border border-secondary-container/50">
+<span class="material-symbols-outlined text-[18px]">two_wheeler</span>
+                    Any Ride
+                </button>
+<button class="bg-surface-container-lowest text-on-surface-variant px-4 py-2 rounded-full font-label-md flex items-center gap-2 whitespace-nowrap border border-outline-variant hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+                    Now
+                </button>
+</div>
+</section>
+<div class="flex flex-col lg:flex-row gap-6 h-full">
+<!-- Map View (Rustic Style) -->
+<section class="w-full lg:w-3/5 h-64 md:h-[500px] bg-surface-variant rounded-xl overflow-hidden relative shadow-[0_4px_12px_rgba(75,61,51,0.08)] border border-outline-variant/50">
+<!-- Fallback Map Image with Location -->
+<div class="absolute inset-0 bg-cover bg-center w-full h-full opacity-80 mix-blend-multiply" data-alt="A stylized, warm-toned illustrated map showing a village landscape with dirt paths, a river, and small clusters of houses, drawn in a rustic, minimal Gramin Modernism style. A few pin icons indicate riders." data-location="Rural India" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB9cYdqvHetpXYeXFSYtoa7_rdhe5MIa5BAKav-Nw4h2KdG2YSR5LT1HcR955ezS6tSzVy-gP-e2VnmORJhCGQJr1bDF_V4imB0qzSgVtz_pqMPXT4CjMx5O5y4hkj_ndTmPKFN2mlqPqaY_lHJoDYQAaWVSTLhZWiu-uxR7KcOPdwMbI9Ym_1jL-xpjoUDcxGFiVSRShnke76zq8zrV_Xj3GzwtWuxjPu5pLwuXAuS3BqqJYN8_pF_')"></div>
+<div class="absolute inset-0 map-texture opacity-30"></div>
+<!-- Stylized Map Markers (Simulated) -->
+<div class="absolute top-1/4 left-1/3 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+<div class="bg-surface-container-lowest p-1 rounded-full shadow-md mb-1 border-2 border-primary">
+<img alt="Rider" class="w-6 h-6 rounded-full object-cover" data-alt="A tiny profile picture of a rider, warm colors." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBoJRsajNqYNL7haRAxHM1iNi8YGTGZhJSNYA9Kf0VBZudP3gWhgEajOlMwmXO_21h48racbQqCMEHD9NmUEyk1x7_iQR3-IwQOaokICpMOiKL5Qa3qIvXKgGd7sERUQv4Cpy-la8AMC408mxGmgal2zL3B0rLEYBJjXOKRQu2nH3woIP5QB7-dJMY3jy52dy4c3GQYBMFXqK0aaAlW1x1znzemR3d57tifuJBm8A_oQqz5BiU2G0Zi"/>
+</div>
+<div class="w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[8px] border-t-primary"></div>
+</div>
+<div class="absolute top-1/2 left-2/3 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+<div class="bg-surface-container-lowest p-1 rounded-full shadow-md mb-1 border-2 border-secondary">
+<img alt="Rider" class="w-8 h-8 rounded-full object-cover" data-alt="A tiny profile picture of another rider, warm colors." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzMYWKlFXGc45scvDnPPG3PQhHBG7a1QRShtETW0TK_clPRp1naKUOkM476rv6FtpZVtv9PeRNTGyvLlxvtvzZFglAJiK9mGm28oBf7JYESRov2puZJvB3oVBmwYUOIpWcGD63W9HQIFdGNnNHqzPs_wyO0QjM4ZU8vyliFo-P_1opxTo0tGQiJDAaDmF4v5kIRoE3PXs321p2IKbu4pKC8vBqOxlkqx5Aa2xB2986Zu0plX85YeR1"/>
+</div>
+<div class="w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[10px] border-t-secondary"></div>
+</div>
+<div class="absolute bottom-4 left-4 right-4 bg-surface-container-lowest/90 backdrop-blur-sm p-3 rounded-lg flex items-center justify-between border border-outline-variant shadow-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary">near_me</span>
+<span class="font-label-md text-on-surface">3 riders nearby</span>
+</div>
+<button class="text-primary font-label-md">Re-center</button>
+</div>
+</section>
+<!-- Ride List -->
+<section class="w-full lg:w-2/5 flex flex-col gap-4 overflow-y-auto pr-2 pb-8">
+<h2 class="font-headline-md text-headline-md text-on-surface">Available Rides</h2>
+<!-- Ride Card 1 -->
+<article class="bg-surface-container-low rounded-xl p-4 border border-outline-variant shadow-[0_2px_8px_rgba(75,61,51,0.05)] flex flex-col gap-3 relative overflow-hidden transition-transform active:scale-95 duration-150">
+<div class="flex justify-between items-start">
+<div class="flex gap-3 items-center">
+<div class="w-12 h-12 rounded-full overflow-hidden border border-outline-variant relative">
+<img alt="Rider Profile" class="w-full h-full object-cover" data-alt="A portrait of a male rider wearing a simple turban, smiling warmly, depicted in a minimalist block-print style with earthy tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAL-qcYIlcWnXZM_yQDJhUJ5K4JVLO1-OCjjBL3zbDqhT1P3ICwZxImlp7l3yYJez8867tINRb5t_9T-AXGHU7D9QGY2bj0iZfObD23G3q8ChV8jual_xWvCGR2gst0MQeNHmNCbA8BFEFIlO7zJqXIwQzEBMbdhyA21eRsifa7nC7HlVjDWw75JxvpQUWbORnPctuw0z5PWXx8duHqlOej1eVxQ6NQs9oFcgbJyxmvC1jANp9vwTo9"/>
+</div>
+<div>
+<h3 class="font-label-md text-on-surface text-[16px]">Ramesh K.</h3>
+<div class="flex items-center gap-1 text-secondary-container">
+<span class="material-symbols-outlined text-[16px] animate-pulse">local_florist</span>
+<span class="font-label-sm text-on-surface-variant font-bold">4.9 Karma</span>
+</div>
+</div>
+</div>
+<div class="text-right">
+<div class="font-label-md text-primary">Leaves in 10m</div>
+<div class="font-label-sm text-on-surface-variant">Scooter</div>
+</div>
+</div>
+<div class="flex gap-2 items-center text-on-surface-variant font-body-md text-sm mt-1 border-t border-dashed border-outline-variant pt-2">
+<span class="material-symbols-outlined text-[18px]">route</span>
+<span>Passes by Market Square</span>
+</div>
+<button class="w-full bg-primary text-on-primary py-3 rounded-lg font-label-md shadow-[0_2px_4px_rgba(75,61,51,0.1)] mt-2 flex justify-center items-center gap-2">
+                        Request Ride
+                    </button>
+</article>
+<!-- Ride Card 2 -->
+<article class="bg-surface-container-low rounded-xl p-4 border border-outline-variant shadow-[0_2px_8px_rgba(75,61,51,0.05)] flex flex-col gap-3 relative overflow-hidden transition-transform active:scale-95 duration-150">
+<div class="flex justify-between items-start">
+<div class="flex gap-3 items-center">
+<div class="w-12 h-12 rounded-full overflow-hidden border border-outline-variant relative">
+<img alt="Rider Profile" class="w-full h-full object-cover" data-alt="A portrait of a female rider with a warm smile, wearing a traditional dupatta, depicted in a minimalist block-print style with earthy tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfkAvht7Zve8mlnIbVNgSEebZDMT6PNTPLcYGPmkCL4s_n082z6PamtNyvXoOn9DevTEJ-216jATZhqjtm9lR-psQswQ8Kmw_7KGE_dYiBp35Ggg4kRP87kPU6Nwqmiyxv0pjT8rHsCzra2N5-1R5SmFe44ixcrjadbbJp65Pfi4AK7dR6Vg1SXQfwKak7BJH78grW8bvukZi7T4sS4Z0ijyWPM0tXc0q-BXMGXQTQt2nnjYAdipWq"/>
+</div>
+<div>
+<h3 class="font-label-md text-on-surface text-[16px]">Sunita D.</h3>
+<div class="flex items-center gap-1 text-secondary-container">
+<span class="material-symbols-outlined text-[16px]">local_florist</span>
+<span class="font-label-sm text-on-surface-variant font-bold">4.7 Karma</span>
+</div>
+</div>
+</div>
+<div class="text-right">
+<div class="font-label-md text-primary">Leaves in 25m</div>
+<div class="font-label-sm text-on-surface-variant">Cargo Bike</div>
+</div>
+</div>
+<div class="flex gap-2 items-center text-on-surface-variant font-body-md text-sm mt-1 border-t border-dashed border-outline-variant pt-2">
+<span class="material-symbols-outlined text-[18px]">route</span>
+<span>Direct Route</span>
+</div>
+<button class="w-full border-2 border-tertiary text-tertiary py-2.5 rounded-lg font-label-md mt-2 flex justify-center items-center gap-2 hover:bg-tertiary/10 transition-colors">
+                        Request Ride
+                    </button>
+</article>
+<!-- Ride Card 3 (Quiet state) -->
+<article class="bg-surface-container-lowest rounded-xl p-4 border border-outline-variant shadow-[0_2px_8px_rgba(75,61,51,0.02)] flex flex-col gap-3 relative overflow-hidden opacity-80">
+<div class="flex justify-between items-start">
+<div class="flex gap-3 items-center">
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant relative bg-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">person</span>
+</div>
+<div>
+<h3 class="font-label-md text-on-surface text-[14px]">Anil P.</h3>
+<div class="font-label-sm text-on-surface-variant">New Rider</div>
+</div>
+</div>
+<div class="text-right">
+<div class="font-label-md text-on-surface-variant">Leaves in 1h</div>
+<div class="font-label-sm text-on-surface-variant">Bike</div>
+</div>
+</div>
+<button class="w-full border border-outline text-on-surface-variant py-2 rounded-lg font-label-md mt-2 hover:bg-surface-variant transition-colors">
+                        Request Ride
+                    </button>
+</article>
+</section>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-3 pb-safe bg-surface-container-highest dark:bg-surface-container-highest shadow-[0_-4px_12px_rgba(75,61,51,0.08)] rounded-t-xl md:hidden">
+<button class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 hover:bg-primary-fixed/20 active:scale-90 transition-all duration-200">
+<span class="material-symbols-outlined">search_check</span>
+<span class="font-label-sm text-label-sm mt-1">Find</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary-fixed/20 active:scale-90 transition-all duration-200 px-4 py-1 rounded-full">
+<span class="material-symbols-outlined">motorcycle</span>
+<span class="font-label-sm text-label-sm mt-1">Offer</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary-fixed/20 active:scale-90 transition-all duration-200 px-4 py-1 rounded-full">
+<span class="material-symbols-outlined">leaderboard</span>
+<span class="font-label-sm text-label-sm mt-1">Ranks</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary-fixed/20 active:scale-90 transition-all duration-200 px-4 py-1 rounded-full">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="font-label-sm text-label-sm mt-1">Profile</span>
+</button>
+</nav>
+</body></html>

@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="max-w-7xl mx-auto p-4 md:p-8">
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-on-surface mb-2">Secret Admin Dashboard</h1>
+        <p class="text-on-surface-variant">Manage Users, Rides, and Karma Transactions</p>
+    </div>
+
+    <!-- Users Section -->
+    <section class="mb-12">
+        <h2 class="text-2xl font-bold text-on-surface mb-4">Users</h2>
+        <div class="overflow-x-auto bg-surface-container rounded-xl border border-outline-variant shadow-sm">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="border-b border-outline-variant bg-surface-container-high">
+                        <th class="p-4 font-semibold text-on-surface">ID</th>
+                        <th class="p-4 font-semibold text-on-surface">Name</th>
+                        <th class="p-4 font-semibold text-on-surface">Phone</th>
+                        <th class="p-4 font-semibold text-on-surface">Karma Balance</th>
+                        <th class="p-4 font-semibold text-on-surface">Trust Rating</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for u in all_users %}
+                    <tr class="border-b border-outline-variant hover:bg-surface-container-high/50">
+                        <td class="p-4 text-on-surface">{{ u.id }}</td>
+                        <td class="p-4 text-on-surface font-medium">{{ u.name }}</td>
+                        <td class="p-4 text-on-surface-variant">{{ u.phone }}</td>
+                        <td class="p-4 text-primary font-bold">{{ u.karma_balance }}</td>
+                        <td class="p-4 text-on-surface-variant">{{ u.trust_rating }} ⭐</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Rides Section -->
+    <section class="mb-12">
+        <h2 class="text-2xl font-bold text-on-surface mb-4">All Rides</h2>
+        <div class="overflow-x-auto bg-surface-container rounded-xl border border-outline-variant shadow-sm">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="border-b border-outline-variant bg-surface-container-high">
+                        <th class="p-4 font-semibold text-on-surface">ID</th>
+                        <th class="p-4 font-semibold text-on-surface">Helper</th>
+                        <th class="p-4 font-semibold text-on-surface">Route</th>
+                        <th class="p-4 font-semibold text-on-surface">Date</th>
+                        <th class="p-4 font-semibold text-on-surface">Reward</th>
+                        <th class="p-4 font-semibold text-on-surface">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for r in all_rides %}
+                    <tr class="border-b border-outline-variant hover:bg-surface-container-high/50">
+                        <td class="p-4 text-on-surface">{{ r.id }}</td>
+                        <td class="p-4 text-on-surface">{{ r.helper.name }}</td>
+                        <td class="p-4 text-on-surface-variant">{{ r.source }} &rarr; {{ r.destination }}</td>
+                        <td class="p-4 text-on-surface-variant">{{ r.date_time | formatDate }}</td>
+                        <td class="p-4 text-primary">{{ r.karma_reward }}</td>
+                        <td class="p-4 text-on-surface font-semibold">
+                            <span class="px-2 py-1 rounded text-xs uppercase tracking-wide
+                                {% if r.status == 'cancelled' %}bg-error/10 text-error
+                                {% elif r.status == 'matched' %}bg-primary/10 text-primary
+                                {% else %}bg-secondary/10 text-secondary{% endif %}">
+                                {{ r.status }}
+                            </span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Transactions Section -->
+    <section class="mb-12">
+        <h2 class="text-2xl font-bold text-on-surface mb-4">Recent Karma Transactions</h2>
+        <div class="overflow-x-auto bg-surface-container rounded-xl border border-outline-variant shadow-sm">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="border-b border-outline-variant bg-surface-container-high">
+                        <th class="p-4 font-semibold text-on-surface">ID</th>
+                        <th class="p-4 font-semibold text-on-surface">Date</th>
+                        <th class="p-4 font-semibold text-on-surface">Sender</th>
+                        <th class="p-4 font-semibold text-on-surface">Receiver</th>
+                        <th class="p-4 font-semibold text-on-surface">Amount</th>
+                        <th class="p-4 font-semibold text-on-surface">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for t in recent_transactions %}
+                    <tr class="border-b border-outline-variant hover:bg-surface-container-high/50">
+                        <td class="p-4 text-on-surface">{{ t.id }}</td>
+                        <td class="p-4 text-on-surface-variant">{{ t.timestamp | formatDate }}</td>
+                        <td class="p-4 text-on-surface">{{ t.sender.name if t.sender else 'System' }}</td>
+                        <td class="p-4 text-on-surface">{{ t.receiver.name }}</td>
+                        <td class="p-4 text-primary font-bold">{{ t.amount }}</td>
+                        <td class="p-4 text-on-surface">
+                            <span class="px-2 py-1 rounded text-xs uppercase tracking-wide
+                                {% if t.status == 'refunded' %}bg-error/10 text-error
+                                {% elif t.status == 'escrow' %}bg-secondary-container text-on-secondary-container
+                                {% else %}bg-primary/10 text-primary{% endif %}">
+                                {{ t.status }}
+                            </span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+{% endblock %}

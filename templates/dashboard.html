@@ -36,7 +36,16 @@
                     </span>
                 </div>
                 <h4 class="font-headline-md text-lg text-on-surface mb-1">{{ ride.source }} <span class="material-symbols-outlined text-sm mx-1">arrow_forward</span> {{ ride.destination }}</h4>
-                <p class="text-sm text-on-surface-variant mb-4">Status: {{ ride.status | capitalize }}</p>
+                <div class="flex justify-between items-center mb-4">
+                    <p class="text-sm text-on-surface-variant">Status: <span class="{% if ride.status == 'cancelled' %}text-error{% endif %}">{{ ride.status | capitalize }}</span></p>
+                    {% if ride.status != 'cancelled' %}
+                    <form action="/api/rides/{{ ride.id }}/cancel" method="POST" onsubmit="return confirm('Are you sure you want to cancel this ride? Any pending or accepted requests will be refunded.');">
+                        <button type="submit" class="text-error font-bold text-sm hover:underline flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[16px]">cancel</span> Cancel Ride
+                        </button>
+                    </form>
+                    {% endif %}
+                </div>
 
                 {% if ride.status == 'matched' %}
                     <div class="mt-auto pt-4 border-t border-outline-variant/30">
@@ -45,7 +54,7 @@
                         </a>
                     </div>
                 {% else %}
-                    {% if ride.requests and ride.requests.length > 0 %}
+                    {% if ride.status != 'cancelled' and ride.requests and ride.requests.length > 0 %}
                         <div class="mt-auto pt-4 border-t border-outline-variant/30">
                             <p class="text-sm text-on-surface font-semibold mb-3">📥 Pending Requests:</p>
                             <div class="space-y-3">
@@ -77,7 +86,12 @@
                 <div class="flex justify-between items-start mb-4">
                     <span class="bg-tertiary/10 text-tertiary text-xs px-2 py-1 rounded font-bold uppercase tracking-wide">Seeking Ride</span>
                     <span class="text-primary font-bold flex items-center gap-1">
-                        -{{ req.ride.karma_reward }} <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">spa</span> (Escrow)
+                        -{{ req.ride.karma_reward }} <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">spa</span> 
+                        {% if req.status == 'cancelled' or req.status == 'rejected' %}
+                        (Refunded)
+                        {% else %}
+                        (Escrow)
+                        {% endif %}
                     </span>
                 </div>
                 <h4 class="font-headline-md text-lg text-on-surface mb-1">{{ req.ride.source }} <span class="material-symbols-outlined text-sm mx-1">arrow_forward</span> {{ req.ride.destination }}</h4>

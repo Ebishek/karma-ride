@@ -81,4 +81,7 @@ Message.belongsTo(Ride, { foreignKey: 'ride_id', as: 'ride' });
 User.hasMany(Message, { foreignKey: 'sender_id', as: 'messages_sent' });
 Message.belongsTo(User, { foreignKey: 'sender_id', as: 'sender' });
 
+KarmaTransaction.belongsTo(User, { foreignKey: 'sender_id', as: 'sender' });
+KarmaTransaction.belongsTo(User, { foreignKey: 'receiver_id', as: 'receiver' });
+
 module.exports = { sequelize, User, Ride, RideRequest, KarmaTransaction, Message };
