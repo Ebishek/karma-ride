@@ -251,7 +251,7 @@ app.post('/api/request/:ride_id', requireAuth, async (req, res) => {
         seeker_id: seeker.id
     });
 
-    res.redirect('/');
+    res.redirect(`/ride/${ride.id}/chat`);
 });
 
 app.post('/api/request/:request_id/accept', requireAuth, async (req, res) => {
@@ -288,22 +288,25 @@ app.get('/ride/:ride_id/chat', requireAuth, async (req, res) => {
     const ride = await Ride.findByPk(req.params.ride_id, {
         include: [
             { model: User, as: 'helper' },
-            { model: RideRequest, as: 'requests', where: { status: 'accepted' }, include: [{ model: User, as: 'seeker' }], required: false },
+            { model: RideRequest, as: 'requests', include: [{ model: User, as: 'seeker' }] },
             { model: Message, as: 'messages', include: [{ model: User, as: 'sender' }] }
         ]
     });
 
     if (!ride) return res.status(404).send("Ride not found");
 
-    const acceptedReq = ride.requests && ride.requests.length > 0 ? ride.requests[0] : null;
-    if (!acceptedReq) return res.status(403).send("Ride is not matched yet");
-
     const isHelper = ride.helper_id === res.locals.user.id;
-    const isSeeker = acceptedReq.seeker_id === res.locals.user.id;
+    const userReq = ride.requests ? ride.requests.find(r => r.seeker_id === res.locals.user.id && (r.status === 'pending' || r.status === 'accepted')) : null;
 
-    if (!isHelper && !isSeeker) return res.status(403).send("Unauthorized");
+    if (!isHelper && !userReq) return res.status(403).send("Unauthorized");
 
-    const otherPerson = isHelper ? acceptedReq.seeker : ride.helper;
+    let otherPerson;
+    if (isHelper) {
+        const activeReq = ride.requests.find(r => r.status === 'accepted') || ride.requests.find(r => r.status === 'pending');
+        otherPerson = activeReq ? activeReq.seeker : { name: 'Seekers', trust_rating: 5.0 };
+    } else {
+        otherPerson = ride.helper;
+    }
 
     res.render('chat.html', {
         ride,
