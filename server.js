@@ -108,18 +108,26 @@ app.get('/register', (req, res) => {
 });
 
 app.post('/register', async (req, res) => {
-    const { name, phone, password } = req.body;
+    const { name, phone, email, password } = req.body;
     
     // Check if exists
     const existing = await User.findOne({ where: { phone } });
     if (existing) {
         return res.render('register.html', { error: 'Phone number already registered' });
     }
+
+    if (email && email.trim() !== '') {
+        const existingEmail = await User.findOne({ where: { email: email.trim() } });
+        if (existingEmail) {
+            return res.render('register.html', { error: 'Email already registered' });
+        }
+    }
     
     const password_hash = await bcrypt.hash(password, 10);
     const user = await User.create({
         name,
         phone,
+        email: email && email.trim() !== '' ? email.trim() : null,
         password_hash,
         karma_balance: 50
     });
@@ -208,6 +216,98 @@ app.post('/api/rides/:ride_id/cancel', requireAuth, async (req, res) => {
 
     ride.status = 'cancelled';
     await ride.save();
+
+    res.redirect('/');
+});
+
+app.post('/api/rides/:id/complete', requireAuth, async (req, res) => {
+    const rideId = req.params.id;
+    const ride = await Ride.findByPk(rideId, {
+        include: [{ model: RideRequest, as: 'requests' }]
+    });
+
+    if (!ride) return res.status(404).send("Ride not found");
+    if (ride.helper_id !== res.locals.user.id) return res.status(403).send("Unauthorized");
+    if (ride.status === 'completed' || ride.status === 'cancelled') return res.redirect('/');
+
+    if (ride.requests) {
+        for (const request of ride.requests) {
+            if (request.status === 'accepted') {
+                await KarmaTransaction.update(
+                    { status: 'completed' },
+                    { where: { ride_id: ride.id, sender_id: request.seeker_id, status: 'escrow' } }
+                );
+                const helper = await User.findByPk(ride.helper_id);
+                helper.karma_balance += ride.karma_reward;
+                await helper.save();
+                
+                request.status = 'completed';
+                await request.save();
+            } else if (request.status === 'pending') {
+                const seeker = await User.findByPk(request.seeker_id);
+                if (seeker) {
+                    seeker.karma_balance += ride.karma_reward;
+                    await seeker.save();
+                }
+                await KarmaTransaction.update(
+                    { status: 'refunded' },
+                    { where: { ride_id: ride.id, sender_id: request.seeker_id, status: 'escrow' } }
+                );
+                request.status = 'cancelled';
+                await request.save();
+            }
+        }
+    }
+
+    ride.status = 'completed';
+    await ride.save();
+
+    res.redirect('/');
+});
+
+app.post('/api/requests/:id/rate', requireAuth, async (req, res) => {
+    const requestId = req.params.id;
+    const { rating } = req.body;
+    
+    const request = await RideRequest.findByPk(requestId, {
+        include: [{ model: Ride, as: 'ride' }]
+    });
+
+    if (!request) return res.status(404).send("Request not found");
+    if (request.seeker_id !== res.locals.user.id) return res.status(403).send("Unauthorized");
+    if (request.status !== 'completed') return res.status(400).send("Can only rate completed rides");
+    
+    request.rating = parseInt(rating);
+    await request.save();
+
+    const helperId = request.ride.helper_id;
+    const allHelperRequests = await RideRequest.findAll({
+        where: { rating: { [Op.not]: null } },
+        include: [{
+            model: Ride,
+            as: 'ride',
+            where: { helper_id: helperId }
+        }]
+    });
+
+    const helper = await User.findByPk(helperId);
+    if (allHelperRequests.length > 0) {
+        const sum = allHelperRequests.reduce((acc, req) => acc + req.rating, 0);
+        helper.trust_rating = parseFloat((sum / allHelperRequests.length).toFixed(1));
+    }
+    
+    let badges = helper.badges || [];
+    if (!badges.includes('First Journey') && allHelperRequests.length >= 1) {
+        badges.push('First Journey');
+    }
+    if (!badges.includes('Stellar Rider') && request.rating === 5) {
+        badges.push('Stellar Rider');
+    }
+    if (!badges.includes('Trusted Member') && allHelperRequests.length >= 5 && helper.trust_rating >= 4.5) {
+        badges.push('Trusted Member');
+    }
+    helper.badges = badges;
+    await helper.save();
 
     res.redirect('/');
 });
@@ -372,7 +472,7 @@ app.get('/profile', requireAuth, async (req, res) => {
 });
 
 app.post('/profile', requireAuth, async (req, res) => {
-    const { name, phone, current_password, new_password } = req.body;
+    const { name, phone, email, current_password, new_password } = req.body;
     const user = await User.findByPk(res.locals.user.id);
 
     if (!user) return res.status(404).send("User not found");
@@ -385,6 +485,19 @@ app.post('/profile', requireAuth, async (req, res) => {
             return res.redirect('/profile?error=' + encodeURIComponent('Phone number already in use'));
         }
         user.phone = phone;
+    }
+
+    if (email !== undefined) {
+        const trimmedEmail = email.trim() !== '' ? email.trim() : null;
+        if (trimmedEmail !== user.email) {
+            if (trimmedEmail !== null) {
+                const existing = await User.findOne({ where: { email: trimmedEmail } });
+                if (existing && existing.id !== user.id) {
+                    return res.redirect('/profile?error=' + encodeURIComponent('Email already in use'));
+                }
+            }
+            user.email = trimmedEmail;
+        }
     }
 
     if (new_password && new_password.trim() !== '') {
@@ -406,14 +519,50 @@ app.post('/profile', requireAuth, async (req, res) => {
 
 // --- LEADERBOARD ROUTE ---
 app.get('/leaderboard', requireAuth, async (req, res) => {
-    const users = await User.findAll({
-        order: [['karma_balance', 'DESC']],
-        limit: 100
-    });
+    const period = req.query.period || 'all';
+    
+    let users = await User.findAll();
+    
+    if (period === 'all') {
+        users = users.map(u => {
+            return { ...u.toJSON(), score: u.karma_balance };
+        });
+    } else {
+        let startDate = new Date();
+        if (period === 'today') {
+            startDate.setHours(0, 0, 0, 0);
+        } else if (period === 'week') {
+            startDate.setDate(startDate.getDate() - startDate.getDay());
+            startDate.setHours(0, 0, 0, 0);
+        } else if (period === 'month') {
+            startDate.setDate(1);
+            startDate.setHours(0, 0, 0, 0);
+        }
+
+        const txs = await KarmaTransaction.findAll({
+            where: {
+                timestamp: { [Op.gte]: startDate },
+                status: { [Op.ne]: 'refunded' }
+            }
+        });
+
+        const userScores = {};
+        for (const tx of txs) {
+            if (tx.receiver_id) {
+                userScores[tx.receiver_id] = (userScores[tx.receiver_id] || 0) + tx.amount;
+            }
+        }
+
+        users = users.map(u => {
+            return { ...u.toJSON(), score: userScores[u.id] || 0 };
+        });
+    }
+
+    users.sort((a, b) => b.score - a.score);
 
     const currentUserId = res.locals.user.id;
     let currentUserRank = -1;
-    let currentUserData = res.locals.user;
+    let currentUserData = null;
 
     for (let i = 0; i < users.length; i++) {
         if (users[i].id === currentUserId) {
@@ -423,16 +572,21 @@ app.get('/leaderboard', requireAuth, async (req, res) => {
         }
     }
 
-    // Top 3
-    const podiumUsers = users.slice(0, 3);
-    // Ranks 4+
-    const listUsers = users.slice(3);
+    if (!currentUserData) {
+        currentUserData = { ...res.locals.user.toJSON(), score: 0 };
+        if (period === 'all') currentUserData.score = res.locals.user.karma_balance;
+    }
+
+    const topUsers = users.slice(0, 100);
+    const podiumUsers = topUsers.slice(0, 3);
+    const listUsers = topUsers.slice(3);
 
     res.render('leaderboard.html', {
         podium: podiumUsers,
         list_users: listUsers,
         current_rank: currentUserRank,
-        current_user_data: currentUserData
+        current_user_data: currentUserData,
+        period: period
     });
 });
 

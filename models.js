@@ -24,9 +24,11 @@ const User = sequelize.define('User', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     name: { type: DataTypes.STRING, allowNull: false },
     phone: { type: DataTypes.STRING, unique: true, allowNull: false },
+    email: { type: DataTypes.STRING, unique: true, allowNull: true },
     password_hash: { type: DataTypes.STRING, allowNull: false },
     karma_balance: { type: DataTypes.INTEGER, defaultValue: 50 },
-    trust_rating: { type: DataTypes.FLOAT, defaultValue: 5.0 }
+    trust_rating: { type: DataTypes.FLOAT, defaultValue: 5.0 },
+    badges: { type: DataTypes.JSON, defaultValue: [] }
 }, { tableName: 'users', timestamps: false });
 
 const Ride = sequelize.define('Ride', {
@@ -44,7 +46,8 @@ const RideRequest = sequelize.define('RideRequest', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     ride_id: { type: DataTypes.INTEGER, references: { model: Ride, key: 'id' } },
     seeker_id: { type: DataTypes.INTEGER, references: { model: User, key: 'id' } },
-    status: { type: DataTypes.STRING, defaultValue: 'pending' }
+    status: { type: DataTypes.STRING, defaultValue: 'pending' },
+    rating: { type: DataTypes.INTEGER, allowNull: true }
 }, { tableName: 'ride_requests', timestamps: false });
 
 const Message = sequelize.define('Message', {

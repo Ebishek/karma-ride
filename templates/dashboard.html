@@ -48,7 +48,12 @@
                 </div>
 
                 {% if ride.status == 'matched' %}
-                    <div class="mt-auto pt-4 border-t border-outline-variant/30">
+                    <div class="mt-auto pt-4 border-t border-outline-variant/30 flex flex-col gap-2">
+                        <form action="/api/rides/{{ ride.id }}/complete" method="POST" class="w-full" onsubmit="return confirm('Mark this journey as completed? This will finalize the Karma transfer.');">
+                            <button type="submit" class="w-full bg-secondary-container text-on-secondary-container font-label-md py-3 rounded-lg shadow-sm flex justify-center items-center gap-2 hover:bg-secondary-container/90 transition-colors">
+                                <span class="material-symbols-outlined text-sm">check_circle</span> Complete Journey
+                            </button>
+                        </form>
                         <a href="/ride/{{ ride.id }}/chat" class="w-full bg-primary text-on-primary font-label-md py-3 rounded-lg shadow-sm flex justify-center items-center gap-2 hover:bg-primary/90 transition-colors">
                             <span class="material-symbols-outlined text-sm">chat</span> Open Secure Chat
                         </a>
@@ -102,6 +107,26 @@
                     <a href="/ride/{{ req.ride.id }}/chat" class="w-full bg-primary text-on-primary font-label-md py-3 rounded-lg shadow-sm flex justify-center items-center gap-2 hover:bg-primary/90 transition-colors">
                         <span class="material-symbols-outlined text-sm">chat</span> Open Secure Chat
                     </a>
+                </div>
+                {% endif %}
+                
+                {% if req.status == 'completed' and not req.rating %}
+                <div class="mt-auto pt-4 border-t border-outline-variant/30 bg-surface-container-high p-3 rounded-xl border border-primary/20">
+                    <form action="/api/requests/{{ req.id }}/rate" method="POST" class="flex flex-col gap-3">
+                        <p class="text-sm font-semibold text-center text-primary">How was your ride?</p>
+                        <div class="flex justify-center gap-3">
+                            <label class="cursor-pointer hover:scale-110 transition-transform"><input type="radio" name="rating" value="1" class="hidden peer"><span class="text-2xl peer-checked:grayscale-0 grayscale opacity-50 peer-checked:opacity-100">⭐</span></label>
+                            <label class="cursor-pointer hover:scale-110 transition-transform"><input type="radio" name="rating" value="2" class="hidden peer"><span class="text-2xl peer-checked:grayscale-0 grayscale opacity-50 peer-checked:opacity-100">⭐</span></label>
+                            <label class="cursor-pointer hover:scale-110 transition-transform"><input type="radio" name="rating" value="3" class="hidden peer"><span class="text-2xl peer-checked:grayscale-0 grayscale opacity-50 peer-checked:opacity-100">⭐</span></label>
+                            <label class="cursor-pointer hover:scale-110 transition-transform"><input type="radio" name="rating" value="4" class="hidden peer"><span class="text-2xl peer-checked:grayscale-0 grayscale opacity-50 peer-checked:opacity-100">⭐</span></label>
+                            <label class="cursor-pointer hover:scale-110 transition-transform"><input type="radio" name="rating" value="5" class="hidden peer" checked><span class="text-2xl peer-checked:grayscale-0 grayscale opacity-50 peer-checked:opacity-100">⭐</span></label>
+                        </div>
+                        <button type="submit" class="w-full bg-primary text-on-primary font-label-md py-2 rounded-lg shadow-sm mt-1">Submit Rating</button>
+                    </form>
+                </div>
+                {% elif req.status == 'completed' and req.rating %}
+                <div class="mt-auto pt-4 border-t border-outline-variant/30 text-center">
+                    <p class="text-sm font-bold text-primary bg-primary/10 py-2 rounded-lg">You rated this ride {{ req.rating }} ⭐</p>
                 </div>
                 {% endif %}
             </div>
