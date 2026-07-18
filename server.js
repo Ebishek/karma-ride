@@ -5,7 +5,7 @@ const path = require('path');
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
 const { Op } = require('sequelize');
-const { sequelize, User, Ride, RideRequest, KarmaTransaction, Message, Notification } = require('./models');
+const { sequelize, User, Ride, RideRequest, KarmaTransaction, Message, Notification, RideAlert } = require('./models');
 
 const app = express();
 
@@ -220,6 +220,94 @@ app.post('/api/rides', requireAuth, async (req, res) => {
     res.redirect('/dashboard');
 });
 
+app.get('/request-ride', requireAuth, (req, res) => {
+    res.render('request_ride.html');
+});
+
+app.post('/api/ride-alerts', requireAuth, async (req, res) => {
+    const user = res.locals.user;
+    const { source, destination, date_time_str, karma_reward } = req.body;
+    
+    const reward = parseInt(karma_reward);
+    if (user.karma_balance < reward) {
+        return res.status(400).send("Not enough Karma");
+    }
+
+    // Deduct Karma (Escrow)
+    user.karma_balance -= reward;
+    await user.save();
+
+    const alert = await RideAlert.create({
+        seeker_id: user.id,
+        source: source,
+        destination: destination,
+        date_time: new Date(date_time_str),
+        karma_reward: reward
+    });
+
+    // Notify all other users
+    const otherUsers = await User.findAll({ where: { id: { [Op.ne]: user.id } } });
+    for (const u of otherUsers) {
+        await Notification.create({
+            user_id: u.id,
+            type: 'ride_alert',
+            content: `${user.name} is looking for a ride from ${source} to ${destination}!`,
+            link: '/find'
+        });
+    }
+
+    res.redirect('/dashboard');
+});
+
+app.post('/api/ride-alerts/:id/fulfill', requireAuth, async (req, res) => {
+    const user = res.locals.user;
+    const alert = await RideAlert.findByPk(req.params.id, {
+        include: [{ model: User, as: 'seeker' }]
+    });
+
+    if (!alert || alert.status !== 'open') return res.status(400).send("Alert not available");
+    if (alert.seeker_id === user.id) return res.status(400).send("Cannot fulfill own alert");
+
+    // Convert Alert to a Ride
+    const newRide = await Ride.create({
+        helper_id: user.id,
+        source: alert.source,
+        destination: alert.destination,
+        date_time: alert.date_time,
+        karma_reward: alert.karma_reward,
+        status: 'open'
+    });
+
+    // Automatically create accepted request for the seeker
+    await RideRequest.create({
+        ride_id: newRide.id,
+        seeker_id: alert.seeker_id,
+        status: 'accepted'
+    });
+
+    // Create KarmaTransaction for the escrow
+    await KarmaTransaction.create({
+        sender_id: alert.seeker_id,
+        receiver_id: user.id,
+        amount: alert.karma_reward,
+        ride_id: newRide.id,
+        status: 'escrow'
+    });
+
+    alert.status = 'fulfilled';
+    await alert.save();
+
+    // Notify the seeker
+    await Notification.create({
+        user_id: alert.seeker_id,
+        type: 'ride_fulfilled',
+        content: `${user.name} has accepted your ride request!`,
+        link: `/rides/${newRide.id}`
+    });
+
+    res.redirect(`/rides/${newRide.id}`);
+});
+
 app.post('/api/rides/:ride_id/cancel', requireAuth, async (req, res) => {
     const ride = await Ride.findByPk(req.params.ride_id, {
         include: [{ model: RideRequest, as: 'requests' }]
@@ -366,7 +454,15 @@ app.get('/find', requireAuth, async (req, res) => {
         include: [{ model: User, as: 'helper' }]
     });
 
-    res.render('find_ride.html', { rides: available_rides });
+    const active_alerts = await RideAlert.findAll({
+        where: {
+            status: 'open',
+            seeker_id: { [Op.ne]: user.id }
+        },
+        include: [{ model: User, as: 'seeker' }]
+    });
+
+    res.render('find_ride.html', { rides: available_rides, alerts: active_alerts });
 });
 
 app.post('/api/request/:ride_id', requireAuth, async (req, res) => {

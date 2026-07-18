@@ -95,6 +95,62 @@
             </article>
             {% endfor %}
         </section>
+
+        <!-- Ride Alerts List -->
+        <section class="w-full lg:w-2/5 flex flex-col gap-4 overflow-y-auto pr-2 pb-8">
+            <div class="flex justify-between items-center">
+                <h2 class="font-headline-md text-headline-md text-on-surface">Village Ride Alerts</h2>
+                <span class="bg-error-container text-on-error-container text-xs font-bold px-2 py-1 rounded-full animate-pulse">Live</span>
+            </div>
+            
+            {% if not alerts or alerts.length == 0 %}
+            <div class="bg-surface-container-low rounded-xl p-6 border border-dashed border-outline-variant flex flex-col items-center justify-center text-center">
+                <p class="font-body-md text-on-surface-variant">No one is currently requesting a ride.</p>
+            </div>
+            {% endif %}
+
+            {% for alert in alerts %}
+            <article class="bg-surface-container-highest rounded-xl p-4 border border-outline-variant shadow-[0_2px_8px_rgba(75,61,51,0.05)] flex flex-col gap-3 relative overflow-hidden transition-transform active:scale-95 duration-150">
+                <div class="flex justify-between items-start">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-tertiary-container flex items-center justify-center text-on-tertiary-container">
+                            <span class="material-symbols-outlined">person</span>
+                        </div>
+                        <div>
+                            <h3 class="font-label-md text-label-md text-on-surface">{{ alert.seeker.name }}</h3>
+                            <p class="text-xs text-on-surface-variant">Needs a ride!</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-end">
+                        <span class="bg-secondary-container text-on-secondary-container px-2 py-1 rounded-md text-xs font-bold border border-outline-variant">
+                            Offering 💎 {{ alert.karma_reward }}
+                        </span>
+                        <span class="text-xs text-on-surface-variant mt-1">{{ alert.date_time | formatDate }}</span>
+                    </div>
+                </div>
+
+                <!-- Route Timeline -->
+                <div class="relative pl-4 py-2 mt-2">
+                    <div class="absolute left-[7px] top-4 bottom-4 w-0.5 bg-outline-variant border-dashed"></div>
+                    <div class="relative flex items-center gap-3 mb-4">
+                        <div class="w-4 h-4 rounded-full bg-surface-container-lowest border-4 border-tertiary absolute -left-[23px]"></div>
+                        <p class="font-body-md text-on-surface">{{ alert.source }}</p>
+                    </div>
+                    <div class="relative flex items-center gap-3">
+                        <div class="w-4 h-4 rounded-full bg-primary absolute -left-[23px]"></div>
+                        <p class="font-body-md text-on-surface font-semibold">{{ alert.destination }}</p>
+                    </div>
+                </div>
+                
+                <form action="/api/ride-alerts/{{ alert.id }}/fulfill" method="POST" class="w-full mt-2">
+                    <button type="submit" class="w-full py-2.5 rounded-lg font-label-md flex justify-center items-center gap-2 transition-colors bg-tertiary text-on-tertiary hover:bg-tertiary/90 shadow-sm">
+                        <span>Fulfill Ride (Earn {{ alert.karma_reward }})</span>
+                        <span class="material-symbols-outlined text-sm">local_taxi</span>
+                    </button>
+                </form>
+            </article>
+            {% endfor %}
+        </section>
     </div>
 </main>
 {% endblock %}

@@ -135,7 +135,7 @@
     </section>
 
     <!-- Core Actions (Chaupal Cards) -->
-    <section class="grid grid-cols-1 md:grid-cols-2 gap-margin-mobile px-margin-mobile md:px-0 mb-12">
+    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-margin-mobile px-margin-mobile md:px-0 mb-12">
         <!-- Find a Ride Card -->
         <a href="/find" class="block">
             <div class="bg-surface-container rounded-xl p-md shadow-[0_4px_12px_rgba(75,61,51,0.08)] border border-outline-variant/30 relative overflow-hidden group hover:scale-[1.01] transition-transform duration-200 h-full">
@@ -171,6 +171,26 @@
                     <button class="bg-on-secondary-fixed-variant text-on-secondary font-label-md text-label-md py-3 px-6 rounded-lg w-full shadow-sm flex justify-center items-center gap-2 border border-on-secondary-fixed-variant pointer-events-none">
                         <span>Post Your Route</span>
                         <span class="material-symbols-outlined text-sm">add</span>
+                    </button>
+                </div>
+            </div>
+        </a>
+
+        <!-- Request a Ride (Alert) Card -->
+        <a href="/request-ride" class="block">
+            <div class="bg-tertiary-container text-on-tertiary-container rounded-xl p-md shadow-[0_4px_12px_rgba(75,61,51,0.08)] border border-tertiary/30 relative overflow-hidden group hover:scale-[1.01] transition-transform duration-200 h-full">
+                <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <span class="material-symbols-outlined text-[120px]" style="font-variation-settings: 'FILL' 1;">campaign</span>
+                </div>
+                <div class="relative z-10 flex flex-col h-full">
+                    <div class="bg-on-tertiary-container/10 w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">campaign</span>
+                    </div>
+                    <h3 class="font-headline-md text-headline-md mb-2">Request a Ride</h3>
+                    <p class="font-body-md text-body-md opacity-90 mb-6 flex-grow">Post an alert for a specific destination and let helpers find you.</p>
+                    <button class="bg-on-tertiary-container text-tertiary-container font-label-md text-label-md py-3 px-6 rounded-lg w-full shadow-sm flex justify-center items-center gap-2 pointer-events-none">
+                        <span>Create Alert</span>
+                        <span class="material-symbols-outlined text-sm">add_alert</span>
                     </button>
                 </div>
             </div>
