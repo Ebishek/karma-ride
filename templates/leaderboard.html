@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block head %}
+<style>
+    .rustic-texture {
+        background-color: #fff8f5;
+        background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+    }
+    
+    /* Block-print numbers simulation */
+    .block-print-num {
+        font-family: 'Literata', serif;
+        font-weight: 700;
+        color: #a03f28; /* Primary */
+        position: relative;
+        display: inline-block;
+        text-shadow: 1px 1px 0px rgba(138, 114, 108, 0.3); /* Outline color for rustic feel */
+    }
+    .block-print-num::before {
+        content: '';
+        position: absolute;
+        top: -2px; left: -2px; right: -2px; bottom: -2px;
+        border: 1px dashed #ddc0ba; /* outline-variant */
+        border-radius: 4px;
+        z-index: -1;
+        background: #ffeadd; /* surface-container */
+        transform: rotate(-2deg);
+    }
+    .block-print-num-gold::before {
+        background: #ffbe30; /* secondary-container */
+        border-color: #7b5800; /* secondary */
+    }
+
+    .dashed-divider {
+        border-bottom: 1px dashed #ddc0ba; /* outline-variant */
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="flex-grow px-margin-mobile md:px-margin-desktop pt-8 pb-32 max-w-4xl mx-auto w-full rustic-texture">
+    <!-- Header Section -->
+    <div class="mb-8 text-center md:text-left mt-8">
+        <h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface mb-2">Community Leaders</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant">Celebrating our top riders sharing journeys.</p>
+    </div>
+
+    <!-- Top 3 Podium (Bento/Card Layout) -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        {% if podium.length > 1 %}
+        <!-- Rank 2 -->
+        <div class="bg-surface-container rounded-xl p-6 flex flex-col items-center justify-center border border-outline-variant/50 shadow-[0_4px_12px_rgba(75,61,51,0.08)] order-2 md:order-1 transform md:translate-y-4">
+            <div class="w-16 h-16 rounded-full overflow-hidden border-4 border-outline mb-3 bg-secondary-container flex items-center justify-center text-2xl font-bold">
+                {{ podium[1].name[0] }}
+            </div>
+            <h3 class="font-label-md text-label-md text-on-surface font-bold text-center">{{ podium[1].name }}</h3>
+            <div class="flex items-center gap-1 text-primary-container font-label-md text-label-md mt-2">
+                <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">spa</span> {{ podium[1].karma_balance }}
+            </div>
+            <div class="mt-4 text-center">
+                <span class="block-print-num text-2xl w-10 h-10 flex items-center justify-center">2</span>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if podium.length > 0 %}
+        <!-- Rank 1 -->
+        <div class="bg-secondary-fixed rounded-xl p-6 flex flex-col items-center justify-center border border-secondary/30 shadow-[0_8px_16px_rgba(75,61,51,0.12)] order-1 md:order-2 z-10">
+            <div class="w-20 h-20 rounded-full overflow-hidden border-4 border-secondary-container mb-3 relative bg-primary text-on-primary flex items-center justify-center text-3xl font-bold">
+                <div class="absolute -top-2 -right-2 bg-primary text-on-primary rounded-full p-1 shadow-sm z-20">
+                    <span class="material-symbols-outlined text-xs">local_fire_department</span>
+                </div>
+                {{ podium[0].name[0] }}
+            </div>
+            <h3 class="font-headline-md text-headline-md text-on-surface font-bold text-center">{{ podium[0].name }}</h3>
+            <div class="flex items-center gap-1 text-primary font-headline-md text-headline-md mt-2">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">spa</span> {{ podium[0].karma_balance }}
+            </div>
+            <div class="mt-4 text-center">
+                <span class="block-print-num block-print-num-gold text-3xl w-12 h-12 flex items-center justify-center">1</span>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if podium.length > 2 %}
+        <!-- Rank 3 -->
+        <div class="bg-surface-container rounded-xl p-6 flex flex-col items-center justify-center border border-outline-variant/50 shadow-[0_4px_12px_rgba(75,61,51,0.08)] order-3 transform md:translate-y-6">
+            <div class="w-16 h-16 rounded-full overflow-hidden border-4 border-outline mb-3 bg-tertiary-container text-on-tertiary-container flex items-center justify-center text-2xl font-bold">
+                {{ podium[2].name[0] }}
+            </div>
+            <h3 class="font-label-md text-label-md text-on-surface font-bold text-center">{{ podium[2].name }}</h3>
+            <div class="flex items-center gap-1 text-primary-container font-label-md text-label-md mt-2">
+                <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">spa</span> {{ podium[2].karma_balance }}
+            </div>
+            <div class="mt-4 text-center">
+                <span class="block-print-num text-2xl w-10 h-10 flex items-center justify-center">3</span>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- List 4-100 -->
+    {% if list_users.length > 0 %}
+    <div class="bg-surface-container-low rounded-xl border border-outline-variant shadow-sm overflow-hidden mb-8">
+        <ul class="flex flex-col">
+            {% for u in list_users %}
+            <li class="flex items-center p-4 dashed-divider hover:bg-surface-variant/30 transition-colors">
+                <div class="w-10 text-center mr-4">
+                    <span class="font-headline-md text-headline-md text-on-surface-variant opacity-70">{{ loop.index + 3 }}</span>
+                </div>
+                <div class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-label-md text-label-md mr-4 font-bold">
+                    {{ u.name[0] }}
+                </div>
+                <div class="flex-grow">
+                    <h4 class="font-label-md text-label-md text-on-surface">{{ u.name }}</h4>
+                </div>
+                <div class="flex items-center gap-1 text-on-surface font-label-md text-label-md bg-surface-container-highest px-3 py-1 rounded-full">
+                    {{ u.karma_balance }} <span class="material-symbols-outlined text-sm text-primary" style="font-variation-settings: 'FILL' 1;">spa</span>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <!-- Your Rank Section -->
+    <div class="fixed bottom-[72px] md:bottom-0 left-0 w-full bg-inverse-surface text-inverse-on-surface p-4 shadow-[0_-8px_16px_rgba(75,61,51,0.15)] z-40 md:relative md:rounded-xl md:mb-8">
+        <div class="max-w-4xl mx-auto flex items-center justify-between">
+            <div class="flex items-center">
+                <div class="w-12 h-12 rounded-full border-2 border-primary mr-4 overflow-hidden relative bg-primary-container text-on-primary-container flex items-center justify-center text-xl font-bold">
+                    {{ current_user_data.name[0] }}
+                </div>
+                <div>
+                    <p class="font-label-sm text-label-sm text-outline-variant uppercase tracking-wider mb-1">Your Rank</p>
+                    <h4 class="font-headline-md text-headline-md font-bold">
+                        {% if current_rank > 0 %}
+                            #{{ current_rank }}
+                        {% else %}
+                            Unranked
+                        {% endif %}
+                    </h4>
+                </div>
+            </div>
+            <div class="text-right">
+                <p class="font-label-sm text-label-sm text-outline-variant mb-1">Karma Points</p>
+                <div class="flex items-center justify-end gap-1 font-label-md text-label-md text-inverse-primary">
+                    {{ current_user_data.karma_balance }} <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">spa</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

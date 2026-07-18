@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JRVRDDSC05"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-JRVRDDSC05');
+    </script>
     <meta charset="UTF-8">
     <script>
         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -140,6 +149,10 @@
                 <span class="material-symbols-outlined">motorcycle</span>
                 <span class="font-label-md">Offer</span>
             </a>
+            <a class="flex items-center gap-2 text-on-surface-variant hover:bg-surface-variant/50 transition-colors p-2 rounded-lg" href="/leaderboard">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">leaderboard</span>
+                <span class="font-label-md">Ranks</span>
+            </a>
         </div>
         {% if user %}
         <div class="flex items-center gap-4 text-primary dark:text-primary-fixed-dim">
@@ -154,9 +167,9 @@
                 <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">spa</span>
                 <span class="font-bold text-sm">{{ user.karma_balance }}</span>
             </div>
-            <div class="h-8 w-8 rounded-full bg-surface-container-high border-2 border-primary-container overflow-hidden hidden md:block">
+            <a href="/profile" class="h-8 w-8 rounded-full bg-surface-container-high border-2 border-primary-container overflow-hidden hidden md:block hover:opacity-80 transition-opacity">
                 <img class="w-full h-full object-cover" data-alt="Profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4_vW_5Gw57zaHgUrDWqmvNICUcMw712hf9-T5hIbygVp09WLlxiDGiUR4h6rGALYmiF8DOpnLVXxqdDiCV7BrXg3VDjcXTi9zZEe-Z7GlEFYfKeH9c8Kl5Hc21N6IsPTPwTyb_-mrJ0ssAjROgDVuNv0AHpv35Z7uis2_APHWbrmeAKCBqrdibZFI4Er8AC0yjHuVqlZp8DWOSyMZFsJcCWkEufh2uSQ2CEqzZa9aPTkUl915KvlI"/>
-            </div>
+            </a>
             <a href="/logout" title="Logout" class="hover:bg-error/20 text-error transition-colors p-2 rounded-full scale-95 transition-transform duration-150 flex items-center justify-center">
                 <span class="material-symbols-outlined">logout</span>
             </a>
@@ -196,7 +209,11 @@
             <span class="material-symbols-outlined">motorcycle</span>
             <span class="font-label-sm text-label-sm mt-1">Offer</span>
         </a>
-        <a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary-fixed/20 rounded-full px-4 py-1 transition-colors" href="#">
+        <a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary-fixed/20 rounded-full px-4 py-1 transition-colors" href="/leaderboard">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">leaderboard</span>
+            <span class="font-label-sm text-label-sm mt-1">Ranks</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary-fixed/20 rounded-full px-4 py-1 transition-colors" href="/profile">
             <span class="material-symbols-outlined">account_circle</span>
             <span class="font-label-sm text-label-sm mt-1">Profile</span>
         </a>

@@ -344,6 +344,98 @@ app.get('/api/ride/:ride_id/messages', requireAuth, async (req, res) => {
     const sortedMessages = ride.messages.sort((a, b) => new Date(a.sent_at) - new Date(b.sent_at));
     res.json({ messages: sortedMessages });
 });
+// --- PROFILE ROUTES ---
+app.get('/profile', requireAuth, async (req, res) => {
+    const error = req.query.error;
+    const success = req.query.success;
+
+    const recentOffered = await Ride.findAll({
+        where: { helper_id: res.locals.user.id },
+        order: [['date_time', 'DESC']],
+        limit: 5
+    });
+
+    const recentRequests = await RideRequest.findAll({
+        where: { seeker_id: res.locals.user.id },
+        include: [{ model: Ride, as: 'ride' }],
+        order: [['id', 'DESC']],
+        limit: 5
+    });
+    const recentRequestedRides = recentRequests.map(r => r.ride).filter(r => r);
+
+    res.render('profile.html', {
+        recentOffered,
+        recentRequestedRides,
+        error,
+        success: success ? "Profile updated successfully!" : null
+    });
+});
+
+app.post('/profile', requireAuth, async (req, res) => {
+    const { name, phone, current_password, new_password } = req.body;
+    const user = await User.findByPk(res.locals.user.id);
+
+    if (!user) return res.status(404).send("User not found");
+
+    if (name) user.name = name;
+    
+    if (phone && phone !== user.phone) {
+        const existing = await User.findOne({ where: { phone } });
+        if (existing) {
+            return res.redirect('/profile?error=' + encodeURIComponent('Phone number already in use'));
+        }
+        user.phone = phone;
+    }
+
+    if (new_password && new_password.trim() !== '') {
+        if (!current_password) {
+            return res.redirect('/profile?error=' + encodeURIComponent('Current password is required to set a new password'));
+        }
+        
+        const isMatch = await bcrypt.compare(current_password, user.password_hash);
+        if (!isMatch) {
+            return res.redirect('/profile?error=' + encodeURIComponent('Incorrect current password'));
+        }
+        
+        user.password_hash = await bcrypt.hash(new_password, 10);
+    }
+
+    await user.save();
+    res.redirect('/profile?success=1');
+});
+
+// --- LEADERBOARD ROUTE ---
+app.get('/leaderboard', requireAuth, async (req, res) => {
+    const users = await User.findAll({
+        order: [['karma_balance', 'DESC']],
+        limit: 100
+    });
+
+    const currentUserId = res.locals.user.id;
+    let currentUserRank = -1;
+    let currentUserData = res.locals.user;
+
+    for (let i = 0; i < users.length; i++) {
+        if (users[i].id === currentUserId) {
+            currentUserRank = i + 1;
+            currentUserData = users[i];
+            break;
+        }
+    }
+
+    // Top 3
+    const podiumUsers = users.slice(0, 3);
+    // Ranks 4+
+    const listUsers = users.slice(3);
+
+    res.render('leaderboard.html', {
+        podium: podiumUsers,
+        list_users: listUsers,
+        current_rank: currentUserRank,
+        current_user_data: currentUserData
+    });
+});
+
 
 // --- ADMIN ROUTES ---
 app.get('/secret-admin-panel', requireAdmin, async (req, res) => {
