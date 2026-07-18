@@ -27,7 +27,8 @@ app.use('/static', express.static(path.join(__dirname, 'static')));
 // Setup Nunjucks
 const env = nunjucks.configure('templates', {
     autoescape: true,
-    express: app
+    express: app,
+    noCache: true
 });
 
 env.addFilter('formatDate', function(dateStr) {
