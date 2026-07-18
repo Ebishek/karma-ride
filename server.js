@@ -114,7 +114,7 @@ app.post('/api/notifications/read_all', requireAuth, async (req, res) => {
 // --- AUTH ROUTES ---
 
 app.get('/login', (req, res) => {
-    if (req.session.userId) return res.redirect('/');
+    if (req.session.userId) return res.redirect('/dashboard');
     res.render('login.html');
 });
 
@@ -124,13 +124,13 @@ app.post('/login', async (req, res) => {
     
     if (user && await bcrypt.compare(password, user.password_hash)) {
         req.session.userId = user.id;
-        return res.redirect('/');
+        return res.redirect('/dashboard');
     }
     res.render('login.html', { error: 'Invalid phone or password' });
 });
 
 app.get('/register', (req, res) => {
-    if (req.session.userId) return res.redirect('/');
+    if (req.session.userId) return res.redirect('/dashboard');
     res.render('register.html');
 });
 
@@ -160,7 +160,7 @@ app.post('/register', async (req, res) => {
     });
     
     req.session.userId = user.id;
-    res.redirect('/');
+    res.redirect('/dashboard');
 });
 
 app.get('/logout', (req, res) => {
@@ -170,7 +170,12 @@ app.get('/logout', (req, res) => {
 
 // --- MAIN ROUTES (Protected) ---
 
-app.get('/', requireAuth, async (req, res) => {
+app.get('/', (req, res) => {
+    if (req.session.userId) return res.redirect('/dashboard');
+    res.render('landing.html');
+});
+
+app.get('/dashboard', requireAuth, async (req, res) => {
     const user = res.locals.user;
     const active_rides = await Ride.findAll({ 
         where: { helper_id: user.id },
@@ -207,7 +212,7 @@ app.post('/api/rides', requireAuth, async (req, res) => {
         karma_reward: parseInt(karma_reward)
     });
     
-    res.redirect('/');
+    res.redirect('/dashboard');
 });
 
 app.post('/api/rides/:ride_id/cancel', requireAuth, async (req, res) => {
@@ -218,7 +223,7 @@ app.post('/api/rides/:ride_id/cancel', requireAuth, async (req, res) => {
     if (!ride) return res.status(404).send("Ride not found");
     if (ride.helper_id !== res.locals.user.id) return res.status(403).send("Unauthorized");
 
-    if (ride.status === 'cancelled') return res.redirect('/');
+    if (ride.status === 'cancelled') return res.redirect('/dashboard');
 
     // Refund Karma for any pending or accepted requests
     if (ride.requests) {
@@ -244,7 +249,7 @@ app.post('/api/rides/:ride_id/cancel', requireAuth, async (req, res) => {
     ride.status = 'cancelled';
     await ride.save();
 
-    res.redirect('/');
+    res.redirect('/dashboard');
 });
 
 app.post('/api/rides/:id/complete', requireAuth, async (req, res) => {
@@ -255,7 +260,7 @@ app.post('/api/rides/:id/complete', requireAuth, async (req, res) => {
 
     if (!ride) return res.status(404).send("Ride not found");
     if (ride.helper_id !== res.locals.user.id) return res.status(403).send("Unauthorized");
-    if (ride.status === 'completed' || ride.status === 'cancelled') return res.redirect('/');
+    if (ride.status === 'completed' || ride.status === 'cancelled') return res.redirect('/dashboard');
 
     if (ride.requests) {
         for (const request of ride.requests) {
@@ -296,7 +301,7 @@ app.post('/api/rides/:id/complete', requireAuth, async (req, res) => {
     ride.status = 'completed';
     await ride.save();
 
-    res.redirect('/');
+    res.redirect('/dashboard');
 });
 
 app.post('/api/requests/:id/rate', requireAuth, async (req, res) => {
@@ -343,7 +348,7 @@ app.post('/api/requests/:id/rate', requireAuth, async (req, res) => {
     helper.badges = badges;
     await helper.save();
 
-    res.redirect('/');
+    res.redirect('/dashboard');
 });
 
 app.get('/find', requireAuth, async (req, res) => {
@@ -422,7 +427,7 @@ app.post('/api/request/:request_id/accept', requireAuth, async (req, res) => {
         }
     );
 
-    res.redirect('/');
+    res.redirect('/dashboard');
 });
 
 app.get('/ride/:ride_id/chat', requireAuth, async (req, res) => {

@@ -125,13 +125,13 @@
     <!-- Top App Bar -->
     <header class="bg-background dark:bg-background shadow-[0_4px_12px_rgba(75,61,51,0.08)] flex justify-between items-center px-margin-mobile h-16 w-full fixed top-0 z-50">
         <div class="flex items-center gap-3">
-            <a href="/" class="flex items-center gap-3">
+            <a href="{% if user %}/dashboard{% else %}/{% endif %}" class="flex items-center gap-3">
                 <img alt="KarmaRide Logo" class="h-10 w-10 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCP7B0g_dNrlyNqnb8mqwE4CRBp2zK4oPAWjfXUAVxt8Wrzsr4qdWB0LncrJ-NzQGBz9qQQtaPTEF3Zn8hc8OCVk22NYKN0rQ2VJBKvN_axjcZyjhbnXPk-SF3OvEIg3nqNW98icfMSYx2bNZWIZliFy-dvHYSrnPlGLLi8SUA8KTAqqWnkQaVlNuaPj4w-rSvqh9AOC9OH3GDOYBjuEmuBUDNdCiJnqE8uOiG6pfFSSIlj6Lib0JJ-"/>
                 <h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary dark:text-primary-fixed-dim">KarmaRide</h1>
             </a>
         </div>
         <div class="hidden md:flex gap-6 items-center">
-            <a class="flex items-center gap-2 text-primary font-bold hover:bg-surface-variant/50 transition-colors p-2 rounded-lg" href="/">
+            <a class="flex items-center gap-2 text-primary font-bold hover:bg-surface-variant/50 transition-colors p-2 rounded-lg" href="{% if user %}/dashboard{% else %}/{% endif %}">
                 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
                 <span class="font-label-md">Home</span>
             </a>
@@ -200,7 +200,7 @@
     <!-- Bottom Navigation Bar (Mobile Only) -->
     {% if user %}
     <nav class="md:hidden bg-surface-container-highest dark:bg-surface-container-highest shadow-[0_-4px_12px_rgba(75,61,51,0.08)] fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-3 pb-safe rounded-t-xl">
-        <a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary-fixed/20 rounded-full px-4 py-1 transition-colors" href="/">
+        <a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary-fixed/20 rounded-full px-4 py-1 transition-colors" href="{% if user %}/dashboard{% else %}/{% endif %}">
             <span class="material-symbols-outlined">home</span>
             <span class="font-label-sm text-label-sm mt-1">Home</span>
         </a>

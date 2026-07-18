@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="w-full">
+    <!-- Hero Section -->
+    <section class="w-full bg-primary-container text-on-primary-container py-20 px-6 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
+        <div class="max-w-4xl mx-auto relative z-10 text-center">
+            <h1 class="font-headline-lg text-4xl md:text-6xl font-bold mb-6">Community Transport for Rural Villages</h1>
+            <p class="font-body-lg text-lg md:text-xl mb-10 max-w-2xl mx-auto text-on-primary-container/80">KarmaRide connects neighbors to share journeys. Offer a ride to earn Karma, or use your Karma to get where you need to go.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="/register" class="bg-primary text-on-primary px-8 py-4 rounded-full font-label-lg font-bold shadow-lg hover:bg-primary/90 transition-transform transform hover:scale-105">Join the Community</a>
+                <a href="/login" class="bg-surface text-primary px-8 py-4 rounded-full font-label-lg font-bold shadow hover:bg-surface-variant transition-colors border border-primary/20">Log In</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section class="max-w-7xl mx-auto py-20 px-6">
+        <div class="text-center mb-16">
+            <h2 class="font-headline-md text-3xl font-bold text-on-surface mb-4">How KarmaRide Works</h2>
+            <p class="text-on-surface-variant max-w-2xl mx-auto font-body-md">We believe in a sharing economy. Instead of money, we use "Karma" to ensure everyone contributes and benefits equally.</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-12">
+            <!-- Step 1 -->
+            <div class="bg-surface-container-low p-8 rounded-2xl shadow-sm border border-outline-variant/30 text-center hover:-translate-y-2 transition-transform duration-300">
+                <div class="w-16 h-16 bg-secondary-container text-on-secondary-container rounded-full flex items-center justify-center mx-auto mb-6">
+                    <span class="material-symbols-outlined text-3xl">motorcycle</span>
+                </div>
+                <h3 class="font-headline-sm text-xl font-bold mb-3">1. Offer a Ride</h3>
+                <p class="text-on-surface-variant font-body-md">Heading to town? Post your journey on the app and help a neighbor get there too.</p>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="bg-surface-container-low p-8 rounded-2xl shadow-sm border border-outline-variant/30 text-center hover:-translate-y-2 transition-transform duration-300">
+                <div class="w-16 h-16 bg-tertiary-container text-on-tertiary-container rounded-full flex items-center justify-center mx-auto mb-6">
+                    <span class="material-symbols-outlined text-3xl">spa</span>
+                </div>
+                <h3 class="font-headline-sm text-xl font-bold mb-3">2. Earn Karma</h3>
+                <p class="text-on-surface-variant font-body-md">When you successfully drop off a passenger, you earn Karma points directly to your wallet.</p>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="bg-surface-container-low p-8 rounded-2xl shadow-sm border border-outline-variant/30 text-center hover:-translate-y-2 transition-transform duration-300">
+                <div class="w-16 h-16 bg-primary-container text-on-primary-container rounded-full flex items-center justify-center mx-auto mb-6">
+                    <span class="material-symbols-outlined text-3xl">search_check</span>
+                </div>
+                <h3 class="font-headline-sm text-xl font-bold mb-3">3. Find a Ride</h3>
+                <p class="text-on-surface-variant font-body-md">Need to go somewhere? Spend your earned Karma to request a ride from other community helpers.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Section -->
+    <section class="bg-surface-container-highest py-16 px-6">
+        <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-12">
+            <div class="flex-1 text-center md:text-left">
+                <h2 class="font-headline-md text-3xl font-bold text-on-surface mb-4">Built on Trust</h2>
+                <p class="text-on-surface-variant font-body-md mb-6">Safety and reliability are our top priorities. After every ride, passengers rate their driver. Consistently great helpers earn community badges and higher Trust Ratings.</p>
+                <a href="/register" class="text-primary font-bold hover:underline flex items-center justify-center md:justify-start gap-1">
+                    Sign up today <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                </a>
+            </div>
+            <div class="flex-1 flex justify-center">
+                <div class="bg-surface p-6 rounded-2xl shadow-lg border border-outline-variant/20 flex flex-col items-center rotate-3 transform">
+                    <div class="w-20 h-20 bg-primary text-on-primary rounded-full flex items-center justify-center text-3xl font-bold mb-4">
+                        A
+                    </div>
+                    <div class="flex items-center gap-1 text-secondary font-bold text-lg mb-2">
+                        5.0 <span class="material-symbols-outlined">star</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <span class="bg-tertiary-container text-on-tertiary-container text-xs px-2 py-1 rounded-full flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[12px]">verified</span> Stellar Rider
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}
