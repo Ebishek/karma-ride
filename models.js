@@ -98,6 +98,14 @@ const Announcement = sequelize.define('Announcement', {
     timestamp: { type: DataTypes.DATE, defaultValue: Sequelize.NOW }
 }, { tableName: 'announcements', timestamps: false });
 
+const PushSubscription = sequelize.define('PushSubscription', {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    user_id: { type: DataTypes.INTEGER, references: { model: User, key: 'id' } },
+    endpoint: { type: DataTypes.TEXT, allowNull: false, unique: true },
+    keys: { type: DataTypes.JSON, allowNull: false },
+    timestamp: { type: DataTypes.DATE, defaultValue: Sequelize.NOW }
+}, { tableName: 'push_subscriptions', timestamps: false });
+
 // Relationships
 User.hasMany(Ride, { foreignKey: 'helper_id', as: 'rides_offered' });
 Ride.belongsTo(User, { foreignKey: 'helper_id', as: 'helper' });
@@ -123,4 +131,4 @@ User.hasMany(RideAlert, { foreignKey: 'seeker_id', as: 'ride_alerts' });
 RideAlert.belongsTo(User, { foreignKey: 'seeker_id', as: 'seeker' });
 Notification.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
 
-module.exports = { sequelize, User, Ride, RideRequest, KarmaTransaction, Message, Notification, RideAlert, Announcement };
+module.exports = { sequelize, User, Ride, RideRequest, KarmaTransaction, Message, Notification, RideAlert, Announcement, PushSubscription };

@@ -5,9 +5,22 @@ const path = require('path');
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
 const { Op } = require('sequelize');
-const { sequelize, User, Ride, RideRequest, KarmaTransaction, Message, Notification, RideAlert, Announcement } = require('./models');
+const { sequelize, User, Ride, RideRequest, KarmaTransaction, Message, Notification, RideAlert, Announcement, PushSubscription } = require('./models');
 
 const app = express();
+
+const webpush = require('web-push');
+
+// Configure web-push
+if (process.env.VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY) {
+    webpush.setVapidDetails(
+        'mailto:admin@karmaride.com',
+        process.env.VAPID_PUBLIC_KEY,
+        process.env.VAPID_PRIVATE_KEY
+    );
+} else {
+    console.warn("⚠️ VAPID keys not found in .env. Web Push will not work.");
+}
 
 // Parse form bodies
 app.use(express.urlencoded({ extended: true }));
@@ -23,6 +36,11 @@ app.use(session({
 
 // Serve static files
 app.use('/static', express.static(path.join(__dirname, 'static')));
+
+// Serve Service Worker from root
+app.get('/sw.js', (req, res) => {
+    res.sendFile(path.join(__dirname, 'static', 'sw.js'));
+});
 
 // Setup Nunjucks
 const env = nunjucks.configure('templates', {
@@ -42,6 +60,10 @@ app.set('view engine', 'html');
 // Sync DB
 sequelize.sync({ alter: true }).then(async () => {
     console.log("Database synced!");
+    const PORT = process.env.PORT || 8000;
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
 }).catch(err => {
     console.error("Database sync failed:", err);
 });
@@ -82,6 +104,7 @@ async function getCurrentUser(req) {
 // Pass user to all templates
 app.use(async (req, res, next) => {
     res.locals.user = await getCurrentUser(req);
+    res.locals.vapidPublicKey = process.env.VAPID_PUBLIC_KEY;
     next();
 });
 
@@ -841,6 +864,29 @@ app.get('/secret-admin-panel', requireAdmin, async (req, res) => {
     });
 });
 
+app.post('/api/push/subscribe', requireAuth, async (req, res) => {
+    const subscription = req.body;
+    
+    // Check if the subscription already exists to avoid duplicates
+    const existing = await PushSubscription.findOne({ 
+        where: { endpoint: subscription.endpoint } 
+    });
+    
+    if (!existing) {
+        await PushSubscription.create({
+            user_id: req.session.userId,
+            endpoint: subscription.endpoint,
+            keys: subscription.keys
+        });
+    } else if (existing.user_id !== req.session.userId) {
+        // Update user_id if the same device is used by a new user
+        existing.user_id = req.session.userId;
+        await existing.save();
+    }
+    
+    res.status(201).json({ success: true });
+});
+
 app.get('/api/admin/trends', requireAdmin, async (req, res) => {
     const daysParam = parseInt(req.query.days) || 7;
     const rides = await Ride.findAll();
@@ -917,7 +963,35 @@ app.post('/secret-admin-panel/announcements', requireAdmin, async (req, res) => 
         await Notification.bulkCreate(notifications);
     }
 
-    // TODO: If push_notification is true, trigger Firebase Cloud Messaging (FCM) or OneSignal here
+    if (push_notification === 'true' && process.env.VAPID_PUBLIC_KEY) {
+        const targetUserIds = targetUsers.map(u => u.id);
+        const subscriptions = await PushSubscription.findAll({
+            where: { user_id: { [Op.in]: targetUserIds } }
+        });
+
+        const payload = JSON.stringify({
+            title: 'New Announcement: ' + title,
+            body: body.substring(0, 100) + (body.length > 100 ? '...' : ''),
+            url: '/'
+        });
+
+        const pushPromises = subscriptions.map(sub => {
+            const pushSub = {
+                endpoint: sub.endpoint,
+                keys: sub.keys
+            };
+            return webpush.sendNotification(pushSub, payload).catch(err => {
+                if (err.statusCode === 404 || err.statusCode === 410) {
+                    console.log('Subscription has expired or is no longer valid: ', err);
+                    return sub.destroy();
+                } else {
+                    console.error('Error sending push notification: ', err);
+                }
+            });
+        });
+
+        await Promise.all(pushPromises);
+    }
 
     res.redirect('/secret-admin-panel/announcements/new?success=true');
 });
@@ -951,7 +1025,4 @@ app.get('/secret-admin-panel/members', requireAdmin, async (req, res) => {
     });
 });
 
-const PORT = process.env.PORT || 8000;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+
