@@ -2,9 +2,22 @@
 
 {% block content %}
 <main class="flex-1 px-margin-mobile md:px-margin-desktop pb-24 md:pb-16 flex flex-col gap-6 w-full max-w-3xl mx-auto relative z-20 mt-8">
-    <div class="mb-2">
-        <h1 class="font-headline-lg text-headline-lg text-on-surface mb-2">Offer a Ride</h1>
-        <p class="font-body-md text-on-surface-variant">Help the community and earn Karma points.</p>
+    <div class="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+            <h1 class="font-headline-lg text-headline-lg text-on-surface mb-2">Offer a Ride</h1>
+            <p class="font-body-md text-on-surface-variant">Help the community and earn Karma points.</p>
+        </div>
+        
+        <div class="flex bg-surface-variant rounded-full p-1 w-full max-w-[280px] shadow-inner border border-outline-variant/30 relative shrink-0">
+            <div class="w-[calc(50%-4px)] absolute top-1 bottom-1 right-1 bg-primary rounded-full shadow-md z-0 transition-all duration-300"></div>
+            
+            <a href="/request-ride" class="flex-1 flex justify-center items-center gap-1 py-2.5 rounded-full font-label-md z-10 transition-colors text-on-surface-variant hover:text-on-surface">
+                <span class="material-symbols-outlined text-sm">hail</span> Request
+            </a>
+            <a href="/offer" class="flex-1 flex justify-center items-center gap-1 py-2.5 rounded-full font-label-md z-10 transition-colors text-on-primary">
+                <span class="material-symbols-outlined text-sm">motorcycle</span> Offer
+            </a>
+        </div>
     </div>
 
     <form action="/api/rides" method="POST" class="bg-surface-container rounded-2xl p-6 md:p-8 shadow-[0_4px_12px_rgba(75,61,51,0.08)] border border-outline-variant/30 space-y-6">

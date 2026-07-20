@@ -143,6 +143,10 @@
                 <span class="material-symbols-outlined">motorcycle</span>
                 <span class="font-label-md">Offer</span>
             </a>
+            <a class="flex items-center gap-2 text-on-surface-variant hover:bg-surface-variant/50 transition-colors p-2 rounded-lg" href="/request-ride">
+                <span class="material-symbols-outlined">hail</span>
+                <span class="font-label-md">Request</span>
+            </a>
             <a class="flex items-center gap-2 text-on-surface-variant hover:bg-surface-variant/50 transition-colors p-2 rounded-lg" href="/leaderboard">
                 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">leaderboard</span>
                 <span class="font-label-md">Ranks</span>
@@ -156,7 +160,7 @@
                     <span class="material-symbols-outlined">notifications</span>
                     <span id="notif-badge" class="hidden absolute top-1 right-2 w-2.5 h-2.5 bg-error rounded-full"></span>
                 </button>
-                <div id="notif-dropdown" class="hidden absolute right-0 mt-2 w-80 bg-surface-container-highest rounded-xl shadow-[0_4px_12px_rgba(75,61,51,0.15)] border border-outline-variant/30 overflow-hidden z-50 flex flex-col max-h-96">
+                <div id="notif-dropdown" class="hidden fixed top-[72px] right-4 left-4 sm:absolute sm:top-auto sm:right-0 sm:left-auto sm:mt-2 sm:w-80 bg-surface-container-highest rounded-xl shadow-[0_4px_12px_rgba(75,61,51,0.15)] border border-outline-variant/30 overflow-hidden z-50 flex flex-col max-h-96">
                     <div class="p-3 border-b border-outline-variant/30 flex justify-between items-center bg-surface-container">
                         <h4 class="font-headline-md text-sm text-on-surface">Notifications</h4>
                         <button id="mark-all-read" class="text-xs text-primary font-bold hover:underline">Mark all read</button>
@@ -208,19 +212,22 @@
             <span class="material-symbols-outlined">search_check</span>
             <span class="font-label-sm text-label-sm mt-1">Find</span>
         </a>
-        <a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary-fixed/20 rounded-full px-4 py-1 transition-colors" href="/offer">
-            <span class="material-symbols-outlined">motorcycle</span>
-            <span class="font-label-sm text-label-sm mt-1">Offer</span>
+        <a href="/offer" class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary-fixed/20 rounded-lg p-2 transition-all">
+            <span class="material-symbols-outlined mb-1">motorcycle</span>
+            <span class="font-label-sm text-label-sm">Offer</span>
         </a>
-        <a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary-fixed/20 rounded-full px-4 py-1 transition-colors" href="/leaderboard">
-            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">leaderboard</span>
-            <span class="font-label-sm text-label-sm mt-1">Ranks</span>
+        <a href="/request-ride" class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary-fixed/20 rounded-lg p-2 transition-all">
+            <span class="material-symbols-outlined mb-1">hail</span>
+            <span class="font-label-sm text-label-sm">Request</span>
+        </a>
+        <a href="/leaderboard" class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary-fixed/20 rounded-lg p-2 transition-all">
+            <span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">leaderboard</span>
+            <span class="font-label-sm text-label-sm">Ranks</span>
         </a>
         <a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary-fixed/20 rounded-full px-4 py-1 transition-colors" href="/profile">
             <span class="material-symbols-outlined">account_circle</span>
             <span class="font-label-sm text-label-sm mt-1">Profile</span>
         </a>
-        <a class="flex flex-col items-center justify-center text-error hover:bg-error/20 rounded-full px-4 py-1 transition-colors" href="/logout">
             <span class="material-symbols-outlined">logout</span>
             <span class="font-label-sm text-label-sm mt-1">Logout</span>
         </a>

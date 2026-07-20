@@ -2,474 +2,317 @@
 <html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Village Chaupal Dashboard - KarmaRide</title>
+<title>Village Chaupal Dashboard - Enterprise SaaS</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-
-<script id="tailwind-config">
-tailwind.config = {
-    darkMode: "class",
-    theme: {
-        extend: {
-            "colors": {
-                "tertiary-container": "#347e8b",
-                "primary-fixed-dim": "#ffb4a3",
-                "on-primary-fixed-variant": "#812914",
-                "secondary": "#7b5800",
-                "error": "#ba1a1a",
-                "surface-variant": "#f4ded0",
-                "surface-dim": "#ecd6c8",
-                "tertiary": "#106571",
-                "on-primary-fixed": "#3d0700",
-                "surface-bright": "#fff8f5",
-                "secondary-fixed-dim": "#fcbc2c",
-                "error-container": "#ffdad6",
-                "inverse-on-surface": "#ffede3",
-                "on-secondary-fixed-variant": "#5d4200",
-                "on-tertiary": "#ffffff",
-                "surface-container-lowest": "#ffffff",
-                "surface-container-high": "#fae4d6",
-                "secondary-container": "#ffbe30",
-                "on-secondary": "#ffffff",
-                "on-error-container": "#93000a",
-                "surface-container-highest": "#f4ded0",
-                "primary-fixed": "#ffdad2",
-                "secondary-fixed": "#ffdea6",
-                "on-tertiary-container": "#f7feff",
-                "on-surface": "#241911",
-                "on-tertiary-fixed-variant": "#004e59",
-                "surface": "#fff8f5",
-                "on-surface-variant": "#56423d",
-                "surface-tint": "#a03f29",
-                "inverse-primary": "#ffb4a3",
-                "on-primary": "#ffffff",
-                "inverse-surface": "#3b2e24",
-                "outline-variant": "#ddc0ba",
-                "tertiary-fixed-dim": "#8bd2df",
-                "on-secondary-container": "#6f4f00",
-                "on-background": "#241911",
-                "primary-container": "#c0573e",
-                "on-tertiary-fixed": "#001f24",
-                "tertiary-fixed": "#a7eefc",
-                "on-error": "#ffffff",
-                "outline": "#8a726c",
-                "on-secondary-fixed": "#271900",
-                "surface-container-low": "#fff1e9",
-                "primary": "#a03f28",
-                "on-primary-container": "#120100",
-                "background": "#fff8f5",
-                "surface-container": "#ffeadd"
-            },
-            "borderRadius": {
-                "DEFAULT": "0.25rem",
-                "lg": "0.5rem",
-                "xl": "0.75rem",
-                "full": "9999px"
-            },
-            "spacing": {
-                "gutter": "16px",
-                "margin-mobile": "16px",
-                "xs": "8px",
-                "margin-desktop": "32px",
-                "sm": "16px",
-                "md": "24px",
-                "lg": "40px",
-                "xl": "64px",
-                "base": "4px"
-            },
-            "fontFamily": {
-                "body-md": ["Plus Jakarta Sans"],
-                "label-md": ["Plus Jakarta Sans"],
-                "headline-lg": ["Literata"],
-                "body-lg": ["Plus Jakarta Sans"],
-                "headline-lg-mobile": ["Literata"],
-                "headline-md": ["Literata"],
-                "label-sm": ["Plus Jakarta Sans"]
-            },
-            "fontSize": {
-                "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
-                "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
-                "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}],
-                "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
-                "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}]
-            }
-        }
-    }
-}
-</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"on-primary-fixed-variant": "#3323cc", primary: "#1e00a9", "tertiary-fixed": "#ffdbcc", "on-tertiary-fixed": "#351000", error: "#BA1A1A", "primary-fixed": "#e2dfff", "on-secondary-container": "#56657c", "primary-fixed-dim": "#c3c0ff", "on-tertiary-container": "#ff9f72", "on-primary-container": "#b1afff", "surface-tint": "#4d44e3", "on-background": "#111c2d", "on-tertiary-fixed-variant": "#7b2f00", "on-tertiary": "#ffffff", secondary: "#505f76", "on-secondary-fixed": "#0c1c30", "on-secondary-fixed-variant": "#39485e", "secondary-fixed-dim": "#b8c7e2", "surface-variant": "#d8e3fb", "on-error-container": "#93000a", "surface-bright": "#f9f9ff", "outline-variant": "#c7c4d8", "error-container": "#ffdad6", "on-surface": "#111c2d", "tertiary-fixed-dim": "#ffb694", "on-primary-fixed": "#0f0069", "on-surface-variant": "#464555", "inverse-surface": "#263143", "on-secondary": "#ffffff", surface: "#f9f9ff", background: "#f9f9ff", "surface-dim": "#cfdaf2", "secondary-fixed": "#d4e3ff", tertiary: "#592000", "surface-container-lowest": "#ffffff", "surface-container-low": "#f0f3ff", "on-error": "#ffffff", "primary-container": "#3525cd", outline: "#777587", "inverse-on-surface": "#ecf1ff", "inverse-primary": "#c3c0ff", "tertiary-container": "#7d3000", "surface-container": "#e7eeff", "on-primary": "#ffffff", "surface-container-highest": "#d8e3fb", "secondary-container": "#d4e3ff", "surface-container-high": "#dee8ff", "outline-subtle": "rgba(199, 196, 216, 0.3)", warning: "#F59E0B", "card-bg": "#FFFFFF", "surface-bg": "#F8FAFC", info: "#3B82F6", success: "#10B981"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}, spacing: {"stack-sm": "8px", "stack-md": "16px", "section-margin": "48px", "bento-gap": "16px", "container-padding": "24px", unit: "4px"}, fontFamily: {"label-sm": ["Inter"], "body-lg": ["Inter"], "headline-md": ["Inter"], "headline-lg": ["Inter"], "display-lg": ["Inter"], "headline-sm": ["Inter"], "label-md": ["Inter"], "body-md": ["Inter"], "body-sm": ["Inter"]}, fontSize: {"label-sm": ["11px", {lineHeight: "14px", fontWeight: "500"}], "body-lg": ["18px", {lineHeight: "28px", fontWeight: "400"}], "headline-md": ["24px", {lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "600"}], "headline-lg": ["32px", {lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "700"}], "display-lg": ["48px", {lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700"}], "headline-sm": ["20px", {lineHeight: "28px", fontWeight: "600"}], "label-md": ["12px", {lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "600"}], "body-md": ["16px", {lineHeight: "24px", fontWeight: "400"}], "body-sm": ["14px", {lineHeight: "20px", fontWeight: "400"}]}}}};</script>
 <style>
-    body {
-        background-color: theme('colors.background');
-        color: theme('colors.on-background');
-    }
-    .rustic-shadow {
-        box-shadow: 4px 0 12px rgba(75, 61, 51, 0.08);
-    }
-    .rustic-card {
-        border: 1px solid theme('colors.outline-variant');
-        background-color: theme('colors.surface');
-        box-shadow: 0 4px 12px rgba(75, 61, 51, 0.05);
-        border-radius: theme('borderRadius.lg');
-        position: relative;
-        overflow: hidden;
-    }
-    .rustic-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.03"/></svg>');
-        pointer-events: none;
-        z-index: 0;
-    }
-    .rustic-card > * {
-        position: relative;
-        z-index: 1;
-    }
-    .dashed-divider {
-        border-bottom: 1px dashed theme('colors.outline-variant');
-    }
-</style>
+        body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; }
+        .bento-card {
+            background-color: #FFFFFF;
+            border-radius: 8px; /* Fixed based on prompt constraint */
+            box-shadow: 0px 1px 3px rgba(0,0,0,0.05), 0px 10px 15px -3px rgba(0,0,0,0.08);
+            padding: 24px;
+            transition: all 0.2s ease-in-out;
+        }
+        .bento-card:hover {
+            box-shadow: 0px 4px 6px -1px rgba(0, 0, 0, 0.1), 0px 20px 25px -5px rgba(0, 0, 0, 0.1);
+            transform: translateY(-1px);
+        }
+        .metric-trend-up { color: #10B981; }
+        .metric-trend-down { color: #EF4444; }
+        .status-badge-completed { background-color: rgba(16, 185, 129, 0.1); color: #047857; }
+        .status-badge-pending { background-color: rgba(245, 158, 11, 0.1); color: #B45309; }
+        .status-badge-active { background-color: rgba(59, 130, 246, 0.1); color: #1D4ED8; }
+        
+        /* Bar chart styling for visual representation */
+        .chart-bar-container { display: flex; align-items: flex-end; gap: 8px; height: 180px; width: 100%; }
+        .chart-bar { background-color: #4F46E5; width: 100%; border-radius: 4px 4px 0 0; opacity: 0.8; transition: opacity 0.2s; }
+        .chart-bar:hover { opacity: 1; }
+    </style>
 </head>
-<body class="antialiased overflow-x-hidden flex h-screen font-body-md text-body-md bg-background">
+<body class="text-[#1E293B] antialiased">
+<div class="flex h-screen overflow-hidden">
 <!-- SideNavBar -->
-<nav class="hidden md:flex h-screen w-64 fixed left-0 top-0 bg-surface-container-low shadow-[4px_0_12px_rgba(75,61,51,0.08)] flex-col p-md gap-sm z-50">
-<!-- Brand -->
-<div class="flex items-center gap-sm mb-md px-4">
-<img alt="Brand logo" class="w-10 h-10 rounded-md object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLsuVwV5b-hLk3VPrRGw34AgYvAhjAtwYY7ExcD6Qv8cZ-4dBLcuq7tdeKGK-7kVqy_yR7jEetxwKRk3Mdb1XNUIWTR_IYQxc_aHa4wxbKmPxB7N77f3Mg1UKuXGpAdj533jvHoH1vyCF49uK47qx60Hy73gUM4goo3xBW31XzrnrYQP5dD_cimm2s6xv-AC29RKZzc3kwOZPAZU0bdzDjmEiqvBtQcbAYR1oeYBDYlH5dJgJwteC0Jl-iw"/>
-<div class="flex flex-col">
-<span class="font-headline-md text-headline-md font-bold text-primary">KarmaRide Admin</span>
-<span class="font-label-sm text-label-sm text-on-surface-variant">Village Sector</span>
+<aside class="w-64 h-screen fixed left-0 top-0 bg-surface flex flex-col py-stack-md border-r border-outline-variant/30 shadow-sm z-20 hidden md:flex">
+<div class="px-container-padding mb-8 flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold">K</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">KarmaRide Admin</h1>
+<p class="font-label-sm text-label-sm text-secondary">Community Management</p>
 </div>
 </div>
-<!-- CTA -->
-<button class="w-full bg-primary-container text-on-primary-container font-label-md text-label-md py-3 px-4 rounded-lg flex items-center justify-center gap-2 hover:bg-primary hover:text-on-primary transition-colors mb-md">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add_circle</span>
-            New Announcement
-        </button>
-<!-- Navigation Links -->
-<div class="flex-1 flex flex-col gap-2">
-<a class="flex items-center gap-3 px-4 py-3 bg-secondary-container text-on-secondary-container rounded-lg font-bold hover:bg-surface-container-high transition-colors scale-95 transition-transform duration-200" href="#">
+<nav class="flex-1 px-3 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-primary font-bold border-r-4 border-primary bg-primary-container/10 transition-transform scale-[0.98]" href="/secret-admin-panel">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
-<span class="font-label-md text-label-md">Chaupal Dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
 </a>
-<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#members">
-<span class="material-symbols-outlined">groups</span>
-<span class="font-label-md text-label-md">Sangh Members</span>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-secondary font-medium hover:bg-surface-container-high transition-colors" href="/secret-admin-panel/members">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-md text-label-md">Members</span>
 </a>
-<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
-<span class="material-symbols-outlined">local_taxi</span>
-<span class="font-label-md text-label-md">Yatra Tracking</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
-<span class="material-symbols-outlined">notifications_active</span>
-<span class="font-label-md text-label-md">Karma Alerts</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
-<span class="material-symbols-outlined">settings</span>
-<span class="font-label-md text-label-md">Village Settings</span>
-</a>
-</div>
-<!-- Footer Links -->
-<div class="mt-auto flex flex-col gap-2 border-t border-outline-variant pt-4">
-<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="/">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-secondary font-medium hover:bg-surface-container-high transition-colors" href="/">
 <span class="material-symbols-outlined">home</span>
 <span class="font-label-md text-label-md">Return to App</span>
 </a>
-<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="/logout">
-<span class="material-symbols-outlined">logout</span>
-<span class="font-label-md text-label-md">Logout</span>
-</a>
-</div>
 </nav>
-<!-- Main Content Wrapper -->
-<div class="flex-1 ml-0 md:ml-64 flex flex-col h-screen overflow-hidden">
+<div class="px-container-padding mt-auto">
+<button class="w-full py-2 bg-primary-container text-white rounded-lg font-label-md text-label-md hover:opacity-90 transition-opacity">New Announcement</button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col md:ml-64 relative w-full h-full">
 <!-- TopNavBar -->
-<header class="fixed top-0 right-0 w-full md:w-[calc(100%-16rem)] h-16 bg-surface border-b border-outline-variant z-40 flex justify-between items-center px-margin-desktop">
-<div class="flex items-center gap-sm">
-<!-- Mobile Menu Button (Hidden on Desktop) -->
-<button class="md:hidden text-on-surface-variant p-2 rounded-lg hover:bg-surface-container-high">
-<span class="material-symbols-outlined">menu</span>
-</button>
-<span class="font-headline-md text-headline-md font-bold text-primary hidden md:block">KarmaRide Admin</span>
-</div>
+<header class="fixed top-0 right-0 left-0 md:left-64 h-16 z-10 bg-surface/80 backdrop-blur-md shadow-sm flex justify-between items-center px-container-padding w-auto">
+<div class="font-headline-sm text-headline-sm font-bold text-on-surface">
+                KarmaRide Console
+            </div>
 <div class="flex items-center gap-4">
-<!-- Search (Placeholder for layout) -->
-<div class="hidden sm:flex items-center bg-surface-container-low rounded-full px-4 py-2 border border-outline-variant focus-within:border-primary transition-colors">
-<span class="material-symbols-outlined text-on-surface-variant mr-2">search</span>
-<input class="bg-transparent border-none outline-none text-body-md font-body-md text-on-surface placeholder:text-on-surface-variant w-48 focus:ring-0" placeholder="Search village activity..." type="text"/>
+<div class="relative hidden md:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 transform -translate-y-1/2 text-outline text-sm">search</span>
+<input class="pl-9 pr-4 py-1.5 bg-surface-container-lowest border border-outline-variant rounded-full font-body-sm text-body-sm focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all outline-none w-64" placeholder="Search..." type="text"/>
 </div>
-<!-- Trailing Actions -->
-<div class="flex items-center gap-2">
-<button class="p-2 text-on-surface-variant hover:text-primary transition-colors rounded-full hover:bg-surface-container-high relative">
+<button class="text-on-surface-variant hover:text-primary transition-colors p-1 rounded-full hover:bg-surface-container">
 <span class="material-symbols-outlined">notifications</span>
-<span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
 </button>
-<button class="p-2 text-on-surface-variant hover:text-primary transition-colors rounded-full hover:bg-surface-container-high">
-<span class="material-symbols-outlined">history_edu</span>
+<button class="text-on-surface-variant hover:text-primary transition-colors p-1 rounded-full hover:bg-surface-container">
+<span class="material-symbols-outlined">help_outline</span>
 </button>
-<button class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant overflow-hidden ml-2 flex items-center justify-center text-primary hover:opacity-80 transition-opacity">
-<span class="material-symbols-outlined">person</span>
+<div class="h-6 w-px bg-outline-variant/50 mx-1"></div>
+<button class="flex items-center gap-2 hover:bg-surface-container p-1 pr-3 rounded-full transition-colors">
+<img class="w-8 h-8 rounded-full object-cover" src="https://ui-avatars.com/api/?name=Admin&background=1e00a9&color=fff"/>
+<span class="font-label-md text-label-md text-on-surface hidden lg:block">Admin</span>
 </button>
-</div>
 </div>
 </header>
-<!-- Main Canvas -->
-<main class="flex-1 overflow-y-auto pt-24 p-margin-mobile md:p-margin-desktop bg-surface-container-lowest">
+<!-- Canvas -->
+<main class="flex-1 overflow-y-auto pt-24 pb-12 px-4 md:px-8">
+<div class="max-w-7xl mx-auto space-y-6">
 <!-- Page Header -->
-<div class="mb-lg">
-<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-xs">Village Chaupal Dashboard</h1>
-<p class="font-body-lg text-body-lg text-on-surface-variant">High-level overview of community health and transportation harmony.</p>
-</div>
-
-{% set total_karma = 0 %}
-{% for u in all_users %}
-  {% set total_karma = total_karma + u.karma_balance %}
-{% endfor %}
-
-{% set active_rides_count = 0 %}
-{% for r in all_rides %}
-  {% if r.status != 'completed' and r.status != 'cancelled' %}
-    {% set active_rides_count = active_rides_count + 1 %}
-  {% endif %}
-{% endfor %}
-
-<!-- Bento Grid Layout -->
-<div class="grid grid-cols-1 md:grid-cols-12 gap-md mb-12">
-<!-- KPI Cards (Row 1) -->
-<div class="md:col-span-4 rustic-card p-md flex flex-col gap-sm border-t-4 border-t-secondary-container">
-<div class="flex justify-between items-start">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
 <div>
-<p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Total Good Karma</p>
-<h2 class="font-headline-lg text-headline-lg text-on-surface mt-1">{{ total_karma }}</h2>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-1">Village Chaupal Overview</h2>
+<p class="font-body-md text-body-md text-secondary">Real-time metrics and community activity monitoring.</p>
 </div>
-<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
-<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">spa</span>
-</div>
-</div>
-<div class="flex items-center gap-1 text-tertiary-container mt-auto">
-<span class="material-symbols-outlined text-sm">trending_up</span>
-<span class="font-label-sm text-label-sm">Community wealth</span>
-</div>
-</div>
-<div class="md:col-span-4 rustic-card p-md flex flex-col gap-sm border-t-4 border-t-tertiary">
-<div class="flex justify-between items-start">
-<div>
-<p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Active Rides</p>
-<h2 class="font-headline-lg text-headline-lg text-on-surface mt-1">{{ active_rides_count }}</h2>
-</div>
-<div class="w-12 h-12 rounded-full bg-tertiary-container flex items-center justify-center text-on-tertiary-container">
-<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">motorcycle</span>
-</div>
-</div>
-<div class="flex items-center gap-1 text-on-surface-variant mt-auto">
-<span class="material-symbols-outlined text-sm">schedule</span>
-<span class="font-label-sm text-label-sm">Currently moving in the sector</span>
-</div>
-</div>
-<div class="md:col-span-4 rustic-card p-md flex flex-col gap-sm border-t-4 border-t-primary">
-<div class="flex justify-between items-start">
-<div>
-<p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Verified Members</p>
-<h2 class="font-headline-lg text-headline-lg text-on-surface mt-1">{{ all_users | length }}</h2>
-</div>
-<div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container">
-<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">how_to_reg</span>
-</div>
-</div>
-<div class="flex items-center gap-1 text-tertiary-container mt-auto">
-<span class="material-symbols-outlined text-sm">people</span>
-<span class="font-label-sm text-label-sm">Total users registered</span>
-</div>
-</div>
-
-<!-- Main Content Row -->
-<!-- Village Activity Chart (Simplified UI Representation) -->
-<div class="md:col-span-8 rustic-card p-md flex flex-col">
-<div class="flex justify-between items-center mb-md">
-<h3 class="font-headline-md text-headline-md text-on-surface">Village Activity Trends</h3>
-<button class="text-primary font-label-md text-label-md hover:underline flex items-center gap-1">
-                            This Week <span class="material-symbols-outlined text-sm">arrow_drop_down</span>
-</button>
-</div>
-<div class="flex-1 bg-surface-container-low rounded-lg border border-outline-variant p-4 flex items-end gap-2 h-64 relative">
-<!-- Abstract Chart Bars -->
-<div class="w-full flex justify-around items-end h-full">
-<div class="w-8 md:w-12 bg-surface-variant rounded-t-sm h-[30%] relative group">
-<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-inverse-surface text-inverse-on-surface text-label-sm px-2 py-1 rounded">120</div>
-</div>
-<div class="w-8 md:w-12 bg-surface-variant rounded-t-sm h-[45%] relative group">
-<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-inverse-surface text-inverse-on-surface text-label-sm px-2 py-1 rounded">180</div>
-</div>
-<div class="w-8 md:w-12 bg-secondary-container rounded-t-sm h-[80%] relative group">
-<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-inverse-surface text-inverse-on-surface text-label-sm px-2 py-1 rounded">320</div>
-</div>
-<div class="w-8 md:w-12 bg-surface-variant rounded-t-sm h-[60%] relative group">
-<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-inverse-surface text-inverse-on-surface text-label-sm px-2 py-1 rounded">240</div>
-</div>
-<div class="w-8 md:w-12 bg-primary-container opacity-80 rounded-t-sm h-[50%] relative group">
-<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-inverse-surface text-inverse-on-surface text-label-sm px-2 py-1 rounded">200</div>
-</div>
-<div class="w-8 md:w-12 bg-surface-variant rounded-t-sm h-[70%] relative group">
-<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-inverse-surface text-inverse-on-surface text-label-sm px-2 py-1 rounded">280</div>
-</div>
-<div class="w-8 md:w-12 bg-tertiary-container opacity-60 rounded-t-sm h-[90%] relative group">
-<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-inverse-surface text-inverse-on-surface text-label-sm px-2 py-1 rounded">360</div>
-</div>
-</div>
-<!-- Axis Labels -->
-<div class="absolute bottom-0 left-0 w-full flex justify-around text-label-sm text-on-surface-variant pt-2 border-t border-outline-variant mt-2">
-<span>Mon</span>
-<span>Tue</span>
-<span class="font-bold text-on-surface">Wed</span>
-<span>Thu</span>
-<span>Fri</span>
-<span>Sat</span>
-<span>Sun</span>
-</div>
-</div>
-</div>
-<!-- Recent Karma Alerts -->
-<div class="md:col-span-4 rustic-card flex flex-col">
-<div class="p-md border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
-<h3 class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
-<span class="material-symbols-outlined text-primary">campaign</span>
-                            Recent Karma Alerts
-                        </h3>
-</div>
-<div class="flex-1 overflow-y-auto p-md flex flex-col gap-4">
-<!-- Alert Item 1 -->
-<div class="flex gap-3 dashed-divider pb-4">
-<div class="mt-1 w-8 h-8 rounded-full bg-error-container text-on-error-container flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-sm">construction</span>
-</div>
-<div>
-<h4 class="font-label-md text-label-md text-on-surface">Road Closure near Panchayat</h4>
-<p class="font-body-md text-body-md text-on-surface-variant mt-1 text-sm">Main road blocked for repairs. Divert via East fields.</p>
-<span class="font-label-sm text-label-sm text-outline mt-2 block">10 mins ago • Reported by Ramesh</span>
-</div>
-</div>
-<!-- Alert Item 2 -->
-<div class="flex gap-3 dashed-divider pb-4">
-<div class="mt-1 w-8 h-8 rounded-full bg-tertiary-container text-on-tertiary-container flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-sm">rainy</span>
-</div>
-<div>
-<h4 class="font-label-md text-label-md text-on-surface">Heavy Rain Alert</h4>
-<p class="font-body-md text-body-md text-on-surface-variant mt-1 text-sm">Expect delays. Ride carefully on mud paths.</p>
-<span class="font-label-sm text-label-sm text-outline mt-2 block">1 hour ago • System Alert</span>
-</div>
-</div>
-<!-- Alert Item 3 -->
 <div class="flex gap-3">
-<div class="mt-1 w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-sm">festival</span>
+<button class="px-4 py-2 bg-surface-container-lowest border border-outline-variant text-on-surface rounded-lg font-label-md text-label-md hover:bg-surface-container transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">download</span> Export Report
+                        </button>
 </div>
+</div>
+<!-- Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-bento-gap">
+<!-- Metrics Row (Spans all columns) -->
+<div class="col-span-1 md:col-span-2 lg:col-span-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-bento-gap">
+<!-- Metric 1 -->
+<div class="bento-card flex flex-col gap-2">
+<div class="flex items-center gap-2 text-secondary">
+<span class="material-symbols-outlined text-[20px]">stars</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Total Good Karma</span>
+</div>
+<div class="font-headline-lg text-headline-lg text-on-surface">{{ total_karma }}</div>
+<div class="font-body-sm text-body-sm font-medium text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">info</span> Total across platform
+                            </div>
+</div>
+<!-- Metric 2 -->
+<div class="bento-card flex flex-col gap-2">
+<div class="flex items-center gap-2 text-secondary">
+<span class="material-symbols-outlined text-[20px]">directions_car</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Active Rides</span>
+</div>
+<div class="font-headline-lg text-headline-lg text-on-surface">{{ active_rides_count }}</div>
+<div class="font-body-sm text-body-sm font-medium text-secondary flex items-center gap-1">
+                                Currently En Route
+                            </div>
+</div>
+<!-- Metric 3 -->
+<div class="bento-card flex flex-col gap-2">
+<div class="flex items-center gap-2 text-secondary">
+<span class="material-symbols-outlined text-[20px]">verified_user</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Verified Members</span>
+</div>
+<div class="font-headline-lg text-headline-lg text-on-surface">{{ total_users }}</div>
+<div class="font-body-sm text-body-sm font-medium text-secondary flex items-center gap-1">
+                                Community Size
+                            </div>
+</div>
+<!-- Metric 4 -->
+<div class="bento-card flex flex-col gap-2">
+<div class="flex items-center gap-2 text-secondary">
+<span class="material-symbols-outlined text-[20px]">badge</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Drivers Approved</span>
+</div>
+<div class="font-headline-lg text-headline-lg text-on-surface">{{ drivers_approved }}</div>
+<div class="font-body-sm text-body-sm font-medium text-secondary flex items-center gap-1">
+                                Fully Vetted
+                            </div>
+</div>
+<!-- Metric 5 -->
+<div class="bento-card flex flex-col gap-2">
+<div class="flex items-center gap-2 text-secondary">
+<span class="material-symbols-outlined text-[20px]">route</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Total Trips</span>
+</div>
+<div class="font-headline-lg text-headline-lg text-on-surface">{{ total_rides }}</div>
+<div class="font-body-sm text-body-sm font-medium text-secondary flex items-center gap-1">
+                                All time
+                            </div>
+</div>
+<!-- Metric 6 -->
+<div class="bento-card flex flex-col gap-2">
+<div class="flex items-center gap-2 text-secondary">
+<span class="material-symbols-outlined text-[20px]">report_problem</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Total Complaints</span>
+</div>
+<div class="font-headline-lg text-headline-lg text-on-surface">{{ ride_alerts.length }}</div>
+<div class="font-body-sm text-body-sm font-medium text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">info</span> Logged Issues
+                            </div>
+</div>
+</div>
+<!-- Chart Section (Spans 4 columns) -->
+<div class="col-span-1 md:col-span-2 lg:col-span-4 bento-card flex flex-col h-full min-h-[350px]">
+<div class="flex justify-between items-center mb-6 pb-4 border-b border-outline-variant/30">
 <div>
-<h4 class="font-label-md text-label-md text-on-surface">Local Mela Crowd</h4>
-<p class="font-body-md text-body-md text-on-surface-variant mt-1 text-sm">High demand expected near the temple square this evening.</p>
-<span class="font-label-sm text-label-sm text-outline mt-2 block">3 hours ago • Community Board</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Activity Trends</h3>
+<p class="font-body-sm text-body-sm text-secondary" id="trend-subtitle">Karma activity over the last 7 days</p>
 </div>
-</div>
-</div>
-<div class="p-4 border-t border-outline-variant bg-surface-container-lowest mt-auto">
-<button class="w-full text-center text-primary font-label-md text-label-md hover:underline">View All Alerts</button>
-</div>
-</div>
-</div>
-
-<!-- Sangh Members Directory Section -->
-<div id="members" class="mb-lg mt-12">
-<div class="flex justify-between items-end mb-lg">
-<div>
-<h2 class="font-headline-lg text-headline-lg text-primary mb-1">Sangh Members</h2>
-<p class="font-body-lg text-body-lg text-on-surface-variant">Manage and verify village directory participants.</p>
-</div>
-<!-- Filters -->
-<div class="flex gap-sm">
-<select class="bg-surface-container border border-outline-variant rounded-lg px-4 py-2 font-label-md text-label-md text-on-surface focus:border-primary focus:ring-0 cursor-pointer">
-<option value="">All Locations</option>
-<option value="varanasi">Varanasi</option>
-<option value="chamba">Chamba</option>
-<option value="mirzapur">Mirzapur</option>
-</select>
-<select class="bg-surface-container border border-outline-variant rounded-lg px-4 py-2 font-label-md text-label-md text-on-surface focus:border-primary focus:ring-0 cursor-pointer">
-<option value="">All Statuses</option>
-<option value="verified">Verified</option>
-<option value="pending">Pending</option>
+<select id="trend-selector" class="bg-surface-container-lowest border border-outline-variant rounded-md font-body-sm text-body-sm py-1.5 pl-3 pr-8 focus:border-primary-container outline-none">
+<option value="7">Last 7 Days</option>
+<option value="30">Last 30 Days</option>
 </select>
 </div>
+<div class="flex-1 flex flex-col justify-end relative mt-4">
+<!-- Y-axis lines -->
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none pb-8">
+<div class="w-full h-px bg-outline-variant/20"></div>
+<div class="w-full h-px bg-outline-variant/20"></div>
+<div class="w-full h-px bg-outline-variant/20"></div>
+<div class="w-full h-px bg-outline-variant/20"></div>
+<div class="w-full h-px bg-outline-variant/20"></div>
 </div>
-
-<!-- Members Table -->
-<div class="bg-surface rounded-xl shadow-[0_2px_8px_rgba(75,61,51,0.05)] border border-outline-variant border-opacity-50 overflow-hidden">
+<!-- Dynamic Bar Chart -->
+<div id="chart-container" class="chart-bar-container pb-8 z-10 px-4">
+    {% for trend in activity_trends %}
+    <div class="flex-1 flex flex-col items-center justify-end h-full gap-2 group">
+        <div class="chart-bar" style="height: {{ (trend.count / max_activity) * 100 }}%; min-height: 5%;"></div>
+        <span class="font-label-sm text-label-sm text-secondary">{{ trend.dayName }}</span>
+        <div class="absolute top-0 opacity-0 group-hover:opacity-100 transition-opacity bg-inverse-surface text-inverse-on-surface text-label-sm px-2 py-1 rounded">{{ trend.count }} rides</div>
+    </div>
+    {% endfor %}
+</div>
+</div>
+</div>
+<!-- Alerts Section (Spans 2 columns) -->
+<div class="col-span-1 md:col-span-2 lg:col-span-2 bento-card flex flex-col h-full min-h-[350px]">
+<div class="flex justify-between items-center mb-4 pb-4 border-b border-outline-variant/30">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Recent Alerts</h3>
+<button class="text-primary hover:text-on-primary-fixed-variant font-label-md text-label-md">View All</button>
+</div>
+<div class="flex-1 space-y-4 overflow-y-auto pr-2">
+    {% for alert in ride_alerts %}
+    <div class="flex gap-3 items-start group hover:bg-slate-50 p-2 -mx-2 rounded-lg transition-colors cursor-pointer">
+    <div class="p-2 rounded-full {% if alert.status == 'open' %}bg-error-container text-on-error-container{% else %}bg-surface-container-high text-primary{% endif %} shrink-0 mt-0.5">
+    <span class="material-symbols-outlined text-[16px]">{% if alert.status == 'open' %}warning{% else %}check_circle{% endif %}</span>
+    </div>
+    <div>
+    <p class="font-body-sm text-body-sm font-medium text-on-surface">Ride request: {{ alert.source }} to {{ alert.destination }}</p>
+    <p class="font-label-sm text-label-sm text-secondary mt-1">{{ alert.createdAt.toLocaleString() }} • From {{ alert.seeker.name }}</p>
+    </div>
+    </div>
+    {% endfor %}
+    {% if ride_alerts.length == 0 %}
+    <p class="text-secondary text-sm text-center my-4">No recent alerts.</p>
+    {% endif %}
+</div>
+</div>
+<!-- Transactions Table (Spans all columns) -->
+<div class="col-span-1 md:col-span-2 lg:col-span-6 bento-card">
+<div class="flex justify-between items-center mb-6 pb-4 border-b border-outline-variant/30">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Recent Transactions</h3>
+<button class="px-3 py-1.5 text-secondary hover:text-primary hover:bg-surface-container rounded-md transition-colors font-label-md text-label-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]">filter_list</span> Filter
+                            </button>
+</div>
+<div class="overflow-x-auto">
 <table class="w-full text-left border-collapse">
-<thead class="bg-surface-container-low border-b border-outline-variant border-opacity-50">
-<tr>
-<th class="py-4 px-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Member Details</th>
-<th class="py-4 px-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Contact</th>
-<th class="py-4 px-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Karma Level</th>
-<th class="py-4 px-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Status</th>
-<th class="py-4 px-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider text-right">Actions</th>
+<thead>
+<tr class="border-b border-outline-variant/20">
+<th class="py-3 px-4 font-label-md text-label-md text-secondary uppercase tracking-wider font-semibold">Name</th>
+<th class="py-3 px-4 font-label-md text-label-md text-secondary uppercase tracking-wider font-semibold">Karma</th>
+<th class="py-3 px-4 font-label-md text-label-md text-secondary uppercase tracking-wider font-semibold">Method</th>
+<th class="py-3 px-4 font-label-md text-label-md text-secondary uppercase tracking-wider font-semibold">Status</th>
+<th class="py-3 px-4 text-right font-label-md text-label-md text-secondary uppercase tracking-wider font-semibold">Action</th>
 </tr>
 </thead>
-<tbody class="divide-y divide-outline-variant divide-opacity-30 divide-dashed">
-
-{% for u in all_users %}
-<tr class="hover:bg-surface-container-lowest transition-colors group">
-<td class="py-4 px-md">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container-high border border-outline-variant flex items-center justify-center">
-<span class="material-symbols-outlined text-outline">person</span>
-</div>
-<div>
-<p class="font-label-md text-label-md text-on-surface">{{ u.name }}</p>
-<p class="font-body-md text-sm text-on-surface-variant">User #{{ u.id }}</p>
-</div>
-</div>
-</td>
-<td class="py-4 px-md font-body-md text-body-md text-on-surface-variant">{{ u.phone }}</td>
-<td class="py-4 px-md">
-<div class="flex items-center gap-1 text-secondary-container {% if u.karma_balance == 0 %}opacity-50{% endif %}">
-<span class="material-symbols-outlined text-[18px]">spa</span>
-<span class="font-label-md text-label-md text-on-surface font-bold">{{ u.karma_balance }}</span>
-</div>
-</td>
-<td class="py-4 px-md">
-<span class="inline-flex items-center px-2 py-1 rounded-md bg-[#e6f4ea] text-[#137333] font-label-sm text-label-sm gap-1 border border-[#ceead6]">
-<span class="material-symbols-outlined text-[14px]">verified</span> Verified
-</span>
-</td>
-<td class="py-4 px-md text-right">
-<button class="text-tertiary hover:text-tertiary-container font-label-md text-label-md px-3 py-1 rounded border border-outline-variant opacity-0 group-hover:opacity-100 transition-opacity mr-2">
-    View History
-</button>
-</td>
-</tr>
-{% endfor %}
-
+<tbody>
+    {% for tx in recent_transactions %}
+    <tr class="border-b border-outline-variant/10 hover:bg-slate-50 transition-colors group">
+    <td class="py-4 px-4">
+    <div class="flex items-center gap-3">
+    <div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-primary font-label-md font-bold">{{ tx.receiver.name[0] | upper }}</div>
+    <span class="font-body-md text-body-md font-medium text-on-surface">{{ tx.receiver.name }}</span>
+    </div>
+    </td>
+    <td class="py-4 px-4 font-body-md text-body-md text-on-surface">{{ tx.amount }}</td>
+    <td class="py-4 px-4 font-body-sm text-body-sm text-secondary">{{ tx.reason | default("Karma Transfer") }}</td>
+    <td class="py-4 px-4">
+    <span class="px-2.5 py-1 rounded-full font-label-sm text-label-sm font-semibold status-badge-{{ tx.status | default('completed') }}">{{ (tx.status | default('completed')) | capitalize }}</span>
+    </td>
+    <td class="py-4 px-4 text-right">
+    <button class="p-1 text-outline hover:text-primary transition-colors opacity-0 group-hover:opacity-100">
+    <span class="material-symbols-outlined text-[20px]">more_vert</span>
+    </button>
+    </td>
+    </tr>
+    {% endfor %}
+    {% if recent_transactions.length == 0 %}
+    <tr><td colspan="5" class="py-4 px-4 text-center text-secondary">No transactions yet.</td></tr>
+    {% endif %}
 </tbody>
 </table>
-<!-- Pagination -->
-<div class="bg-surface-container-low px-md py-3 flex items-center justify-between border-t border-outline-variant border-opacity-50">
-<p class="font-body-md text-sm text-on-surface-variant">Showing all {{ all_users | length }} members</p>
-<div class="flex gap-2">
-<button class="p-1 rounded text-on-surface-variant hover:bg-surface-variant disabled:opacity-50" disabled="">
-<span class="material-symbols-outlined">chevron_left</span>
-</button>
-<button class="p-1 rounded text-on-surface hover:bg-surface-variant transition-colors disabled:opacity-50" disabled="">
-<span class="material-symbols-outlined">chevron_right</span>
-</button>
 </div>
 </div>
 </div>
 </div>
-
 </main>
 </div>
-</body></html>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const trendSelector = document.getElementById('trend-selector');
+        const chartContainer = document.getElementById('chart-container');
+        const trendSubtitle = document.getElementById('trend-subtitle');
+
+        trendSelector.addEventListener('change', async (e) => {
+            const days = e.target.value;
+            trendSubtitle.innerText = `Karma activity over the last ${days} days`;
+            
+            try {
+                const response = await fetch(`/api/admin/trends?days=${days}`);
+                const data = await response.json();
+                
+                chartContainer.innerHTML = '';
+                
+                data.trends.forEach(trend => {
+                    const heightPercent = (trend.count / data.max_activity) * 100;
+                    
+                    const barHtml = `
+                        <div class="flex-1 flex flex-col items-center justify-end h-full gap-2 group">
+                            <div class="chart-bar" style="height: ${heightPercent}%; min-height: 5%;"></div>
+                            <span class="font-label-sm text-label-sm text-secondary text-xs truncate max-w-full">${trend.dayName}</span>
+                            <div class="absolute top-0 opacity-0 group-hover:opacity-100 transition-opacity bg-inverse-surface text-inverse-on-surface text-label-sm px-2 py-1 rounded z-20">${trend.count} rides</div>
+                        </div>
+                    `;
+                    chartContainer.insertAdjacentHTML('beforeend', barHtml);
+                });
+            } catch (err) {
+                console.error("Error fetching trends:", err);
+            }
+        });
+    });
+</script>
+</body>
+</html>

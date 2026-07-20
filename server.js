@@ -768,19 +768,143 @@ app.get('/secret-admin-panel', requireAdmin, async (req, res) => {
         include: [{ model: User, as: 'helper' }],
         order: [['id', 'DESC']] 
     });
-    const transactions = await KarmaTransaction.findAll({
+    
+    // Fetch recent ride alerts for "Recent Karma Alerts" section
+    const rideAlerts = await RideAlert.findAll({
+        include: [{ model: User, as: 'seeker' }],
+        order: [['createdAt', 'DESC']],
+        limit: 4
+    });
+
+    // Fetch recent karma transactions
+    const recentTransactions = await KarmaTransaction.findAll({
         include: [
             { model: User, as: 'sender' },
             { model: User, as: 'receiver' }
         ],
-        order: [['timestamp', 'DESC']],
-        limit: 50
+        order: [['createdAt', 'DESC']],
+        limit: 5
+    });
+
+    let totalKarma = 0;
+    users.forEach(u => {
+        totalKarma += (u.karma_balance || 0);
+    });
+
+    const activeRidesCount = rides.filter(r => r.status !== 'completed' && r.status !== 'cancelled').length;
+
+    // Calculate activity trends for the past 7 days based on Rides created/scheduled
+    const activityTrends = [];
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const today = new Date();
+    
+    for (let i = 6; i >= 0; i--) {
+        const d = new Date();
+        d.setDate(today.getDate() - i);
+        const dayStart = new Date(d.setHours(0,0,0,0));
+        const dayEnd = new Date(d.setHours(23,59,59,999));
+        
+        // Count rides in this day
+        const ridesCount = rides.filter(r => new Date(r.date_time) >= dayStart && new Date(r.date_time) <= dayEnd).length;
+        
+        activityTrends.push({
+            dayName: days[d.getDay()],
+            count: ridesCount,
+            isToday: i === 0
+        });
+    }
+
+    // Determine max count for scaling chart heights (min 1 to avoid division by zero)
+    let maxActivity = Math.max(...activityTrends.map(t => t.count));
+    if (maxActivity === 0) maxActivity = 1;
+
+    // Calculate unique drivers
+    const uniqueDrivers = new Set();
+    rides.forEach(r => {
+        if (r.helper_id) {
+            uniqueDrivers.add(r.helper_id);
+        }
     });
 
     res.render('admin.html', {
         all_users: users,
         all_rides: rides,
-        recent_transactions: transactions
+        ride_alerts: rideAlerts,
+        activity_trends: activityTrends,
+        max_activity: maxActivity,
+        total_karma: totalKarma,
+        active_rides_count: activeRidesCount,
+        total_users: users.length,
+        total_rides: rides.length,
+        drivers_approved: uniqueDrivers.size,
+        recent_transactions: recentTransactions
+    });
+});
+
+app.get('/api/admin/trends', requireAdmin, async (req, res) => {
+    const daysParam = parseInt(req.query.days) || 7;
+    const rides = await Ride.findAll();
+    const activityTrends = [];
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const today = new Date();
+    
+    for (let i = daysParam - 1; i >= 0; i--) {
+        const d = new Date();
+        d.setDate(today.getDate() - i);
+        const dayStart = new Date(d.setHours(0,0,0,0));
+        const dayEnd = new Date(d.setHours(23,59,59,999));
+        
+        const ridesCount = rides.filter(r => new Date(r.date_time) >= dayStart && new Date(r.date_time) <= dayEnd).length;
+        
+        // For 30 days, we might want to group by day, but returning 30 bars is fine for now
+        // Let's format the date label differently for 30 days so it fits (e.g. '12/5' instead of 'Mon')
+        let label = days[d.getDay()];
+        if (daysParam > 7) {
+            label = `${d.getDate()}/${d.getMonth()+1}`;
+        }
+        
+        activityTrends.push({
+            dayName: label,
+            count: ridesCount,
+            isToday: i === 0
+        });
+    }
+
+    let maxActivity = Math.max(...activityTrends.map(t => t.count));
+    if (maxActivity === 0) maxActivity = 1;
+
+    res.json({
+        trends: activityTrends,
+        max_activity: maxActivity
+    });
+});
+
+app.get('/secret-admin-panel/members', requireAdmin, async (req, res) => {
+    const users = await User.findAll({ order: [['id', 'DESC']] });
+    
+    // Total Karma
+    let totalKarma = 0;
+    let totalTrust = 0;
+    users.forEach(u => {
+        totalKarma += (u.karma_balance || 0);
+        totalTrust += (u.trust_rating || 5.0);
+    });
+    const avgTrust = users.length > 0 ? (totalTrust / users.length).toFixed(1) : "5.0";
+
+    // Active Drivers
+    const rides = await Ride.findAll();
+    const uniqueDrivers = new Set();
+    rides.forEach(r => {
+        if (r.helper_id) {
+            uniqueDrivers.add(r.helper_id);
+        }
+    });
+
+    res.render('admin_members.html', { 
+        all_users: users,
+        total_karma: totalKarma,
+        drivers_approved: uniqueDrivers.size,
+        avg_trust: avgTrust
     });
 });
 
