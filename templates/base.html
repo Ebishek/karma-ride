@@ -163,7 +163,7 @@
                 <div id="notif-dropdown" class="hidden absolute top-full right-[-60px] sm:right-0 mt-3 w-[320px] max-w-[90vw] bg-surface-container-highest rounded-xl shadow-lg border border-outline-variant/30 overflow-hidden z-50 flex flex-col max-h-[70vh]">
                     <div class="p-3 border-b border-outline-variant/30 flex justify-between items-center bg-surface-container">
                         <h4 class="font-headline-md text-sm text-on-surface">Notifications</h4>
-                        <button id="mark-all-read" class="text-xs text-primary font-bold hover:underline">Mark all read</button>
+                        <button id="mark-all-read" class="text-xs text-primary font-bold hover:underline">Clear all</button>
                     </div>
                     <div id="notif-list" class="overflow-y-auto flex-1">
                         <!-- Notifications injected here -->
@@ -388,8 +388,23 @@ function urlBase64ToUint8Array(base64String) {
     return outputArray;
 }
 
-// Request permission and setup push notifications after a slight delay
-setTimeout(setupWebPush, 3000);
+// Remove the timeout, instead we will attach it to a click event
+// to bypass mobile browser restrictions on auto-prompting.
+
+// We hook it into the notification bell click!
+document.addEventListener('DOMContentLoaded', () => {
+    const bellBtn = document.getElementById('notif-btn');
+    if (bellBtn) {
+        bellBtn.addEventListener('click', () => {
+            if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+                setupWebPush();
+            } else if (Notification.permission === 'granted') {
+                // Ensure subscription exists even if already granted
+                setupWebPush();
+            }
+        });
+    }
+});
 </script>
 {% endif %}
 </body>

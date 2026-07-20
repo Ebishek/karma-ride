@@ -5,7 +5,20 @@ const path = require('path');
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
 const { Op } = require('sequelize');
-const { sequelize, User, Ride, RideRequest, KarmaTransaction, Message, Notification, RideAlert, Announcement, PushSubscription } = require('./models');
+const { sequelize, User, Ride, RideRequest, KarmaTransaction, Message, Notification, RideAlert, Announcement, PushSubscription, RoadUpdate } = require('./models');
+const multer = require('multer');
+const fs = require('fs');
+
+// Configure multer for image uploads
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'static/uploads/road-updates/')
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + '-' + Math.round(Math.random() * 1E9) + path.extname(file.originalname))
+    }
+});
+const upload = multer({ storage: storage });
 
 const app = express();
 
@@ -128,10 +141,9 @@ app.post('/api/notifications/:id/read', requireAuth, async (req, res) => {
 });
 
 app.post('/api/notifications/read_all', requireAuth, async (req, res) => {
-    await Notification.update(
-        { is_read: true },
-        { where: { user_id: req.session.userId, is_read: false } }
-    );
+    await Notification.destroy({ 
+        where: { user_id: req.session.userId } 
+    });
     res.sendStatus(200);
 });
 
@@ -200,7 +212,12 @@ app.get('/', async (req, res) => {
         order: [['karma_balance', 'DESC']],
         limit: 3
     });
-    res.render('landing.html', { topHeroes });
+    const roadUpdates = await RoadUpdate.findAll({
+        include: [{ model: User, as: 'user', attributes: ['id', 'name'] }],
+        order: [['timestamp', 'DESC']],
+        limit: 5
+    });
+    res.render('landing.html', { topHeroes, roadUpdates });
 });
 
 app.get('/dashboard', requireAuth, async (req, res) => {
@@ -885,6 +902,74 @@ app.post('/api/push/subscribe', requireAuth, async (req, res) => {
     }
     
     res.status(201).json({ success: true });
+});
+
+app.get('/report-road', requireAuth, (req, res) => {
+    res.render('report_road.html');
+});
+
+app.post('/api/road-updates', requireAuth, upload.single('image'), async (req, res) => {
+    try {
+        const { location, description } = req.body;
+        const image_url = req.file ? `/static/uploads/road-updates/${req.file.filename}` : null;
+        
+        await RoadUpdate.create({
+            user_id: req.session.userId,
+            location: location,
+            description: description,
+            image_url: image_url
+        });
+        
+        res.redirect('/dashboard');
+    } catch (error) {
+        console.error("Error creating road update:", error);
+        res.status(500).send("Error submitting road update.");
+    }
+});
+
+app.post('/api/road-updates/:id/upvote', requireAuth, async (req, res) => {
+    try {
+        const update = await RoadUpdate.findByPk(req.params.id);
+        if (!update) return res.status(404).json({ error: "Update not found" });
+        update.upvotes += 1;
+        await update.save();
+        res.json({ success: true, upvotes: update.upvotes });
+    } catch (error) {
+        console.error("Error upvoting road update:", error);
+        res.status(500).json({ error: "Server error" });
+    }
+});
+
+app.post('/api/road-updates/:id/downvote', requireAuth, async (req, res) => {
+    try {
+        const update = await RoadUpdate.findByPk(req.params.id);
+        if (!update) return res.status(404).json({ error: "Update not found" });
+        update.downvotes += 1;
+        await update.save();
+        res.json({ success: true, downvotes: update.downvotes });
+    } catch (error) {
+        console.error("Error downvoting road update:", error);
+        res.status(500).json({ error: "Server error" });
+    }
+});
+
+app.post('/api/road-updates/:id/delete', requireAuth, async (req, res) => {
+    try {
+        const update = await RoadUpdate.findByPk(req.params.id);
+        if (!update) return res.status(404).json({ error: "Update not found" });
+        
+        // Only the creator or admin can delete
+        const user = await User.findByPk(req.session.userId);
+        if (update.user_id !== req.session.userId && user.role !== 'admin') {
+            return res.status(403).json({ error: "Unauthorized" });
+        }
+        
+        await update.destroy();
+        res.json({ success: true });
+    } catch (error) {
+        console.error("Error deleting road update:", error);
+        res.status(500).json({ error: "Server error" });
+    }
 });
 
 app.get('/api/admin/trends', requireAdmin, async (req, res) => {
