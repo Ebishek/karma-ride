@@ -126,6 +126,9 @@ async function voteRoadUpdate(id, action, btnElement) {
                 countSpan.textContent = data.downvotes;
                 btnElement.classList.add('text-error', 'bg-error/10');
             }
+        } else if (response.status === 400) {
+            const errorData = await response.json();
+            alert(errorData.error);
         } else if (response.status === 401) {
             window.location.href = '/login';
         }

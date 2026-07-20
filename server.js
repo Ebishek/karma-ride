@@ -929,10 +929,18 @@ app.post('/api/road-updates', requireAuth, upload.single('image'), async (req, r
 
 app.post('/api/road-updates/:id/upvote', async (req, res) => {
     try {
-        const update = await RoadUpdate.findByPk(req.params.id);
+        const id = req.params.id;
+        req.session.votedUpdates = req.session.votedUpdates || {};
+        if (req.session.votedUpdates[id]) {
+            return res.status(400).json({ error: "You have already voted on this update in this session." });
+        }
+
+        const update = await RoadUpdate.findByPk(id);
         if (!update) return res.status(404).json({ error: "Update not found" });
         update.upvotes += 1;
         await update.save();
+        
+        req.session.votedUpdates[id] = 'upvote';
         res.json({ success: true, upvotes: update.upvotes });
     } catch (error) {
         console.error("Error upvoting road update:", error);
@@ -942,10 +950,18 @@ app.post('/api/road-updates/:id/upvote', async (req, res) => {
 
 app.post('/api/road-updates/:id/downvote', async (req, res) => {
     try {
-        const update = await RoadUpdate.findByPk(req.params.id);
+        const id = req.params.id;
+        req.session.votedUpdates = req.session.votedUpdates || {};
+        if (req.session.votedUpdates[id]) {
+            return res.status(400).json({ error: "You have already voted on this update in this session." });
+        }
+
+        const update = await RoadUpdate.findByPk(id);
         if (!update) return res.status(404).json({ error: "Update not found" });
         update.downvotes += 1;
         await update.save();
+        
+        req.session.votedUpdates[id] = 'downvote';
         res.json({ success: true, downvotes: update.downvotes });
     } catch (error) {
         console.error("Error downvoting road update:", error);
