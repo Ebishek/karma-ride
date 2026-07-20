@@ -927,7 +927,7 @@ app.post('/api/road-updates', requireAuth, upload.single('image'), async (req, r
     }
 });
 
-app.post('/api/road-updates/:id/upvote', requireAuth, async (req, res) => {
+app.post('/api/road-updates/:id/upvote', async (req, res) => {
     try {
         const update = await RoadUpdate.findByPk(req.params.id);
         if (!update) return res.status(404).json({ error: "Update not found" });
@@ -940,7 +940,7 @@ app.post('/api/road-updates/:id/upvote', requireAuth, async (req, res) => {
     }
 });
 
-app.post('/api/road-updates/:id/downvote', requireAuth, async (req, res) => {
+app.post('/api/road-updates/:id/downvote', async (req, res) => {
     try {
         const update = await RoadUpdate.findByPk(req.params.id);
         if (!update) return res.status(404).json({ error: "Update not found" });
