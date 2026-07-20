@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>KarmaRide Dashboard - Enterprise SaaS</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">try{tailwind.config = {darkMode: "class", theme: {extend: {colors: {"on-primary-fixed-variant": "#3323cc", primary: "#1e00a9", "tertiary-fixed": "#ffdbcc", "on-tertiary-fixed": "#351000", error: "#BA1A1A", "primary-fixed": "#e2dfff", "on-secondary-container": "#56657c", "primary-fixed-dim": "#c3c0ff", "on-tertiary-container": "#ff9f72", "on-primary-container": "#b1afff", "surface-tint": "#4d44e3", "on-background": "#111c2d", "on-tertiary-fixed-variant": "#7b2f00", "on-tertiary": "#ffffff", secondary: "#505f76", "on-secondary-fixed": "#0c1c30", "on-secondary-fixed-variant": "#39485e", "secondary-fixed-dim": "#b8c7e2", "surface-variant": "#d8e3fb", "on-error-container": "#93000a", "surface-bright": "#f9f9ff", "outline-variant": "#c7c4d8", "error-container": "#ffdad6", "on-surface": "#111c2d", "tertiary-fixed-dim": "#ffb694", "on-primary-fixed": "#0f0069", "on-surface-variant": "#464555", "inverse-surface": "#263143", "on-secondary": "#ffffff", surface: "#f9f9ff", background: "#f9f9ff", "surface-dim": "#cfdaf2", "secondary-fixed": "#d4e3ff", tertiary: "#592000", "surface-container-lowest": "#ffffff", "surface-container-low": "#f0f3ff", "on-error": "#ffffff", "primary-container": "#3525cd", outline: "#777587", "inverse-on-surface": "#ecf1ff", "inverse-primary": "#c3c0ff", "tertiary-container": "#7d3000", "surface-container": "#e7eeff", "on-primary": "#ffffff", "surface-container-highest": "#d8e3fb", "secondary-container": "#d4e3ff", "surface-container-high": "#dee8ff", "outline-subtle": "rgba(199, 196, 216, 0.3)", warning: "#F59E0B", "card-bg": "#FFFFFF", "surface-bg": "#F8FAFC", info: "#3B82F6", success: "#10B981"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}, spacing: {"stack-sm": "8px", "stack-md": "16px", "section-margin": "48px", "bento-gap": "16px", "container-padding": "24px", unit: "4px"}, fontFamily: {"label-sm": ["Inter"], "body-lg": ["Inter"], "headline-md": ["Inter"], "headline-lg": ["Inter"], "display-lg": ["Inter"], "headline-sm": ["Inter"], "label-md": ["Inter"], "body-md": ["Inter"], "body-sm": ["Inter"]}, fontSize: {"label-sm": ["11px", {lineHeight: "14px", fontWeight: "500"}], "body-lg": ["18px", {lineHeight: "28px", fontWeight: "400"}], "headline-md": ["24px", {lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "600"}], "headline-lg": ["32px", {lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "700"}], "display-lg": ["48px", {lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700"}], "headline-sm": ["20px", {lineHeight: "28px", fontWeight: "600"}], "label-md": ["12px", {lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "600"}], "body-md": ["16px", {lineHeight: "24px", fontWeight: "400"}], "body-sm": ["14px", {lineHeight: "20px", fontWeight: "400"}]}}}};}catch(_e){}</script></head><body class="text-[#1E293B] antialiased">
+<div class="flex h-screen overflow-hidden">
+<!-- SideNavBar -->
+<aside class="w-64 h-screen fixed left-0 top-0 bg-surface flex flex-col py-stack-md border-r border-outline-variant/30 shadow-sm z-20 hidden md:flex">
+<div class="px-container-padding mb-8 flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold">K</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">KarmaRide Admin</h1>
+<p class="font-label-sm text-label-sm text-secondary">Community Management</p>
+</div>
+</div>
+<nav class="flex-1 px-3 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-secondary font-medium hover:bg-surface-container-high transition-colors" href="/secret-admin-panel">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-secondary font-medium hover:bg-surface-container-high transition-colors" href="/secret-admin-panel/members">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-md text-label-md">Members</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-secondary font-medium hover:bg-surface-container-high transition-colors" href="/">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-md text-label-md">Return to App</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col md:ml-64 relative w-full h-full">
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 left-0 md:left-64 h-16 z-10 bg-surface/80 backdrop-blur-md shadow-sm flex justify-between items-center px-container-padding w-auto">
+<div class="font-headline-sm text-headline-sm font-bold text-on-surface">KarmaRide Console</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors p-1 rounded-full hover:bg-surface-container">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex items-center gap-2 hover:bg-surface-container p-1 pr-3 rounded-full transition-colors">
+<img alt="Admin Profile Avatar" class="w-8 h-8 rounded-full object-cover" data-alt="A small circular avatar placeholder image showing an abstract blue geometric shape representing a user profile icon." src="https://ui-avatars.com/api/?name=Admin&background=1e00a9&color=fff">
+<span class="font-label-md text-label-md text-on-surface hidden lg:block">Admin</span>
+</button>
+</div>
+</header>
+<!-- Canvas -->
+<main class="flex-1 overflow-y-auto pt-24 px-container-padding pb-section-margin bg-surface-bg">
+<!-- Header Section -->
+<div class="mb-8">
+<a class="inline-flex items-center text-secondary hover:text-primary transition-colors mb-2 font-body-sm text-body-sm" href="/secret-admin-panel">
+<span class="material-symbols-outlined text-sm mr-1">arrow_back</span>
+            Back to Dashboard
+        </a>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Create New Announcement</h1>
+</div>
+
+{% if success %}
+<div class="mb-6 p-4 bg-success/10 border border-success/30 rounded-lg flex items-center gap-3">
+    <span class="material-symbols-outlined text-success">check_circle</span>
+    <p class="font-body-md text-body-md text-on-surface">Announcement successfully broadcasted to the community.</p>
+</div>
+{% endif %}
+
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-bento-gap">
+<!-- Left Column: Form -->
+<div class="lg:col-span-3 flex flex-col gap-bento-gap">
+<div class="bento-card border border-surface-container-low flex-1">
+<form method="POST" action="/secret-admin-panel/announcements" class="flex flex-col gap-6">
+<!-- Title Input -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-2" for="announcement-title">Announcement Title</label>
+<input name="title" required class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-2 font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-colors shadow-sm" id="announcement-title" placeholder="Enter title here" type="text" value="">
+</div>
+<!-- Target Audience Dropdown -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-2" for="target-audience">Target Audience</label>
+<div class="relative">
+<select name="audience" class="appearance-none w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-2 pr-10 font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-colors shadow-sm cursor-pointer" id="target-audience">
+<option value="all">All Users</option>
+<option selected="" value="drivers">Active Drivers Only</option>
+<option value="riders">Riders Only</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-on-surface-variant">
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Message Body (Rich Text Mockup) -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-2" for="message-body">Message Body</label>
+<div class="border border-outline-variant rounded-lg shadow-sm overflow-hidden focus-within:border-primary-container focus-within:ring-1 focus-within:ring-primary-container transition-colors">
+<!-- Toolbar -->
+<div class="bg-surface-container-low px-3 py-2 flex items-center gap-2 border-b border-outline-variant">
+<button class="p-1 rounded text-on-surface-variant hover:bg-surface-container transition-colors" type="button"><span class="material-symbols-outlined text-[18px]">format_bold</span></button>
+<button class="p-1 rounded text-on-surface-variant hover:bg-surface-container transition-colors" type="button"><span class="material-symbols-outlined text-[18px]">format_italic</span></button>
+<button class="p-1 rounded text-on-surface-variant hover:bg-surface-container transition-colors" type="button"><span class="material-symbols-outlined text-[18px]">format_underlined</span></button>
+<div class="w-px h-4 bg-outline-variant mx-1"></div>
+<button class="p-1 rounded text-on-surface-variant hover:bg-surface-container transition-colors" type="button"><span class="material-symbols-outlined text-[18px]">format_list_bulleted</span></button>
+<button class="p-1 rounded text-on-surface-variant hover:bg-surface-container transition-colors" type="button"><span class="material-symbols-outlined text-[18px]">format_list_numbered</span></button>
+<div class="w-px h-4 bg-outline-variant mx-1"></div>
+<button class="p-1 rounded text-on-surface-variant hover:bg-surface-container transition-colors" type="button"><span class="material-symbols-outlined text-[18px]">link</span></button>
+</div>
+<!-- Textarea -->
+<textarea name="body" required class="w-full border-none px-4 py-3 font-body-md text-body-md text-on-surface resize-y focus:ring-0" id="message-body" placeholder="Type your message here..." rows="6"></textarea>
+</div>
+</div>
+<!-- Push Notification Toggle -->
+<div class="flex items-center justify-between py-2 border-t border-surface-variant">
+<div>
+<div class="font-label-md text-label-md text-on-surface">Send Push Notification</div>
+<div class="font-body-sm text-body-sm text-secondary">Notify users immediately on their devices.</div>
+</div>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input name="push_notification" value="true" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer border-primary" id="push-toggle" type="checkbox">
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-primary cursor-pointer border border-primary" for="push-toggle"></label>
+</div>
+</div>
+<!-- Footer Actions -->
+<div class="flex items-center justify-end gap-4 mt-4 pt-4 border-t border-surface-variant">
+<a href="/secret-admin-panel" class="px-6 py-2 rounded-lg font-label-md text-label-md text-secondary hover:bg-surface-container transition-colors bg-transparent border border-transparent">
+                            Cancel
+</a>
+<button type="submit" class="px-6 py-2 rounded-lg font-label-md text-label-md text-white bg-primary hover:bg-primary-container transition-colors flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">send</span>
+                            Publish Announcement
+                        </button>
+</div>
+</form>
+</div>
+</div>
+<!-- Right Column: Mobile Preview -->
+
+</div>
+</main>
+</div>
+</div>
+
+</body></html>

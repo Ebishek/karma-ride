@@ -89,6 +89,15 @@ const RideAlert = sequelize.define('RideAlert', {
     status: { type: DataTypes.STRING, defaultValue: 'open' } // open, fulfilled, cancelled
 }, { tableName: 'ride_alerts', timestamps: true });
 
+const Announcement = sequelize.define('Announcement', {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    title: { type: DataTypes.STRING, allowNull: false },
+    audience: { type: DataTypes.STRING, allowNull: false },
+    body: { type: DataTypes.TEXT, allowNull: false },
+    push_notification: { type: DataTypes.BOOLEAN, defaultValue: false },
+    timestamp: { type: DataTypes.DATE, defaultValue: Sequelize.NOW }
+}, { tableName: 'announcements', timestamps: false });
+
 // Relationships
 User.hasMany(Ride, { foreignKey: 'helper_id', as: 'rides_offered' });
 Ride.belongsTo(User, { foreignKey: 'helper_id', as: 'helper' });
@@ -114,4 +123,4 @@ User.hasMany(RideAlert, { foreignKey: 'seeker_id', as: 'ride_alerts' });
 RideAlert.belongsTo(User, { foreignKey: 'seeker_id', as: 'seeker' });
 Notification.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
 
-module.exports = { sequelize, User, Ride, RideRequest, KarmaTransaction, Message, Notification, RideAlert };
+module.exports = { sequelize, User, Ride, RideRequest, KarmaTransaction, Message, Notification, RideAlert, Announcement };

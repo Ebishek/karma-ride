@@ -5,7 +5,7 @@ const path = require('path');
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
 const { Op } = require('sequelize');
-const { sequelize, User, Ride, RideRequest, KarmaTransaction, Message, Notification, RideAlert } = require('./models');
+const { sequelize, User, Ride, RideRequest, KarmaTransaction, Message, Notification, RideAlert, Announcement } = require('./models');
 
 const app = express();
 
@@ -782,7 +782,7 @@ app.get('/secret-admin-panel', requireAdmin, async (req, res) => {
             { model: User, as: 'sender' },
             { model: User, as: 'receiver' }
         ],
-        order: [['createdAt', 'DESC']],
+        order: [['timestamp', 'DESC']],
         limit: 5
     });
 
@@ -877,6 +877,49 @@ app.get('/api/admin/trends', requireAdmin, async (req, res) => {
         trends: activityTrends,
         max_activity: maxActivity
     });
+});
+
+app.get('/secret-admin-panel/announcements/new', requireAdmin, async (req, res) => {
+    res.render('admin_announcement_new.html', { success: req.query.success });
+});
+
+app.post('/secret-admin-panel/announcements', requireAdmin, async (req, res) => {
+    const { title, audience, body, push_notification } = req.body;
+    
+    const announcement = await Announcement.create({
+        title,
+        audience,
+        body,
+        push_notification: push_notification === 'true'
+    });
+
+    // Determine target users based on audience
+    let targetUsers = [];
+    if (audience === 'drivers') {
+        const uniqueDrivers = new Set((await Ride.findAll()).map(r => r.helper_id));
+        targetUsers = await User.findAll({ where: { id: Array.from(uniqueDrivers) } });
+    } else if (audience === 'riders') {
+        const uniqueRiders = new Set((await RideRequest.findAll()).map(r => r.seeker_id));
+        targetUsers = await User.findAll({ where: { id: Array.from(uniqueRiders) } });
+    } else {
+        targetUsers = await User.findAll();
+    }
+
+    // Create in-app notifications for targeted users
+    const notifications = targetUsers.map(user => ({
+        user_id: user.id,
+        type: 'announcement',
+        content: title,
+        link: '#' // Link to the announcement details
+    }));
+
+    if (notifications.length > 0) {
+        await Notification.bulkCreate(notifications);
+    }
+
+    // TODO: If push_notification is true, trigger Firebase Cloud Messaging (FCM) or OneSignal here
+
+    res.redirect('/secret-admin-panel/announcements/new?success=true');
 });
 
 app.get('/secret-admin-panel/members', requireAdmin, async (req, res) => {
