@@ -37,118 +37,126 @@
             </div>
         </section>
 
-        <!-- Ride List -->
+        <!-- Right Panel Container -->
         <section class="w-full lg:w-2/5 flex flex-col gap-4 overflow-y-auto pr-2 pb-8">
-            <h2 class="font-headline-md text-headline-md text-on-surface">Available Rides</h2>
-            
-            {% if not rides or rides.length == 0 %}
-            <div class="bg-surface-container-low rounded-xl p-8 border border-dashed border-outline-variant flex flex-col items-center justify-center text-center">
-                <span class="material-symbols-outlined text-5xl text-on-surface-variant mb-4">no_transfer</span>
-                <p class="font-body-lg text-on-surface mb-2">No rides found right now.</p>
-                <p class="font-body-sm text-on-surface-variant">Please check back later.</p>
+            <!-- Tabs -->
+            <div class="flex gap-2 bg-surface-container-low p-1 rounded-lg border border-outline-variant/50 mb-2">
+                <button id="tab-rides" class="flex-1 py-2.5 rounded-md font-label-md bg-primary text-on-primary shadow-sm transition-all flex items-center justify-center gap-2" onclick="switchTab('rides')">
+                    <span class="material-symbols-outlined text-sm">motorcycle</span>
+                    Available Rides
+                </button>
+                <button id="tab-alerts" class="flex-1 py-2.5 rounded-md font-label-md text-on-surface-variant hover:bg-surface-variant transition-all flex items-center justify-center gap-2" onclick="switchTab('alerts')">
+                    <span class="material-symbols-outlined text-sm">campaign</span>
+                    Ride Alerts <span class="bg-error-container text-on-error-container text-[10px] px-1.5 py-0.5 rounded-full animate-pulse ml-1">Live</span>
+                </button>
             </div>
-            {% endif %}
 
-            {% for ride in rides %}
-            <article class="bg-surface-container-low rounded-xl p-4 border border-outline-variant shadow-[0_2px_8px_rgba(75,61,51,0.05)] flex flex-col gap-3 relative overflow-hidden transition-transform active:scale-95 duration-150">
-                <div class="flex justify-between items-start">
-                    <div class="flex items-center gap-3">
-                        <img class="w-10 h-10 rounded-full object-cover border-2 border-secondary-container" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaOsBb7wZCkBsB3tUfT3139LQRS-OcGiAty6QD9Phaia9o9FLhvrEJQK-_dMY28a3F_OKeRi70EQ5hjRxU2s-KIxUDOv8TiIcu3KWFZ4t3mRcAPQHu8Pk86NZpP9oZYa5nqmHAqLyFkbnpGNfWlXP2hiEAnaMYxCtPFGyT0Er7GWuwTNXlRCpH52Ikq8B4avtWUo7DqRhWr2IzRJVt-VmgcemjX7EqLmNgCAM9kIh8UQs3Uj1o-bt1" alt="Driver">
-                        <div>
-                            <h3 class="font-label-md text-label-md text-on-surface">{{ ride.helper.name }}</h3>
-                            <div class="flex items-center gap-1 text-secondary-container">
-                                <span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
-                                <span class="text-xs font-bold">{{ ride.helper.trust_rating }}</span>
+            <!-- Ride List -->
+            <div id="rides-list" class="flex flex-col gap-4">
+                {% if not rides or rides.length == 0 %}
+                <div class="bg-surface-container-low rounded-xl p-8 border border-dashed border-outline-variant flex flex-col items-center justify-center text-center">
+                    <span class="material-symbols-outlined text-5xl text-on-surface-variant mb-4">no_transfer</span>
+                    <p class="font-body-lg text-on-surface mb-2">No rides found right now.</p>
+                    <p class="font-body-sm text-on-surface-variant">Please check back later.</p>
+                </div>
+                {% endif %}
+
+                {% for ride in rides %}
+                <article class="bg-surface-container-low rounded-xl p-4 border border-outline-variant shadow-[0_2px_8px_rgba(75,61,51,0.05)] flex flex-col gap-3 relative overflow-hidden transition-transform active:scale-95 duration-150">
+                    <div class="flex justify-between items-start">
+                        <div class="flex items-center gap-3">
+                            <img class="w-10 h-10 rounded-full object-cover border-2 border-secondary-container" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaOsBb7wZCkBsB3tUfT3139LQRS-OcGiAty6QD9Phaia9o9FLhvrEJQK-_dMY28a3F_OKeRi70EQ5hjRxU2s-KIxUDOv8TiIcu3KWFZ4t3mRcAPQHu8Pk86NZpP9oZYa5nqmHAqLyFkbnpGNfWlXP2hiEAnaMYxCtPFGyT0Er7GWuwTNXlRCpH52Ikq8B4avtWUo7DqRhWr2IzRJVt-VmgcemjX7EqLmNgCAM9kIh8UQs3Uj1o-bt1" alt="Driver">
+                            <div>
+                                <h3 class="font-label-md text-label-md text-on-surface">{{ ride.helper.name }}</h3>
+                                <div class="flex items-center gap-1 text-secondary-container">
+                                    <span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+                                    <span class="text-xs font-bold">{{ ride.helper.trust_rating }}</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="flex flex-col items-end">
-                        <span class="bg-surface-container-high text-on-surface px-2 py-1 rounded-md text-xs font-bold border border-outline-variant">
-                            💎 {{ ride.karma_reward }}
-                        </span>
-                        <span class="text-xs text-on-surface-variant mt-1">{{ ride.date_time | formatDate }}</span>
-                    </div>
-                </div>
-
-                <!-- Route Timeline -->
-                <div class="relative pl-4 py-2 mt-2">
-                    <div class="absolute left-[7px] top-4 bottom-4 w-0.5 bg-outline-variant border-dashed"></div>
-                    <div class="relative flex items-center gap-3 mb-4">
-                        <div class="w-4 h-4 rounded-full bg-surface-container-lowest border-4 border-tertiary absolute -left-[23px]"></div>
-                        <p class="font-body-md text-on-surface">{{ ride.source }}</p>
-                    </div>
-                    <div class="relative flex items-center gap-3">
-                        <div class="w-4 h-4 rounded-full bg-primary absolute -left-[23px]"></div>
-                        <p class="font-body-md text-on-surface font-semibold">{{ ride.destination }}</p>
-                    </div>
-                </div>
-                
-                <form action="/api/request/{{ ride.id }}" method="POST" class="w-full mt-2">
-                    <button type="submit" class="w-full py-2.5 rounded-lg font-label-md flex justify-center items-center gap-2 transition-colors 
-                        {% if user.karma_balance < ride.karma_reward %}bg-surface-container-high text-on-surface-variant cursor-not-allowed{% else %}bg-primary text-on-primary hover:bg-primary/90 shadow-sm{% endif %}"
-                        {% if user.karma_balance < ride.karma_reward %}disabled{% endif %}>
-                        <span>Request Ride</span>
-                        <span class="material-symbols-outlined text-sm">hail</span>
-                    </button>
-                </form>
-            </article>
-            {% endfor %}
-        </section>
-
-        <!-- Ride Alerts List -->
-        <section class="w-full lg:w-2/5 flex flex-col gap-4 overflow-y-auto pr-2 pb-8">
-            <div class="flex justify-between items-center">
-                <h2 class="font-headline-md text-headline-md text-on-surface">Village Ride Alerts</h2>
-                <span class="bg-error-container text-on-error-container text-xs font-bold px-2 py-1 rounded-full animate-pulse">Live</span>
-            </div>
-            
-            {% if not alerts or alerts.length == 0 %}
-            <div class="bg-surface-container-low rounded-xl p-6 border border-dashed border-outline-variant flex flex-col items-center justify-center text-center">
-                <p class="font-body-md text-on-surface-variant">No one is currently requesting a ride.</p>
-            </div>
-            {% endif %}
-
-            {% for alert in alerts %}
-            <article class="bg-surface-container-highest rounded-xl p-4 border border-outline-variant shadow-[0_2px_8px_rgba(75,61,51,0.05)] flex flex-col gap-3 relative overflow-hidden transition-transform active:scale-95 duration-150">
-                <div class="flex justify-between items-start">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full bg-tertiary-container flex items-center justify-center text-on-tertiary-container">
-                            <span class="material-symbols-outlined">person</span>
-                        </div>
-                        <div>
-                            <h3 class="font-label-md text-label-md text-on-surface">{{ alert.seeker.name }}</h3>
-                            <p class="text-xs text-on-surface-variant">Needs a ride!</p>
+                        <div class="flex flex-col items-end">
+                            <span class="bg-surface-container-high text-on-surface px-2 py-1 rounded-md text-xs font-bold border border-outline-variant">
+                                💎 {{ ride.karma_reward }}
+                            </span>
+                            <span class="text-xs text-on-surface-variant mt-1">{{ ride.date_time | formatDate }}</span>
                         </div>
                     </div>
-                    <div class="flex flex-col items-end">
-                        <span class="bg-secondary-container text-on-secondary-container px-2 py-1 rounded-md text-xs font-bold border border-outline-variant">
-                            Offering 💎 {{ alert.karma_reward }}
-                        </span>
-                        <span class="text-xs text-on-surface-variant mt-1">{{ alert.date_time | formatDate }}</span>
-                    </div>
-                </div>
 
-                <!-- Route Timeline -->
-                <div class="relative pl-4 py-2 mt-2">
-                    <div class="absolute left-[7px] top-4 bottom-4 w-0.5 bg-outline-variant border-dashed"></div>
-                    <div class="relative flex items-center gap-3 mb-4">
-                        <div class="w-4 h-4 rounded-full bg-surface-container-lowest border-4 border-tertiary absolute -left-[23px]"></div>
-                        <p class="font-body-md text-on-surface">{{ alert.source }}</p>
+                    <!-- Route Timeline -->
+                    <div class="relative pl-4 py-2 mt-2">
+                        <div class="absolute left-[7px] top-4 bottom-4 w-0.5 bg-outline-variant border-dashed"></div>
+                        <div class="relative flex items-center gap-3 mb-4">
+                            <div class="w-4 h-4 rounded-full bg-surface-container-lowest border-4 border-tertiary absolute -left-[23px]"></div>
+                            <p class="font-body-md text-on-surface">{{ ride.source }}</p>
+                        </div>
+                        <div class="relative flex items-center gap-3">
+                            <div class="w-4 h-4 rounded-full bg-primary absolute -left-[23px]"></div>
+                            <p class="font-body-md text-on-surface font-semibold">{{ ride.destination }}</p>
+                        </div>
                     </div>
-                    <div class="relative flex items-center gap-3">
-                        <div class="w-4 h-4 rounded-full bg-primary absolute -left-[23px]"></div>
-                        <p class="font-body-md text-on-surface font-semibold">{{ alert.destination }}</p>
-                    </div>
+                    
+                    <form action="/api/request/{{ ride.id }}" method="POST" class="w-full mt-2">
+                        <button type="submit" class="w-full py-2.5 rounded-lg font-label-md flex justify-center items-center gap-2 transition-colors 
+                            {% if user.karma_balance < ride.karma_reward %}bg-surface-container-high text-on-surface-variant cursor-not-allowed{% else %}bg-primary text-on-primary hover:bg-primary/90 shadow-sm{% endif %}"
+                            {% if user.karma_balance < ride.karma_reward %}disabled{% endif %}>
+                            <span>Request Ride</span>
+                            <span class="material-symbols-outlined text-sm">hail</span>
+                        </button>
+                    </form>
+                </article>
+                {% endfor %}
+            </div>
+
+            <!-- Ride Alerts List -->
+            <div id="alerts-list" class="flex flex-col gap-4 hidden">
+                {% if not alerts or alerts.length == 0 %}
+                <div class="bg-surface-container-low rounded-xl p-6 border border-dashed border-outline-variant flex flex-col items-center justify-center text-center">
+                    <p class="font-body-md text-on-surface-variant">No one is currently requesting a ride.</p>
                 </div>
-                
-                <form action="/api/ride-alerts/{{ alert.id }}/fulfill" method="POST" class="w-full mt-2">
-                    <button type="submit" class="w-full py-2.5 rounded-lg font-label-md flex justify-center items-center gap-2 transition-colors bg-tertiary text-on-tertiary hover:bg-tertiary/90 shadow-sm">
-                        <span>Fulfill Ride (Earn {{ alert.karma_reward }})</span>
-                        <span class="material-symbols-outlined text-sm">local_taxi</span>
-                    </button>
-                </form>
-            </article>
-            {% endfor %}
+                {% endif %}
+
+                {% for alert in alerts %}
+                <article class="bg-surface-container-highest rounded-xl p-4 border border-outline-variant shadow-[0_2px_8px_rgba(75,61,51,0.05)] flex flex-col gap-3 relative overflow-hidden transition-transform active:scale-95 duration-150">
+                    <div class="flex justify-between items-start">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-tertiary-container flex items-center justify-center text-on-tertiary-container">
+                                <span class="material-symbols-outlined">person</span>
+                            </div>
+                            <div>
+                                <h3 class="font-label-md text-label-md text-on-surface">{{ alert.seeker.name }}</h3>
+                                <p class="text-xs text-on-surface-variant">Needs a ride!</p>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-end">
+                            <span class="bg-secondary-container text-on-secondary-container px-2 py-1 rounded-md text-xs font-bold border border-outline-variant">
+                                Offering 💎 {{ alert.karma_reward }}
+                            </span>
+                            <span class="text-xs text-on-surface-variant mt-1">{{ alert.date_time | formatDate }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Route Timeline -->
+                    <div class="relative pl-4 py-2 mt-2">
+                        <div class="absolute left-[7px] top-4 bottom-4 w-0.5 bg-outline-variant border-dashed"></div>
+                        <div class="relative flex items-center gap-3 mb-4">
+                            <div class="w-4 h-4 rounded-full bg-surface-container-lowest border-4 border-tertiary absolute -left-[23px]"></div>
+                            <p class="font-body-md text-on-surface">{{ alert.source }}</p>
+                        </div>
+                        <div class="relative flex items-center gap-3">
+                            <div class="w-4 h-4 rounded-full bg-primary absolute -left-[23px]"></div>
+                            <p class="font-body-md text-on-surface font-semibold">{{ alert.destination }}</p>
+                        </div>
+                    </div>
+                    
+                    <form action="/api/ride-alerts/{{ alert.id }}/fulfill" method="POST" class="w-full mt-2">
+                        <button type="submit" class="w-full py-2.5 rounded-lg font-label-md flex justify-center items-center gap-2 transition-colors bg-tertiary text-on-tertiary hover:bg-tertiary/90 shadow-sm">
+                            <span>Fulfill Ride (Earn {{ alert.karma_reward }})</span>
+                            <span class="material-symbols-outlined text-sm">local_taxi</span>
+                        </button>
+                    </form>
+                </article>
+                {% endfor %}
+            </div>
         </section>
     </div>
 </main>
@@ -230,12 +238,18 @@
         });
     }
 
+    const rideMarkers = [];
+    const alertMarkers = [];
+
     // Plot Rides
     ridesData.forEach(ride => {
         if (ride.lat && ride.lng) {
-            L.marker([ride.lat, ride.lng], {icon: offerIcon})
-             .addTo(map)
+            const marker = L.marker([ride.lat, ride.lng], {icon: offerIcon})
              .bindPopup(`<b>${ride.helperName}</b><br>Going to: ${ride.destination}`);
+            
+            // Add to map by default because 'rides' tab is active first
+            marker.addTo(map);
+            rideMarkers.push(marker);
             bounds.push([ride.lat, ride.lng]);
         }
     });
@@ -243,9 +257,11 @@
     // Plot Alerts
     alertsData.forEach(alert => {
         if (alert.lat && alert.lng) {
-            L.marker([alert.lat, alert.lng], {icon: alertIcon})
-             .addTo(map)
+            const marker = L.marker([alert.lat, alert.lng], {icon: alertIcon})
              .bindPopup(`<b>${alert.seekerName}</b><br>Needs a ride to: ${alert.destination}`);
+            
+            // Do NOT add to map by default
+            alertMarkers.push(marker);
             bounds.push([alert.lat, alert.lng]);
         }
     });
@@ -253,6 +269,35 @@
     if (bounds.length > 0) {
         map.fitBounds(bounds, {padding: [30, 30]});
     }
+
+    // Tab Switching Logic
+    function switchTab(tabId) {
+        const tabRides = document.getElementById('tab-rides');
+        const tabAlerts = document.getElementById('tab-alerts');
+        const ridesList = document.getElementById('rides-list');
+        const alertsList = document.getElementById('alerts-list');
+
+        if (tabId === 'rides') {
+            tabRides.className = "flex-1 py-2.5 rounded-md font-label-md bg-primary text-on-primary shadow-sm transition-all flex items-center justify-center gap-2";
+            tabAlerts.className = "flex-1 py-2.5 rounded-md font-label-md text-on-surface-variant hover:bg-surface-variant transition-all flex items-center justify-center gap-2";
+            ridesList.classList.remove('hidden');
+            alertsList.classList.add('hidden');
+            
+            // Show ride markers, hide alert markers
+            rideMarkers.forEach(m => map.addLayer(m));
+            alertMarkers.forEach(m => map.removeLayer(m));
+        } else {
+            tabAlerts.className = "flex-1 py-2.5 rounded-md font-label-md bg-primary text-on-primary shadow-sm transition-all flex items-center justify-center gap-2";
+            tabRides.className = "flex-1 py-2.5 rounded-md font-label-md text-on-surface-variant hover:bg-surface-variant transition-all flex items-center justify-center gap-2";
+            alertsList.classList.remove('hidden');
+            ridesList.classList.add('hidden');
+            
+            // Show alert markers, hide ride markers
+            alertMarkers.forEach(m => map.addLayer(m));
+            rideMarkers.forEach(m => map.removeLayer(m));
+        }
+    }
+
 
 </script>
 {% endblock %}
