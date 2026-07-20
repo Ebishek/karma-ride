@@ -235,9 +235,16 @@ app.get('/dashboard', requireAuth, async (req, res) => {
         include: [{ model: Ride, as: 'ride' }]
     });
 
+    const roadUpdates = await RoadUpdate.findAll({
+        include: [{ model: User, as: 'user', attributes: ['id', 'name'] }],
+        order: [['timestamp', 'DESC']],
+        limit: 5
+    });
+
     res.render('dashboard.html', {
         active_rides: active_rides,
-        requests_made: requests_made
+        requests_made: requests_made,
+        roadUpdates: roadUpdates
     });
 });
 
