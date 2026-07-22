@@ -224,6 +224,14 @@ app.get('/logout', (req, res) => {
 
 // --- MAIN ROUTES (Protected) ---
 
+app.get('/guidelines', async (req, res) => {
+    res.render('guidelines.html');
+});
+
+app.get('/safety', async (req, res) => {
+    res.render('safety.html');
+});
+
 app.get('/', async (req, res) => {
     if (req.session.userId) return res.redirect('/dashboard');
     const topHeroes = await User.findAll({

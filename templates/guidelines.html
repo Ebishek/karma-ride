@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block head %}
+<style>
+  .banyan-texture {
+      background-image: radial-gradient(circle at 2px 2px, rgba(160, 63, 40, 0.05) 1px, transparent 0);
+      background-size: 24px 24px;
+  }
+  .chaupal-card {
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+  }
+  .chaupal-card:active {
+      transform: scale(0.98);
+  }
+  .stitched-line {
+      background-image: linear-gradient(to right, #ddc0ba 50%, transparent 50%);
+      background-size: 8px 1px;
+      background-repeat: repeat-x;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="flex-grow w-full max-w-5xl mx-auto px-margin-mobile md:px-margin-desktop py-xl banyan-texture mt-4">
+<!-- Hero Section -->
+<section class="mb-xl text-center">
+<div class="relative w-full h-80 rounded-xl overflow-hidden mb-lg shadow-sm border border-outline-variant">
+<div class="w-full h-full bg-cover bg-center" data-alt="A warm, evocative illustration of a grand Banyan tree in a traditional Indian village setting. The tree is broad with hanging aerial roots, and a circular stone platform (Chaupal) surrounds its base. Soft, golden hour sunlight filters through the dense leaves, casting dappled shadows on the ground. People are shown sitting and conversing in a friendly manner, reflecting a strong sense of community, safety, and mutual respect. The style is rustic-minimalist with terracotta and mustard yellow tones." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAdU4V7-4n2dCHiyiVKblPQPOpyOMfeks0n_GcaBhTpHQU8pob9iiTsHdvh6fOQ23-cl5HSaMstMvjoHKuQRBIoB7LGa_QkFHhZR8MruWikUyZrEzWNuZlqC_HqQmeBV0rvALc0G1SXmX-9YDoPNm_o6MBudHI7hF3GnI1x88wjv9Soagsp6TsuSDQBc-ZEeiM8cGoXux6QVoj9pqCvo7CPrxG6tpgQ9UqOxNPLunFNnHVSbk3eLu4v')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent flex items-end justify-center pb-md">
+<h1 class="font-headline-lg text-headline-lg md:text-headline-lg text-primary drop-shadow-sm">{{ t('Village Guidelines') }}</h1>
+</div>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
+                {{ t('Welcome to KarmaRide, where every journey is a thread in our community fabric. We ride together with trust, respect, and shared purpose.') }}
+            </p>
+</section>
+<!-- Guidelines Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<!-- Respect Your Neighbors -->
+<div class="chaupal-card bg-surface-container-low p-md rounded-xl border border-outline-variant hover:shadow-md">
+<div class="flex items-center gap-sm mb-sm text-primary">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">handshake</span>
+<h2 class="font-headline-md text-headline-md">{{ t('Respect Your Neighbors') }}</h2>
+</div>
+<div class="stitched-line h-px w-full mb-sm"></div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-md">
+                    {{ t("A neighborly smile goes a long way. Whether you are the rider or the passenger, treat every interaction with the kindness you'd show a friend in the village square.") }}
+                </p>
+<ul class="space-y-xs font-label-md text-label-md text-on-surface">
+<li class="flex items-start gap-xs">
+<span class="material-symbols-outlined text-secondary text-sm">check_circle</span>
+<span>{{ t('Be punctual; time is as precious as water.') }}</span>
+</li>
+<li class="flex items-start gap-xs">
+<span class="material-symbols-outlined text-secondary text-sm">check_circle</span>
+<span>{{ t('Keep conversation pleasant and respectful.') }}</span>
+</li>
+</ul>
+</div>
+<!-- Fair Karma Exchange -->
+<div class="chaupal-card bg-surface-container-low p-md rounded-xl border border-outline-variant hover:shadow-md">
+<div class="flex items-center gap-sm mb-sm text-secondary">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">currency_exchange</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">{{ t('Fair Karma Exchange') }}</h2>
+</div>
+<div class="stitched-line h-px w-full mb-sm"></div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-md">
+                    {{ t('The Karma system is built on fairness. We believe in the "Chaupal" spirit—sharing resources for the benefit of all, not just for profit.') }}
+                </p>
+<ul class="space-y-xs font-label-md text-label-md text-on-surface">
+<li class="flex items-start gap-xs">
+<span class="material-symbols-outlined text-secondary text-sm">stars</span>
+<span>{{ t('Contribute fairly to fuel and maintenance.') }}</span>
+</li>
+<li class="flex items-start gap-xs">
+<span class="material-symbols-outlined text-secondary text-sm">stars</span>
+<span>{{ t('Redeem and earn Karma points honestly.') }}</span>
+</li>
+</ul>
+</div>
+<!-- Safety First -->
+<div class="chaupal-card bg-surface-container-low p-md rounded-xl border border-outline-variant hover:shadow-md">
+<div class="flex items-center gap-sm mb-sm text-tertiary">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">security</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">{{ t('Safety First') }}</h2>
+</div>
+<div class="stitched-line h-px w-full mb-sm"></div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-md">
+                    {{ t('Like a sturdy mud wall during monsoons, safety protects our village. Always prioritize the well-being of yourself and your co-rider.') }}
+                </p>
+<div class="bg-surface-container-highest p-sm rounded-lg flex items-center gap-sm border-l-4 border-tertiary">
+<span class="material-symbols-outlined text-tertiary">minor_crash</span>
+<span class="font-label-sm text-label-sm">{{ t('Ensure helmets are worn and bikes are well-maintained before every ride.') }}</span>
+</div>
+</div>
+<!-- Village Trust -->
+<div class="chaupal-card bg-surface-container-low p-md rounded-xl border border-outline-variant hover:shadow-md">
+<div class="flex items-center gap-sm mb-sm text-primary">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">house</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">{{ t('Village Trust') }}</h2>
+</div>
+<div class="stitched-line h-px w-full mb-sm"></div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-md">
+                    {{ t('Our community thrives on identity and honesty. Be your authentic self so the village can trust you.') }}
+                </p>
+<div class="flex gap-xs flex-wrap">
+<span class="bg-secondary-container/30 text-secondary px-sm py-1 rounded-full font-label-sm text-label-sm">{{ t('Verified Profiles') }}</span>
+<span class="bg-secondary-container/30 text-secondary px-sm py-1 rounded-full font-label-sm text-label-sm">{{ t('Real Identity') }}</span>
+<span class="bg-secondary-container/30 text-secondary px-sm py-1 rounded-full font-label-sm text-label-sm">{{ t('No Spam') }}</span>
+</div>
+</div>
+</div>
+<!-- Call to Action -->
+<section class="mt-xl p-lg bg-primary-container rounded-xl text-center text-on-primary mb-8">
+<span class="material-symbols-outlined text-5xl mb-sm" style="font-variation-settings: 'FILL' 0;">verified_user</span>
+<h3 class="font-headline-md text-headline-md mb-xs">{{ t('I Agree to the Karma Pledge') }}</h3>
+<p class="font-body-md text-body-md mb-lg opacity-90">{{ t('By using KarmaRide, you join a circle of trust dedicated to building a better, shared future.') }}</p>
+<a href="/dashboard" class="bg-on-primary text-primary px-xl py-md rounded-full font-label-md text-label-md font-bold hover:bg-surface-bright active:scale-95 transition-all shadow-md inline-block">
+                {{ t('Accept Guidelines') }}
+            </a>
+</section>
+</main>
+<script>
+    document.querySelectorAll('.chaupal-card').forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            card.style.transform = 'translateY(-4px)';
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'translateY(0)';
+        });
+    });
+</script>
+{% endblock %}

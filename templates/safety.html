@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+
+{% block head %}
+<style>
+  .chaupal-card {
+    box-shadow: 0 4px 12px rgba(75, 61, 51, 0.08);
+    border: 1px solid #ddc0ba;
+    background-image: radial-gradient(#f4ded0 0.5px, transparent 0.5px);
+    background-size: 16px 16px;
+    background-color: #fff8f5;
+  }
+  .dashed-divider {
+    background-image: linear-gradient(to right, #8a726c 50%, transparent 50%);
+    background-position: bottom;
+    background-size: 8px 1px;
+    background-repeat: repeat-x;
+    height: 1px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop py-lg space-y-xl mt-4">
+<!-- Hero Section: Trust & Community -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-md items-center">
+<div class="space-y-sm">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-md">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+                    {{ t('Community Verified') }}
+                </div>
+<h1 class="font-headline-lg text-headline-lg md:text-[40px] text-primary leading-tight">{{ t('Your Safety is Our Shared Karma') }}</h1>
+<p class="text-body-lg text-on-surface-variant max-w-xl">
+                    {{ t('KarmaRide is built on the trust of our village neighbors. Every ride is an opportunity to strengthen our community bonds through safety and respect.') }}
+                </p>
+</div>
+<div class="relative h-64 md:h-96 w-full rounded-xl overflow-hidden shadow-lg border-2 border-primary-container">
+<img class="w-full h-full object-cover" data-alt="A cinematic, warm-toned photograph of a scenic Indian village road at sunset. Two people on a scooter, both wearing bright helmets, are riding safely along a dusty path lined with lush banyan trees. The lighting is golden and soft, emphasizing a sense of peaceful community travel and reliable transport. The atmosphere is rustic yet modern, captured with high-quality photography gear." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtqAJHIJ74xfmw7y8-7KC7gd4OJyRMgzR0PcuDrumFhULR_tvW6cICV5tTTj1J-EhvLC39jZNkDYP3xNxi7v8hPsnXX0I5X8hFDnbasTxPRuRueBp1jM515J9tD4IkLWbs-g9mi0pYxe_BVgnB2HdJNDzfkQa6MGR1Z6rVYACVIJOzSmRP4_kQx9u-AdUEKXq-HFWdMhGjstsWB4u_ceICYnD1_hRDU_lxdCbk37K_XTaookDIQBLA"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+</div>
+</section>
+<!-- Bento Grid: Safety Pillars -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-md">
+<!-- Verifying Your Ride -->
+<div class="chaupal-card md:col-span-2 p-md rounded-xl flex flex-col md:flex-row gap-md items-center">
+<div class="flex-1 space-y-sm">
+<div class="w-12 h-12 bg-primary-container rounded-lg flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-2xl">id_card</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface">{{ t('Verifying Your Ride') }}</h2>
+<p class="text-body-md text-on-surface-variant">{{ t("Always match the vehicle plate and rider profile before hopping on. Our digital 'Handshake' ensures you're with the right person.") }}</p>
+<ul class="space-y-2">
+<li class="flex items-center gap-2 text-label-md"><span class="material-symbols-outlined text-secondary text-sm">check_circle</span> {{ t('Match plate number') }}</li>
+<li class="flex items-center gap-2 text-label-md"><span class="material-symbols-outlined text-secondary text-sm">check_circle</span> {{ t('Check profile photo') }}</li>
+<li class="flex items-center gap-2 text-label-md"><span class="material-symbols-outlined text-secondary text-sm">check_circle</span> {{ t("Use the 'Otp' verification") }}</li>
+</ul>
+</div>
+<div class="w-full md:w-48 h-48 bg-surface-container-highest rounded-lg overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A close-up shot of a smartphone screen displaying the KarmaRide app interface with a large, clear rider profile picture and a numerical OTP code. The phone is held by a hand with a warm skin tone against a background of a colorful village market. The focus is sharp on the screen, illustrating a secure digital verification process with earthy tones and vibrant sunlight." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDT0PeV7drbzT9o_mUbUDjXp9P7hLVAxXzNeBQTKvC2atFbsfj5nWPeqY0ulCIcvQVMdJFQLOoXeAyvPEoklBN8DCqLMLrxGqFGzdsF0Ogf1NDv-V3GcK660YlusnTnpgeEnnduvk1W41FI5bVtvbRTcoaVPk00j_i0Ua2TLu6w5bVtsnnvARNNAfyArtq8oveSaYnG8o7xDSCppSpTTqgn8IRKnUwnX5HwiC8u0zBki4yOYINS_bh_"/>
+</div>
+</div>
+<!-- Safe Riding Tips Card -->
+<div class="chaupal-card p-md rounded-xl bg-secondary-container/20 border-secondary/30 space-y-sm">
+<div class="w-12 h-12 bg-secondary-container rounded-lg flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined text-2xl">health_and_safety</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface">{{ t('Safe Riding Tips') }}</h2>
+<div class="space-y-4">
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-secondary">sports_motorsports</span>
+<div>
+<p class="font-label-md text-on-surface">{{ t('Wear a Helmet') }}</p>
+<p class="text-label-sm text-on-surface-variant">{{ t('Mandatory for both rider and passenger.') }}</p>
+</div>
+</div>
+<div class="dashed-divider"></div>
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-secondary">speed</span>
+<div>
+<p class="font-label-md text-on-surface">{{ t('Village Speed Limits') }}</p>
+<p class="text-label-sm text-on-surface-variant">{{ t('Stay under 30km/h in residential lanes.') }}</p>
+</div>
+</div>
+<div class="dashed-divider"></div>
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-secondary">visibility</span>
+<div>
+<p class="font-label-md text-on-surface">{{ t('Night Visibility') }}</p>
+<p class="text-label-sm text-on-surface-variant">{{ t('Check your lights before evening trips.') }}</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Emergency Contacts & Community Reporting -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<!-- Emergency Contacts -->
+<div class="bg-primary text-on-primary p-lg rounded-xl shadow-lg relative overflow-hidden group">
+<div class="absolute -right-10 -bottom-10 opacity-10 rotate-12 transition-transform group-hover:rotate-0 duration-700">
+<span class="material-symbols-outlined text-[200px]">emergency</span>
+</div>
+<div class="relative z-10 space-y-md">
+<h2 class="font-headline-md text-headline-md">{{ t('Emergency Support') }}</h2>
+<p class="opacity-90 font-body-md">{{ t('In case of any incident or immediate danger, use our quick-dial buttons to reach help instantly.') }}</p>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-sm">
+<button class="bg-on-primary text-primary font-label-md py-3 px-4 rounded-lg flex items-center justify-center gap-2 active:scale-95 transition-all">
+<span class="material-symbols-outlined">call</span>
+                            {{ t('Karma Emergency Line') }}
+                        </button>
+<button class="bg-surface-container-lowest/20 border border-on-primary/30 text-on-primary font-label-md py-3 px-4 rounded-lg flex items-center justify-center gap-2 active:scale-95 transition-all">
+<span class="material-symbols-outlined">shield</span>
+                            {{ t('Local Police') }}
+                        </button>
+</div>
+</div>
+</div>
+<!-- Community Reporting -->
+<div class="chaupal-card p-lg rounded-xl border-dashed border-2 border-outline flex flex-col justify-center space-y-sm text-center">
+<div class="mx-auto w-16 h-16 bg-surface-container-high rounded-full flex items-center justify-center text-primary mb-2">
+<span class="material-symbols-outlined text-3xl">report</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface">{{ t('Community Reporting') }}</h2>
+<p class="text-body-md text-on-surface-variant max-w-sm mx-auto">{{ t('See something not right? Help keep the village safe by reporting reckless driving or suspicious behavior.') }}</p>
+<a href="/report-road" class="mx-auto mt-4 border-2 border-primary text-primary px-8 py-2 rounded-full font-label-md hover:bg-primary hover:text-on-primary transition-colors inline-block">
+                    {{ t('Report an Issue') }}
+                </a>
+</div>
+</section>
+<!-- Detailed Safety Illustration Section -->
+<section class="bg-surface-container-low p-md md:p-xl rounded-2xl flex flex-col lg:flex-row items-center gap-xl">
+<div class="flex-1 order-2 lg:order-1 space-y-sm">
+<h2 class="font-headline-md text-headline-md text-on-surface">{{ t("The 'Chaupal' Standards") }}</h2>
+<p class="text-body-lg text-on-surface-variant">{{ t('Our safety standards are co-created with village elders and community leaders. We believe in mutual accountability where every rider and passenger acts as a guardian of the road.') }}</p>
+<div class="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-md">
+<div class="flex items-start gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container shrink-0">
+<span class="material-symbols-outlined text-xl">handshake</span>
+</div>
+<p class="text-label-md">{{ t('Mutual Trust Protocol') }}</p>
+</div>
+<div class="flex items-start gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container shrink-0">
+<span class="material-symbols-outlined text-xl">psychology</span>
+</div>
+<p class="text-label-md">{{ t('Conflict Resolution') }}</p>
+</div>
+<div class="flex items-start gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container shrink-0">
+<span class="material-symbols-outlined text-xl">history_edu</span>
+</div>
+<p class="text-label-md">{{ t('Village Code of Conduct') }}</p>
+</div>
+<div class="flex items-start gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container shrink-0">
+<span class="material-symbols-outlined text-xl">rewarded_ads</span>
+</div>
+<p class="text-label-md">{{ t('Safe Rider Karma Points') }}</p>
+</div>
+</div>
+</div>
+<div class="w-full lg:w-1/3 order-1 lg:order-2">
+<div class="relative aspect-square rounded-full overflow-hidden border-8 border-surface p-4 bg-white shadow-xl">
+<img class="w-full h-full object-cover rounded-full" data-alt="A stylized, flat-lay conceptual illustration of rural safety equipment. A high-quality terracotta-colored helmet sits beside a golden brass bell and a pair of sturdy leather gloves. The background is a textured handmade paper with subtle block-print patterns of trees and local motifs. The aesthetic is clean and modern yet deeply rooted in Indian village craft and warmth." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMBK8eQ6vBq0zcR3e_j2i9K2TT01r3_Tszr1tfyEwRvpVpVT4vlz_aV494pwbfd3gcgtVkTxPgi15UMEAEVG9phJ3sHKZKhAZVlDD-xNhtkPQD7824UrEo_h7jSuiFnM6WYYWGw-v3by7xpuCKcRmVguxxyXgIkxww5B9AE0iMNRZfxaNlN01jPxCiiFe3Egv7NjHBo_XAc-BEaIsJEVLLJmDucMFnyG-98heZRNEnCEPSQ7l7IZEk"/>
+</div>
+</div>
+</section>
+<!-- Karma Rewards Highlight -->
+<section class="flex flex-col items-center text-center space-y-md py-md border-y border-dashed border-outline-variant">
+<div class="relative">
+<span class="material-symbols-outlined text-6xl text-secondary animate-pulse" style="font-variation-settings: 'FILL' 1;">stars</span>
+<div class="absolute -top-2 -right-2 w-4 h-4 bg-primary rounded-full"></div>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">{{ t('Earn Safety Karma') }}</h3>
+<p class="text-body-md text-on-surface-variant max-w-xl">{{ t('Every safe trip, helmet shared, and positive report earns you \"Lotus\" tokens. Redeem these for fuel discounts and community rewards at your local Panchayat store.') }}</p>
+<a class="text-primary font-bold hover:underline flex items-center gap-1" href="#">
+                {{ t('Learn about Karma Rewards') }}
+                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</section>
+</main>
+{% endblock %}
