@@ -111,5 +111,20 @@
   "No Spam": "कोई स्पैम नहीं",
   "I Agree to the Karma Pledge": "मैं कर्म प्रतिज्ञा से सहमत हूँ",
   "By using KarmaRide, you join a circle of trust dedicated to building a better, shared future.": "कर्मा-राइड का उपयोग करके, आप एक बेहतर, साझा भविष्य के निर्माण के लिए समर्पित विश्वास के चक्र में शामिल होते हैं।",
-  "Accept Guidelines": "दिशा-निर्देश स्वीकार करें"
+  "Accept Guidelines": "दिशा-निर्देश स्वीकार करें",
+  "Report Safety Issue": "सुरक्षा समस्या की रिपोर्ट करें",
+  "Help keep our community safe by reporting reckless driving, suspicious behavior, or other safety concerns.": "लापरवाह ड्राइविंग, संदिग्ध व्यवहार, या अन्य सुरक्षा चिंताओं की रिपोर्ट करके हमारे समुदाय को सुरक्षित रखने में मदद करें।",
+  "Type of Issue": "समस्या का प्रकार",
+  "Select an issue type...": "एक समस्या प्रकार का चयन करें...",
+  "Reckless Driving": "लापरवाह ड्राइविंग",
+  "Suspicious Behavior": "संदिग्ध व्यवहार",
+  "Harassment": "उत्पीड़न",
+  "Other": "अन्य",
+  "Description": "विवरण",
+  "Please describe what happened in detail...": "कृपया विस्तार से बताएं कि क्या हुआ...",
+  "Related User (Optional)": "संबंधित उपयोगकर्ता (वैकल्पिक)",
+  "If this involves a specific KarmaRide user, you can enter their user ID here. Otherwise, leave this blank.": "यदि इसमें कोई विशिष्ट कर्मा-राइड उपयोगकर्ता शामिल है, तो आप उनका उपयोगकर्ता आईडी यहां दर्ज कर सकते हैं। अन्यथा, इसे खाली छोड़ दें।",
+  "e.g., 42": "जैसे, 42",
+  "Submit Report": "रिपोर्ट जमा करें",
+  "Your report is confidential and will only be reviewed by village admins.": "आपकी रिपोर्ट गोपनीय है और इसकी समीक्षा केवल गांव के व्यवस्थापकों द्वारा की जाएगी।"
 }

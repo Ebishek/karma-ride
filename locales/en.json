@@ -111,5 +111,20 @@
   "No Spam": "No Spam",
   "I Agree to the Karma Pledge": "I Agree to the Karma Pledge",
   "By using KarmaRide, you join a circle of trust dedicated to building a better, shared future.": "By using KarmaRide, you join a circle of trust dedicated to building a better, shared future.",
-  "Accept Guidelines": "Accept Guidelines"
+  "Accept Guidelines": "Accept Guidelines",
+  "Report Safety Issue": "Report Safety Issue",
+  "Help keep our community safe by reporting reckless driving, suspicious behavior, or other safety concerns.": "Help keep our community safe by reporting reckless driving, suspicious behavior, or other safety concerns.",
+  "Type of Issue": "Type of Issue",
+  "Select an issue type...": "Select an issue type...",
+  "Reckless Driving": "Reckless Driving",
+  "Suspicious Behavior": "Suspicious Behavior",
+  "Harassment": "Harassment",
+  "Other": "Other",
+  "Description": "Description",
+  "Please describe what happened in detail...": "Please describe what happened in detail...",
+  "Related User (Optional)": "Related User (Optional)",
+  "If this involves a specific KarmaRide user, you can enter their user ID here. Otherwise, leave this blank.": "If this involves a specific KarmaRide user, you can enter their user ID here. Otherwise, leave this blank.",
+  "e.g., 42": "e.g., 42",
+  "Submit Report": "Submit Report",
+  "Your report is confidential and will only be reviewed by village admins.": "Your report is confidential and will only be reviewed by village admins."
 }

@@ -5,7 +5,7 @@ const path = require('path');
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
 const { Op } = require('sequelize');
-const { sequelize, User, Ride, RideRequest, KarmaTransaction, Message, Notification, RideAlert, Announcement, PushSubscription, RoadUpdate } = require('./models');
+const { sequelize, User, Ride, RideRequest, KarmaTransaction, Message, Notification, RideAlert, Announcement, PushSubscription, RoadUpdate, SafetyReport } = require('./models');
 const multer = require('multer');
 const fs = require('fs');
 
@@ -943,6 +943,28 @@ app.post('/api/push/subscribe', requireAuth, async (req, res) => {
 
 app.get('/report-road', requireAuth, (req, res) => {
     res.render('report_road.html');
+});
+
+app.get('/report-issue', requireAuth, (req, res) => {
+    res.render('report_issue.html');
+});
+
+app.post('/report-issue', requireAuth, async (req, res) => {
+    try {
+        const { issue_type, description, reported_user_id } = req.body;
+        
+        await SafetyReport.create({
+            reporter_id: req.session.userId,
+            issue_type,
+            description,
+            reported_user_id: reported_user_id ? parseInt(reported_user_id, 10) : null
+        });
+
+        res.redirect('/dashboard?success=Report+submitted+successfully');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error submitting report");
+    }
 });
 
 app.post('/api/road-updates', requireAuth, upload.single('image'), async (req, res) => {

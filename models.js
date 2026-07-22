@@ -117,6 +117,15 @@ const RoadUpdate = sequelize.define('RoadUpdate', {
     timestamp: { type: DataTypes.DATE, defaultValue: Sequelize.NOW }
 }, { tableName: 'road_updates', timestamps: false });
 
+const SafetyReport = sequelize.define('SafetyReport', {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    reporter_id: { type: DataTypes.INTEGER, references: { model: User, key: 'id' } },
+    issue_type: { type: DataTypes.STRING, allowNull: false },
+    description: { type: DataTypes.TEXT, allowNull: false },
+    reported_user_id: { type: DataTypes.INTEGER, allowNull: true, references: { model: User, key: 'id' } },
+    timestamp: { type: DataTypes.DATE, defaultValue: Sequelize.NOW }
+}, { tableName: 'safety_reports', timestamps: false });
+
 // Relationships
 User.hasMany(Ride, { foreignKey: 'helper_id', as: 'rides_offered' });
 Ride.belongsTo(User, { foreignKey: 'helper_id', as: 'helper' });
@@ -145,4 +154,8 @@ Notification.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
 User.hasMany(RoadUpdate, { foreignKey: 'user_id', as: 'road_updates' });
 RoadUpdate.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
 
-module.exports = { sequelize, User, Ride, RideRequest, KarmaTransaction, Message, Notification, RideAlert, Announcement, PushSubscription, RoadUpdate };
+User.hasMany(SafetyReport, { foreignKey: 'reporter_id', as: 'safety_reports' });
+SafetyReport.belongsTo(User, { foreignKey: 'reporter_id', as: 'reporter' });
+SafetyReport.belongsTo(User, { foreignKey: 'reported_user_id', as: 'reported_user' });
+
+module.exports = { sequelize, User, Ride, RideRequest, KarmaTransaction, Message, Notification, RideAlert, Announcement, PushSubscription, RoadUpdate, SafetyReport };
