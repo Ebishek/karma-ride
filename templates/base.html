@@ -124,10 +124,10 @@
     
     <!-- Top App Bar -->
     <header class="bg-background dark:bg-background shadow-[0_4px_12px_rgba(75,61,51,0.08)] flex justify-between items-center px-margin-mobile h-16 w-full fixed top-0 z-50">
-        <div class="flex items-center gap-3">
-            <a href="{% if user %}/dashboard{% else %}/{% endif %}" class="flex items-center gap-3">
-                <img alt="KarmaRide Logo" class="h-10 w-10 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCP7B0g_dNrlyNqnb8mqwE4CRBp2zK4oPAWjfXUAVxt8Wrzsr4qdWB0LncrJ-NzQGBz9qQQtaPTEF3Zn8hc8OCVk22NYKN0rQ2VJBKvN_axjcZyjhbnXPk-SF3OvEIg3nqNW98icfMSYx2bNZWIZliFy-dvHYSrnPlGLLi8SUA8KTAqqWnkQaVlNuaPj4w-rSvqh9AOC9OH3GDOYBjuEmuBUDNdCiJnqE8uOiG6pfFSSIlj6Lib0JJ-"/>
-                <h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary dark:text-primary-fixed-dim">KarmaRide</h1>
+        <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+            <a href="{% if user %}/dashboard{% else %}/{% endif %}" class="flex items-center gap-2 sm:gap-3">
+                <img alt="KarmaRide Logo" class="h-8 w-8 sm:h-10 sm:w-10 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCP7B0g_dNrlyNqnb8mqwE4CRBp2zK4oPAWjfXUAVxt8Wrzsr4qdWB0LncrJ-NzQGBz9qQQtaPTEF3Zn8hc8OCVk22NYKN0rQ2VJBKvN_axjcZyjhbnXPk-SF3OvEIg3nqNW98icfMSYx2bNZWIZliFy-dvHYSrnPlGLLi8SUA8KTAqqWnkQaVlNuaPj4w-rSvqh9AOC9OH3GDOYBjuEmuBUDNdCiJnqE8uOiG6pfFSSIlj6Lib0JJ-"/>
+                <h1 class="font-headline-md text-xl sm:text-[26px] font-bold text-primary dark:text-primary-fixed-dim">KarmaRide</h1>
             </a>
         </div>
         <div class="hidden md:flex gap-6 items-center">
@@ -153,10 +153,10 @@
             </a>
         </div>
         {% if user %}
-        <div class="flex items-center gap-4 text-primary dark:text-primary-fixed-dim">
-            <form action="/api/set-language" method="POST" class="m-0 flex items-center">
+        <div class="flex items-center gap-2 sm:gap-4 text-primary dark:text-primary-fixed-dim shrink-0">
+            <form action="/api/set-language" method="POST" class="m-0 flex items-center shrink-0">
                 <input type="hidden" name="lang" value="{% if currentLang == 'en' %}hi{% else %}en{% endif %}">
-                <button type="submit" class="font-label-md font-bold px-2 py-1 rounded border border-outline-variant hover:bg-surface-variant transition-colors text-on-surface-variant">
+                <button type="submit" class="font-label-md font-bold px-2 py-1 rounded border border-outline-variant hover:bg-surface-variant transition-colors text-on-surface-variant shrink-0 whitespace-nowrap">
                     {% if currentLang == 'en' %}A/अ{% else %}अ/A{% endif %}
                 </button>
             </form>
@@ -175,7 +175,7 @@
                     </div>
                 </div>
             </div>
-            <div class="flex items-center gap-1 bg-surface-container-high px-3 py-1 rounded-full border border-primary-container">
+            <div class="flex items-center gap-1 bg-surface-container-high px-2 py-1 sm:px-3 rounded-full border border-primary-container shrink-0">
                 <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">spa</span>
                 <span class="font-bold text-sm">{{ user.karma_balance }}</span>
             </div>

@@ -51,7 +51,6 @@
 <ul class="space-y-2">
 <li class="flex items-center gap-2 text-label-md"><span class="material-symbols-outlined text-secondary text-sm">check_circle</span> {{ t('Match plate number') }}</li>
 <li class="flex items-center gap-2 text-label-md"><span class="material-symbols-outlined text-secondary text-sm">check_circle</span> {{ t('Check profile photo') }}</li>
-<li class="flex items-center gap-2 text-label-md"><span class="material-symbols-outlined text-secondary text-sm">check_circle</span> {{ t("Use the 'Otp' verification") }}</li>
 </ul>
 </div>
 <div class="w-full md:w-48 h-48 bg-surface-container-highest rounded-lg overflow-hidden border border-outline-variant">
@@ -69,7 +68,7 @@
 <span class="material-symbols-outlined text-secondary">sports_motorsports</span>
 <div>
 <p class="font-label-md text-on-surface">{{ t('Wear a Helmet') }}</p>
-<p class="text-label-sm text-on-surface-variant">{{ t('Mandatory for both rider and passenger.') }}</p>
+<p class="text-label-sm text-on-surface-variant">{{ t('Riders must wear a helmet. Passengers are advised to bring their own.') }}</p>
 </div>
 </div>
 <div class="dashed-divider"></div>
@@ -162,19 +161,6 @@
 <img class="w-full h-full object-cover rounded-full" data-alt="A stylized, flat-lay conceptual illustration of rural safety equipment. A high-quality terracotta-colored helmet sits beside a golden brass bell and a pair of sturdy leather gloves. The background is a textured handmade paper with subtle block-print patterns of trees and local motifs. The aesthetic is clean and modern yet deeply rooted in Indian village craft and warmth." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMBK8eQ6vBq0zcR3e_j2i9K2TT01r3_Tszr1tfyEwRvpVpVT4vlz_aV494pwbfd3gcgtVkTxPgi15UMEAEVG9phJ3sHKZKhAZVlDD-xNhtkPQD7824UrEo_h7jSuiFnM6WYYWGw-v3by7xpuCKcRmVguxxyXgIkxww5B9AE0iMNRZfxaNlN01jPxCiiFe3Egv7NjHBo_XAc-BEaIsJEVLLJmDucMFnyG-98heZRNEnCEPSQ7l7IZEk"/>
 </div>
 </div>
-</section>
-<!-- Karma Rewards Highlight -->
-<section class="flex flex-col items-center text-center space-y-md py-md border-y border-dashed border-outline-variant">
-<div class="relative">
-<span class="material-symbols-outlined text-6xl text-secondary animate-pulse" style="font-variation-settings: 'FILL' 1;">stars</span>
-<div class="absolute -top-2 -right-2 w-4 h-4 bg-primary rounded-full"></div>
-</div>
-<h3 class="font-headline-md text-headline-md text-on-surface">{{ t('Earn Safety Karma') }}</h3>
-<p class="text-body-md text-on-surface-variant max-w-xl">{{ t('Every safe trip, helmet shared, and positive report earns you \"Lotus\" tokens. Redeem these for fuel discounts and community rewards at your local Panchayat store.') }}</p>
-<a class="text-primary font-bold hover:underline flex items-center gap-1" href="#">
-                {{ t('Learn about Karma Rewards') }}
-                <span class="material-symbols-outlined text-sm">arrow_forward</span>
-</a>
 </section>
 </main>
 {% endblock %}
