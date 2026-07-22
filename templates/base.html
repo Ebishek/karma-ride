@@ -133,28 +133,33 @@
         <div class="hidden md:flex gap-6 items-center">
             <a class="flex items-center gap-2 text-primary font-bold hover:bg-surface-variant/50 transition-colors p-2 rounded-lg" href="{% if user %}/dashboard{% else %}/{% endif %}">
                 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
-                <span class="font-label-md">Home</span>
+                <span class="font-label-md">{{ t('Home') }}</span>
             </a>
             <a class="flex items-center gap-2 text-on-surface-variant hover:bg-surface-variant/50 transition-colors p-2 rounded-lg" href="/find">
                 <span class="material-symbols-outlined">search_check</span>
-                <span class="font-label-md">Find</span>
+                <span class="font-label-md">{{ t('Find') }}</span>
             </a>
             <a class="flex items-center gap-2 text-on-surface-variant hover:bg-surface-variant/50 transition-colors p-2 rounded-lg" href="/offer">
                 <span class="material-symbols-outlined">motorcycle</span>
-                <span class="font-label-md">Offer</span>
+                <span class="font-label-md">{{ t('Offer') }}</span>
             </a>
             <a class="flex items-center gap-2 text-on-surface-variant hover:bg-surface-variant/50 transition-colors p-2 rounded-lg" href="/request-ride">
                 <span class="material-symbols-outlined">hail</span>
-                <span class="font-label-md">Request</span>
+                <span class="font-label-md">{{ t('Request') }}</span>
             </a>
             <a class="flex items-center gap-2 text-on-surface-variant hover:bg-surface-variant/50 transition-colors p-2 rounded-lg" href="/leaderboard">
                 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">leaderboard</span>
-                <span class="font-label-md">Ranks</span>
+                <span class="font-label-md">{{ t('Ranks') }}</span>
             </a>
         </div>
         {% if user %}
         <div class="flex items-center gap-4 text-primary dark:text-primary-fixed-dim">
-
+            <form action="/api/set-language" method="POST" class="m-0 flex items-center">
+                <input type="hidden" name="lang" value="{% if currentLang == 'en' %}hi{% else %}en{% endif %}">
+                <button type="submit" class="font-label-md font-bold px-2 py-1 rounded border border-outline-variant hover:bg-surface-variant transition-colors text-on-surface-variant">
+                    {% if currentLang == 'en' %}A/अ{% else %}अ/A{% endif %}
+                </button>
+            </form>
             <div class="relative">
                 <button id="notif-btn" class="hover:bg-surface-variant/50 transition-colors p-2 rounded-full scale-95 transition-transform duration-150 relative">
                     <span class="material-symbols-outlined">notifications</span>
@@ -162,8 +167,8 @@
                 </button>
                 <div id="notif-dropdown" class="hidden absolute top-full right-[-60px] sm:right-0 mt-3 w-[320px] max-w-[90vw] bg-surface-container-highest rounded-xl shadow-lg border border-outline-variant/30 overflow-hidden z-50 flex flex-col max-h-[70vh]">
                     <div class="p-3 border-b border-outline-variant/30 flex justify-between items-center bg-surface-container">
-                        <h4 class="font-headline-md text-sm text-on-surface">Notifications</h4>
-                        <button id="mark-all-read" class="text-xs text-primary font-bold hover:underline">Clear all</button>
+                        <h4 class="font-headline-md text-sm text-on-surface">{{ t('Notifications') }}</h4>
+                        <button id="mark-all-read" class="text-xs text-primary font-bold hover:underline">{{ t('Clear all') }}</button>
                     </div>
                     <div id="notif-list" class="overflow-y-auto flex-1">
                         <!-- Notifications injected here -->
@@ -183,7 +188,13 @@
         </div>
         {% else %}
         <div class="flex items-center gap-4">
-            <a href="/login" class="text-primary font-bold">Login</a>
+            <form action="/api/set-language" method="POST" class="m-0 flex items-center">
+                <input type="hidden" name="lang" value="{% if currentLang == 'en' %}hi{% else %}en{% endif %}">
+                <button type="submit" class="font-label-md font-bold px-2 py-1 rounded border border-outline-variant hover:bg-surface-variant transition-colors text-on-surface-variant">
+                    {% if currentLang == 'en' %}A/अ{% else %}अ/A{% endif %}
+                </button>
+            </form>
+            <a href="/login" class="text-primary font-bold">{{ t('Login') }}</a>
         </div>
         {% endif %}
     </header>
@@ -195,8 +206,8 @@
     <footer class="bg-surface-container-lowest dark:bg-surface-dim border-t border-dashed border-outline-variant w-full px-margin-mobile py-8 flex flex-col items-center gap-4 mt-auto z-10">
         <h2 class="font-headline-md text-headline-md text-primary">KarmaRide</h2>
         <div class="flex flex-wrap justify-center gap-4">
-            <a class="text-on-surface-variant font-body-md text-body-md hover:text-primary transition-colors" href="#">Community Guidelines</a>
-            <a class="text-on-surface-variant font-body-md text-body-md hover:text-primary transition-colors" href="#">Safety Info</a>
+            <a class="text-on-surface-variant font-body-md text-body-md hover:text-primary transition-colors" href="#">{{ t('Community Guidelines') }}</a>
+            <a class="text-on-surface-variant font-body-md text-body-md hover:text-primary transition-colors" href="#">{{ t('Safety Info') }}</a>
         </div>
         <p class="text-tertiary dark:text-tertiary-fixed font-body-md text-body-md mt-4">© 2024 KarmaRide Community</p>
     </footer>
@@ -206,30 +217,30 @@
     <nav class="md:hidden bg-surface-container-highest dark:bg-surface-container-highest shadow-[0_-4px_12px_rgba(75,61,51,0.08)] fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-3 pb-safe rounded-t-xl">
         <a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary-fixed/20 rounded-full px-4 py-1 transition-colors" href="{% if user %}/dashboard{% else %}/{% endif %}">
             <span class="material-symbols-outlined">home</span>
-            <span class="font-label-sm text-label-sm mt-1">Home</span>
+            <span class="font-label-sm text-label-sm mt-1">{{ t('Home') }}</span>
         </a>
         <a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary-fixed/20 rounded-full px-4 py-1 transition-colors" href="/find">
             <span class="material-symbols-outlined">search_check</span>
-            <span class="font-label-sm text-label-sm mt-1">Find</span>
+            <span class="font-label-sm text-label-sm mt-1">{{ t('Find') }}</span>
         </a>
         <a href="/offer" class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary-fixed/20 rounded-lg p-2 transition-all">
             <span class="material-symbols-outlined mb-1">motorcycle</span>
-            <span class="font-label-sm text-label-sm">Offer</span>
+            <span class="font-label-sm text-label-sm">{{ t('Offer') }}</span>
         </a>
         <a href="/request-ride" class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary-fixed/20 rounded-lg p-2 transition-all">
             <span class="material-symbols-outlined mb-1">hail</span>
-            <span class="font-label-sm text-label-sm">Request</span>
+            <span class="font-label-sm text-label-sm">{{ t('Request') }}</span>
         </a>
         <a href="/leaderboard" class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary-fixed/20 rounded-lg p-2 transition-all">
             <span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">leaderboard</span>
-            <span class="font-label-sm text-label-sm">Ranks</span>
+            <span class="font-label-sm text-label-sm">{{ t('Ranks') }}</span>
         </a>
         <a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary-fixed/20 rounded-full px-4 py-1 transition-colors" href="/profile">
             <span class="material-symbols-outlined">account_circle</span>
-            <span class="font-label-sm text-label-sm mt-1">Profile</span>
+            <span class="font-label-sm text-label-sm mt-1">{{ t('Profile') }}</span>
         </a>
             <span class="material-symbols-outlined">logout</span>
-            <span class="font-label-sm text-label-sm mt-1">Logout</span>
+            <span class="font-label-sm text-label-sm mt-1">{{ t('Logout') }}</span>
         </a>
     </nav>
     {% endif %}
@@ -278,7 +289,7 @@
                     }
 
                     if (notifications.length === 0) {
-                        notifList.innerHTML = '<p class="text-center text-sm text-on-surface-variant p-4">No notifications</p>';
+                        notifList.innerHTML = `<p class="text-center text-sm text-on-surface-variant p-4">${"{{ t('No notifications') }}"}</p>`;
                         return;
                     }
 

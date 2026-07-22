@@ -70,6 +70,15 @@ env.addFilter('formatDate', function(dateStr) {
 
 app.set('view engine', 'html');
 
+// --- LOCALIZATION ---
+const enLocales = JSON.parse(fs.readFileSync('./locales/en.json', 'utf8'));
+const hiLocales = JSON.parse(fs.readFileSync('./locales/hi.json', 'utf8'));
+
+app.post('/api/set-language', (req, res) => {
+    req.session.lang = req.body.lang || 'en';
+    res.redirect(req.get('referer') || '/');
+});
+
 // Sync DB
 sequelize.sync({ alter: true }).then(async () => {
     console.log("Database synced!");
@@ -118,6 +127,15 @@ async function getCurrentUser(req) {
 app.use(async (req, res, next) => {
     res.locals.user = await getCurrentUser(req);
     res.locals.vapidPublicKey = process.env.VAPID_PUBLIC_KEY;
+    
+    // Localization
+    const lang = req.session.lang || 'en';
+    res.locals.currentLang = lang;
+    const locales = lang === 'hi' ? hiLocales : enLocales;
+    res.locals.t = function(key) {
+        return locales[key] || key; // Fallback to English key if not translated
+    };
+    
     next();
 });
 

@@ -14,12 +14,12 @@
     <section class="bg-surface-container rounded-xl p-4 shadow-[0_4px_12px_rgba(75,61,51,0.08)] border border-outline-variant/30 flex flex-col md:flex-row gap-4 items-center">
         <div class="relative w-full md:w-2/3">
             <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">location_on</span>
-            <input class="w-full bg-surface-container-lowest border-b-2 border-outline-variant focus:border-primary focus:ring-0 rounded-t-md pl-10 pr-4 py-3 font-body-md text-on-surface placeholder-on-surface-variant" placeholder="Where to?" type="text" />
+            <input class="w-full bg-surface-container-lowest border-b-2 border-outline-variant focus:border-primary focus:ring-0 rounded-t-md pl-10 pr-4 py-3 font-body-md text-on-surface placeholder-on-surface-variant" placeholder="{{ t('Where to?') }}" type="text" />
         </div>
         <div class="flex gap-2 w-full md:w-auto overflow-x-auto pb-2 md:pb-0">
             <button class="bg-secondary-container text-on-secondary-container px-4 py-2 rounded-full font-label-md flex items-center gap-2 whitespace-nowrap shadow-[0_2px_4px_rgba(75,61,51,0.08)] border border-secondary-container/50">
                 <span class="material-symbols-outlined text-[18px]">two_wheeler</span>
-                Any Ride
+                {{ t('Any Ride') }}
             </button>
         </div>
     </section>
@@ -43,18 +43,18 @@
             <div class="flex gap-2 bg-surface-container-low p-1 rounded-lg border border-outline-variant/50 mb-2">
                 <button id="tab-rides" class="flex-1 py-2.5 rounded-md font-label-md bg-primary text-on-primary shadow-sm transition-all flex items-center justify-center gap-2" onclick="switchTab('rides')">
                     <span class="material-symbols-outlined text-sm">motorcycle</span>
-                    Available Rides
+                    {{ t('Available Rides') }}
                 </button>
                 <button id="tab-alerts" class="flex-1 py-2.5 rounded-md font-label-md text-on-surface-variant hover:bg-surface-variant transition-all flex items-center justify-center gap-2" onclick="switchTab('alerts')">
                     <span class="material-symbols-outlined text-sm">campaign</span>
-                    Ride Alerts <span class="bg-error-container text-on-error-container text-[10px] px-1.5 py-0.5 rounded-full animate-pulse ml-1">Live</span>
+                    {{ t('Ride Alerts') }} <span class="bg-error-container text-on-error-container text-[10px] px-1.5 py-0.5 rounded-full animate-pulse ml-1">Live</span>
                 </button>
             </div>
 
             <!-- Monetary Disclaimer -->
             <div class="bg-surface-variant rounded-xl p-3 flex items-start gap-3 border border-outline-variant/50 mb-4">
                 <span class="material-symbols-outlined text-on-surface-variant shrink-0 mt-0.5">info</span>
-                <p class="font-body-sm text-on-surface-variant">KarmaRide operates purely on Karma Points. Any monetary exchange requested by the rider is entirely at their own will. We take no commission and have no connection to such payments.</p>
+                <p class="font-body-sm text-on-surface-variant">{{ t('KarmaRide operates purely on Karma Points. Any monetary exchange requested by the rider is entirely at their own will. We take no commission and have no connection to such payments.') }}</p>
             </div>
 
             <!-- Ride List -->
@@ -62,8 +62,8 @@
                 {% if not rides or rides.length == 0 %}
                 <div class="bg-surface-container-low rounded-xl p-8 border border-dashed border-outline-variant flex flex-col items-center justify-center text-center">
                     <span class="material-symbols-outlined text-5xl text-on-surface-variant mb-4">no_transfer</span>
-                    <p class="font-body-lg text-on-surface mb-2">No rides found right now.</p>
-                    <p class="font-body-sm text-on-surface-variant">Please check back later.</p>
+                    <p class="font-body-lg text-on-surface mb-2">{{ t('No rides found right now.') }}</p>
+                    <p class="font-body-sm text-on-surface-variant">{{ t('Please check back later.') }}</p>
                 </div>
                 {% endif %}
 
@@ -105,7 +105,7 @@
                         <button type="submit" class="w-full py-2.5 rounded-lg font-label-md flex justify-center items-center gap-2 transition-colors 
                             {% if user.karma_balance < ride.karma_reward %}bg-surface-container-high text-on-surface-variant cursor-not-allowed{% else %}bg-primary text-on-primary hover:bg-primary/90 shadow-sm{% endif %}"
                             {% if user.karma_balance < ride.karma_reward %}disabled{% endif %}>
-                            <span>Request Ride</span>
+                            <span>{{ t('Request Ride') }}</span>
                             <span class="material-symbols-outlined text-sm">hail</span>
                         </button>
                     </form>
@@ -130,7 +130,7 @@
                             </div>
                             <div>
                                 <h3 class="font-label-md text-label-md text-on-surface">{{ alert.seeker.name }}</h3>
-                                <p class="text-xs text-on-surface-variant">Needs a ride!</p>
+                                <p class="text-xs text-on-surface-variant">{{ t('Needs a ride!') }}</p>
                             </div>
                         </div>
                         <div class="flex flex-col items-end">
@@ -156,7 +156,7 @@
                     
                     <form action="/api/ride-alerts/{{ alert.id }}/fulfill" method="POST" class="w-full mt-2">
                         <button type="submit" class="w-full py-2.5 rounded-lg font-label-md flex justify-center items-center gap-2 transition-colors bg-tertiary text-on-tertiary hover:bg-tertiary/90 shadow-sm">
-                            <span>Fulfill Ride (Earn {{ alert.karma_reward }})</span>
+                            <span>{{ t('Fulfill Ride') }} (💎 {{ alert.karma_reward }})</span>
                             <span class="material-symbols-outlined text-sm">local_taxi</span>
                         </button>
                     </form>

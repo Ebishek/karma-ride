@@ -12,10 +12,10 @@
             <div class="w-[calc(50%-4px)] absolute top-1 bottom-1 left-1 bg-primary rounded-full shadow-md z-0 transition-all duration-300"></div>
             
             <a href="/request-ride" class="flex-1 flex justify-center items-center gap-1 py-2.5 rounded-full font-label-md z-10 transition-colors text-on-primary">
-                <span class="material-symbols-outlined text-sm">hail</span> Request
+                <span class="material-symbols-outlined text-sm">hail</span> {{ t('Request') }}
             </a>
             <a href="/offer" class="flex-1 flex justify-center items-center gap-1 py-2.5 rounded-full font-label-md z-10 transition-colors text-on-surface-variant hover:text-on-surface">
-                <span class="material-symbols-outlined text-sm">motorcycle</span> Offer
+                <span class="material-symbols-outlined text-sm">motorcycle</span> {{ t('Offer') }}
             </a>
         </div>
     </div>
@@ -30,7 +30,7 @@
         <!-- Form Fields -->
         <div class="space-y-4">
             <div>
-                <label class="block font-label-md text-on-surface mb-1">Source location</label>
+                <label class="block font-label-md text-on-surface mb-1">{{ t('Source location') }}</label>
                 <div class="relative">
                     <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-tertiary">location_on</span>
                     <input type="text" id="source-input" name="source" autocomplete="off" required class="w-full bg-surface-container-lowest border-2 border-outline-variant focus:border-primary focus:ring-0 rounded-xl py-3 pl-10 pr-4 font-body-md text-on-surface placeholder-on-surface-variant transition-colors shadow-sm" placeholder="e.g. Community Center">
@@ -39,7 +39,7 @@
             </div>
             
             <div>
-                <label class="block font-label-md text-on-surface mb-1">Destination</label>
+                <label class="block font-label-md text-on-surface mb-1">{{ t('Destination') }}</label>
                 <div class="relative">
                     <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-primary">flag</span>
                     <input type="text" id="dest-input" name="destination" autocomplete="off" required class="w-full bg-surface-container-lowest border-2 border-outline-variant focus:border-primary focus:ring-0 rounded-xl py-3 pl-10 pr-4 font-body-md text-on-surface placeholder-on-surface-variant transition-colors shadow-sm" placeholder="e.g. Market Square">
@@ -48,7 +48,7 @@
             </div>
 
             <div>
-                <label class="block font-label-md text-on-surface mb-1">Departure Time</label>
+                <label class="block font-label-md text-on-surface mb-1">{{ t('Departure Time') }}</label>
                 <div class="relative">
                     <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">schedule</span>
                     <input type="datetime-local" name="date_time_str" required class="w-full bg-surface-container-lowest border-2 border-outline-variant focus:border-primary focus:ring-0 rounded-xl py-3 pl-10 pr-4 font-body-md text-on-surface transition-colors shadow-sm">
@@ -63,8 +63,8 @@
         <!-- Karma Reward -->
         <div class="bg-secondary-fixed rounded-xl p-4 flex items-center justify-between border border-secondary-container/30 shadow-[0_2px_8px_rgba(123,88,0,0.1)]">
             <div>
-                <p class="font-headline-md text-lg text-on-secondary-fixed">Karma Reward Offered</p>
-                <p class="font-body-sm text-on-secondary-fixed-variant text-sm">Points given to the driver</p>
+                <p class="font-headline-md text-lg text-on-secondary-fixed">{{ t('Karma Reward Offered') }}</p>
+                <p class="font-body-sm text-on-secondary-fixed-variant text-sm">{{ t('Points given to the driver') }}</p>
             </div>
             <div class="flex items-center gap-2">
                 <span class="material-symbols-outlined text-on-secondary-fixed text-2xl" style="font-variation-settings: 'FILL' 1;">spa</span>
@@ -76,15 +76,15 @@
         <!-- Monetary Disclaimer -->
         <div class="bg-surface-variant rounded-xl p-3 flex items-start gap-3 border border-outline-variant/50 mt-4">
             <span class="material-symbols-outlined text-on-surface-variant shrink-0 mt-0.5">info</span>
-            <p class="font-body-sm text-on-surface-variant">KarmaRide operates on Karma Points. Any monetary exchange requested by the rider is entirely at their own will. We take no commission and have no connection to such payments.</p>
+            <p class="font-body-sm text-on-surface-variant">{{ t('KarmaRide operates on Karma Points. Any monetary exchange requested by the rider is entirely at their own will. We take no commission and have no connection to such payments.') }}</p>
         </div>
 
         <div class="flex gap-4 mt-4">
             <a href="/" class="w-1/3 bg-surface-variant text-on-surface-variant font-label-md text-lg py-4 rounded-xl shadow-sm hover:bg-outline-variant/30 transition-colors flex justify-center items-center">
-                Cancel
+                {{ t('Cancel') }}
             </a>
             <button type="submit" class="w-2/3 bg-tertiary text-on-tertiary font-label-md text-lg py-4 rounded-xl shadow-md hover:bg-tertiary/90 transition-colors flex justify-center items-center gap-2" {% if user.karma_balance == 0 %}disabled{% endif %}>
-                <span>Create Alert</span>
+                <span>{{ t('Create Alert') }}</span>
                 <span class="material-symbols-outlined">campaign</span>
             </button>
         </div>
