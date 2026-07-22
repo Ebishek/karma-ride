@@ -212,7 +212,9 @@ app.get('/', async (req, res) => {
         order: [['karma_balance', 'DESC']],
         limit: 3
     });
+    const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
     const roadUpdates = await RoadUpdate.findAll({
+        where: { timestamp: { [Op.gt]: twentyFourHoursAgo } },
         include: [{ model: User, as: 'user', attributes: ['id', 'name'] }],
         order: [['timestamp', 'DESC']],
         limit: 5
@@ -235,9 +237,18 @@ app.get('/dashboard', requireAuth, async (req, res) => {
         include: [{ model: Ride, as: 'ride' }]
     });
 
+    const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+    const roadUpdates = await RoadUpdate.findAll({
+        where: { timestamp: { [Op.gt]: twentyFourHoursAgo } },
+        include: [{ model: User, as: 'user', attributes: ['id', 'name'] }],
+        order: [['timestamp', 'DESC']],
+        limit: 5
+    });
+
     res.render('dashboard.html', {
         active_rides: active_rides,
-        requests_made: requests_made
+        requests_made: requests_made,
+        roadUpdates: roadUpdates
     });
 });
 

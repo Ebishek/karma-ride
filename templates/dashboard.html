@@ -13,6 +13,19 @@
         </div>
     </section>
 
+    <!-- Tabs Navigation -->
+    <div class="mb-8 border-b border-outline-variant/50 px-margin-mobile md:px-0">
+        <nav class="flex gap-6" aria-label="Tabs">
+            <button onclick="switchDashboardTab('main')" id="tab-main" class="border-b-2 border-primary text-primary font-headline-md text-[18px] py-4 px-1 focus:outline-none transition-colors">
+                My Dashboard
+            </button>
+            <button onclick="switchDashboardTab('alerts')" id="tab-alerts" class="border-b-2 border-transparent text-on-surface-variant hover:text-on-surface font-headline-md text-[18px] py-4 px-1 focus:outline-none transition-colors">
+                Live Road Conditions
+            </button>
+        </nav>
+    </div>
+
+    <div id="section-main">
     <!-- Active Activity Section -->
     <section class="px-margin-mobile md:px-0 mb-12">
         <h3 class="font-headline-md text-headline-md text-on-surface mb-6">Active Activity</h3>
@@ -208,7 +221,7 @@
                     </div>
                     <h3 class="font-headline-md text-headline-md mb-2">Report Road Condition</h3>
                     <p class="font-body-md text-body-md text-error/80 mb-6 flex-grow">Alert the village about landslides, construction, or blockages on the route.</p>
-                    <button class="bg-error text-white font-label-md text-label-md py-3 px-6 rounded-lg w-full shadow-sm flex justify-center items-center gap-2 pointer-events-none">
+                    <button class="bg-error text-white font-label-md text-label-md py-3 px-6 rounded-lg w-full shadow-sm flex justify-center items-center gap-2">
                         <span>Report Issue</span>
                         <span class="material-symbols-outlined text-sm">warning</span>
                     </button>
@@ -216,7 +229,133 @@
             </div>
         </a>
     </section>
+    </div> <!-- end section-main -->
 
+    <div id="section-alerts" class="hidden">
+<!-- Community Road Alerts -->
+{% if roadUpdates and roadUpdates.length > 0 %}
+<section class="py-xl px-margin-mobile md:px-margin-desktop bg-error/5 relative border-b border-error/20">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex items-center gap-3 mb-8">
+            <div class="bg-error/20 p-3 rounded-full text-error">
+                <span class="material-symbols-outlined text-[32px]">warning</span>
+            </div>
+            <div>
+                <h3 class="font-headline-lg text-headline-sm md:text-headline-lg text-on-background">Live Road Conditions</h3>
+                <p class="font-body-md text-on-surface-variant">Community-reported alerts for routes in the village.</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for update in roadUpdates %}
+            <div class="bg-surface rounded-2xl overflow-hidden shadow-md border border-outline-variant/30 flex flex-col h-full">
+                {% if update.image_url %}
+                <div class="h-48 w-full overflow-hidden bg-surface-variant relative">
+                    <img src="{{ update.image_url }}" alt="Road Condition" class="w-full h-full object-cover">
+                </div>
+                {% endif %}
+                <div class="p-5 flex flex-col flex-grow">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="bg-error/10 text-error font-label-sm px-2 py-1 rounded-md">{{ update.location }}</span>
+                        <span class="text-xs text-on-surface-variant opacity-70">{{ update.timestamp | formatDate }}</span>
+                    </div>
+                    <p class="font-body-md text-on-surface mb-4 flex-grow">{{ update.description }}</p>
+                    <div class="flex items-center gap-2 mt-auto pt-3 border-t border-outline-variant/30">
+                        <div class="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center text-primary">
+                            <span class="material-symbols-outlined text-[14px]">person</span>
+                        </div>
+                        <span class="font-label-sm text-on-surface-variant">Reported by {{ update.user.name }}</span>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="flex justify-between items-center mt-4 pt-3 border-t border-outline-variant/30">
+                        <div class="flex gap-2">
+                            <button onclick="voteRoadUpdate({{ update.id }}, 'upvote', this)" class="flex items-center gap-1 text-on-surface-variant hover:text-primary hover:bg-primary/10 px-2 py-1 rounded-md transition-colors">
+                                <span class="material-symbols-outlined text-[18px]">thumb_up</span>
+                                <span class="font-label-sm vote-count">{{ update.upvotes }}</span>
+                            </button>
+                            <button onclick="voteRoadUpdate({{ update.id }}, 'downvote', this)" class="flex items-center gap-1 text-on-surface-variant hover:text-error hover:bg-error/10 px-2 py-1 rounded-md transition-colors">
+                                <span class="material-symbols-outlined text-[18px]">thumb_down</span>
+                                <span class="font-label-sm vote-count">{{ update.downvotes }}</span>
+                            </button>
+                        </div>
+                        {% if user and (user.id == update.user_id or user.role == 'admin') %}
+                        <button onclick="deleteRoadUpdate({{ update.id }}, this)" class="flex items-center gap-1 text-on-surface-variant hover:text-error hover:bg-error/10 px-2 py-1 rounded-md transition-colors" title="Remove Alert">
+                            <span class="material-symbols-outlined text-[18px]">delete</span>
+                        </button>
+                        {% endif %}
+                    </div>
+
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<script>
+async function voteRoadUpdate(id, action, btnElement) {
+    try {
+        const response = await fetch(`/api/road-updates/${id}/${action}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (response.ok) {
+            const data = await response.json();
+            const countSpan = btnElement.querySelector('.vote-count');
+            if (action === 'upvote') {
+                countSpan.textContent = data.upvotes;
+                btnElement.classList.add('text-primary', 'bg-primary/10');
+            } else {
+                countSpan.textContent = data.downvotes;
+                btnElement.classList.add('text-error', 'bg-error/10');
+            }
+        } else if (response.status === 400) {
+            const errorData = await response.json();
+            alert(errorData.error);
+        } else if (response.status === 401) {
+            window.location.href = '/login';
+        }
+    } catch (err) {
+        console.error("Failed to vote:", err);
+    }
+}
+
+async function deleteRoadUpdate(id, btnElement) {
+    if (!confirm('Are you sure you want to remove this road condition alert?')) return;
+    
+    try {
+        const response = await fetch(`/api/road-updates/${id}/delete`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (response.ok) {
+            // Remove the card from the UI
+            const card = btnElement.closest('.bg-surface');
+            if (card) {
+                card.remove();
+            }
+        } else {
+            alert("Failed to delete alert.");
+        }
+    } catch (err) {
+        console.error("Failed to delete:", err);
+        alert("An error occurred while deleting.");
+    }
+}
+</script>
+{% else %}
+<section class="px-margin-mobile md:px-0 py-xl text-center">
+    <div class="bg-surface-container rounded-xl p-xl border border-dashed border-outline-variant inline-block">
+        <span class="material-symbols-outlined text-4xl text-on-surface-variant mb-2">check_circle</span>
+        <p class="font-body-lg text-on-surface">No active road alerts reported in the last 24 hours.</p>
+        <a href="/report-road" class="mt-4 inline-block bg-primary text-on-primary py-2 px-6 rounded-md font-label-md hover:bg-primary/90 transition-colors">Report an Issue</a>
+    </div>
+</section>
+{% endif %}
+    </div> <!-- end section-alerts -->
+
+    <div id="section-karma">
     <!-- What is Karma Section -->
     <section class="bg-surface-container-high mx-margin-mobile md:mx-0 rounded-xl p-md md:p-lg mb-12 border border-outline-variant/50 relative overflow-hidden">
         <div class="absolute -bottom-10 -right-10 opacity-5">
@@ -254,6 +393,37 @@
             </div>
         </div>
     </section>
+    </div> <!-- end section-karma -->
+
+<script>
+function switchDashboardTab(tabName) {
+    const mainTab = document.getElementById('tab-main');
+    const alertsTab = document.getElementById('tab-alerts');
+    const mainSection = document.getElementById('section-main');
+    const karmaSection = document.getElementById('section-karma');
+    const alertsSection = document.getElementById('section-alerts');
+
+    if (tabName === 'main') {
+        mainTab.classList.add('border-primary', 'text-primary');
+        mainTab.classList.remove('border-transparent', 'text-on-surface-variant');
+        alertsTab.classList.remove('border-primary', 'text-primary');
+        alertsTab.classList.add('border-transparent', 'text-on-surface-variant');
+        
+        mainSection.classList.remove('hidden');
+        karmaSection.classList.remove('hidden');
+        alertsSection.classList.add('hidden');
+    } else {
+        alertsTab.classList.add('border-primary', 'text-primary');
+        alertsTab.classList.remove('border-transparent', 'text-on-surface-variant');
+        mainTab.classList.remove('border-primary', 'text-primary');
+        mainTab.classList.add('border-transparent', 'text-on-surface-variant');
+        
+        alertsSection.classList.remove('hidden');
+        mainSection.classList.add('hidden');
+        karmaSection.classList.add('hidden');
+    }
+}
+</script>
 
 </main>
 {% endblock %}
