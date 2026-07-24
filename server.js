@@ -307,10 +307,10 @@ app.post('/forgot-password', async (req, res) => {
             subject: 'KarmaRide - Password Reset Code',
             text: `Your KarmaRide password reset code is: ${otp}. Please do not share this code with anyone.`,
             html: `
-            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #f9f9f9; padding: 30px; border-radius: 10px; border: 1px solid #eaeaea;">
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #f0f0f0; padding: 30px; border-radius: 10px; border: 1px solid #e0e0e0;">
                 <h1 style="color: #4CAF50; text-align: center; margin-bottom: 10px;">KarmaRide</h1>
                 <div style="text-align: center; margin-bottom: 15px;">
-                    <img src="https://karmaride.in/static/scoo.gif" alt="KarmaRide Scooter" style="max-width: 150px; height: auto;">
+                    <img src="https://karmaride.in/static/scoo.gif" alt="KarmaRide Scooter" style="max-width: 150px; height: auto; mix-blend-mode: multiply;">
                 </div>
                 <p style="text-align: center; color: #555; font-style: italic; margin-top: 0; margin-bottom: 30px;">"Share your journey, build your karma."</p>
                 
