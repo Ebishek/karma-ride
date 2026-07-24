@@ -8,6 +8,17 @@ const { Op } = require('sequelize');
 const { sequelize, User, Ride, RideRequest, KarmaTransaction, Message, Notification, RideAlert, Announcement, PushSubscription, RoadUpdate, SafetyReport, RideTemplate } = require('./models');
 const multer = require('multer');
 const fs = require('fs');
+const nodemailer = require('nodemailer');
+
+const transporter = nodemailer.createTransport({
+    host: 'smtp.hostinger.com',
+    port: 465,
+    secure: true, // true for port 465, false for port 587
+    auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASSWORD
+    }
+});
 
 // Configure multer for image uploads
 const storage = multer.diskStorage({
@@ -182,8 +193,15 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', async (req, res) => {
-    const { phone, password } = req.body;
-    const user = await User.findOne({ where: { phone } });
+    const { phone, password } = req.body; // 'phone' is now acting as an identifier
+    const user = await User.findOne({ 
+        where: { 
+            [Op.or]: [
+                { phone: phone },
+                { email: phone }
+            ]
+        } 
+    });
     
     if (user && await bcrypt.compare(password, user.password_hash)) {
         req.session.userId = user.id;
@@ -206,18 +224,20 @@ app.post('/register', async (req, res) => {
         return res.render('register.html', { error: 'Phone number already registered' });
     }
 
-    if (email && email.trim() !== '') {
-        const existingEmail = await User.findOne({ where: { email: email.trim() } });
-        if (existingEmail) {
-            return res.render('register.html', { error: 'Email already registered' });
-        }
+    if (!email || email.trim() === '') {
+        return res.render('register.html', { error: 'Email address is required' });
+    }
+
+    const existingEmail = await User.findOne({ where: { email: email.trim() } });
+    if (existingEmail) {
+        return res.render('register.html', { error: 'Email already registered' });
     }
     
     const password_hash = await bcrypt.hash(password, 10);
     const user = await User.create({
         name,
         phone,
-        email: email && email.trim() !== '' ? email.trim() : null,
+        email: email.trim(),
         password_hash,
         karma_balance: 50
     });
@@ -229,6 +249,79 @@ app.post('/register', async (req, res) => {
 app.get('/logout', (req, res) => {
     req.session.destroy();
     res.redirect('/login');
+});
+
+app.get('/forgot-password', (req, res) => {
+    if (req.session.userId) return res.redirect('/dashboard');
+    res.render('forgot_password.html');
+});
+
+app.post('/forgot-password', async (req, res) => {
+    const { email } = req.body;
+    const user = await User.findOne({ where: { email: email.trim() } });
+    if (!user) {
+        return res.render('forgot_password.html', { error: 'No account found with this email' });
+    }
+
+    const otp = Math.floor(1000 + Math.random() * 9000).toString();
+    req.session.resetOtp = otp;
+    req.session.resetEmail = email.trim();
+
+    try {
+        await transporter.sendMail({
+            from: `"KarmaRide" <${process.env.SMTP_USER}>`,
+            to: email.trim(),
+            subject: 'KarmaRide - Password Reset Code',
+            text: `Your KarmaRide password reset code is: ${otp}. Please do not share this code with anyone.`,
+            html: `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #f9f9f9; padding: 30px; border-radius: 10px; border: 1px solid #eaeaea;">
+                <h1 style="color: #4CAF50; text-align: center; margin-bottom: 10px;">KarmaRide</h1>
+                <p style="text-align: center; color: #555; font-style: italic; margin-top: 0; margin-bottom: 30px;">"Share your journey, build your karma."</p>
+                
+                <div style="background-color: #ffffff; padding: 20px; border-radius: 8px; text-align: center;">
+                    <p style="font-size: 16px; color: #333;">Hello!</p>
+                    <p style="font-size: 16px; color: #333;">You requested to reset your password. Use the verification code below to securely reset it:</p>
+                    
+                    <div style="margin: 30px 0;">
+                        <span style="font-size: 32px; font-weight: bold; letter-spacing: 5px; color: #4CAF50; padding: 10px 20px; background-color: #e8f5e9; border-radius: 8px; border: 1px dashed #4CAF50;">${otp}</span>
+                    </div>
+                    
+                    <p style="font-size: 14px; color: #777;">If you did not request a password reset, please ignore this email or contact support if you have concerns.</p>
+                </div>
+                
+                <div style="text-align: center; margin-top: 20px; font-size: 12px; color: #999;">
+                    &copy; ${new Date().getFullYear()} KarmaRide. All rights reserved.
+                </div>
+            </div>
+            `
+        });
+    } catch (err) {
+        console.error('Error sending email:', err);
+        return res.render('forgot_password.html', { error: 'Failed to send reset code. Check your .env configuration.' });
+    }
+
+    res.redirect('/reset-password');
+});
+
+app.get('/reset-password', (req, res) => {
+    if (req.session.userId) return res.redirect('/dashboard');
+    if (!req.session.resetEmail) return res.redirect('/forgot-password');
+    res.render('reset_password.html');
+});
+
+app.post('/reset-password', async (req, res) => {
+    const { otp, new_password } = req.body;
+    if (otp !== req.session.resetOtp) {
+        return res.render('reset_password.html', { error: 'Invalid reset code' });
+    }
+
+    const password_hash = await bcrypt.hash(new_password, 10);
+    await User.update({ password_hash }, { where: { email: req.session.resetEmail } });
+
+    req.session.resetOtp = null;
+    req.session.resetEmail = null;
+
+    res.render('login.html', { message: 'Password reset successful! Please log in.' }); 
 });
 
 // --- MAIN ROUTES (Protected) ---

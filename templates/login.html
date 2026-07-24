@@ -13,17 +13,26 @@
             {{ error }}
         </div>
         {% endif %}
+        
+        {% if message %}
+        <div class="bg-secondary-container text-on-secondary-container p-4 rounded-xl text-center text-sm font-label-md border border-secondary-container">
+            {{ message }}
+        </div>
+        {% endif %}
 
         <div>
-            <label class="block font-label-md text-on-surface mb-1">{{ t('Phone Number') }}</label>
+            <label class="block font-label-md text-on-surface mb-1">{{ t('Email or Phone Number') }}</label>
             <div class="relative">
-                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-tertiary">phone_iphone</span>
-                <input type="tel" name="phone" required class="w-full bg-surface-container-lowest border-2 border-outline-variant focus:border-primary focus:ring-0 rounded-xl py-3 pl-10 pr-4 font-body-md text-on-surface placeholder-on-surface-variant transition-colors shadow-sm" placeholder="{{ t('Enter your phone') }}">
+                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-tertiary">person</span>
+                <input type="text" name="phone" required class="w-full bg-surface-container-lowest border-2 border-outline-variant focus:border-primary focus:ring-0 rounded-xl py-3 pl-10 pr-4 font-body-md text-on-surface placeholder-on-surface-variant transition-colors shadow-sm" placeholder="{{ t('Enter your email or phone') }}">
             </div>
         </div>
 
         <div>
-            <label class="block font-label-md text-on-surface mb-1">{{ t('Password') }}</label>
+            <div class="flex justify-between items-end mb-1">
+                <label class="block font-label-md text-on-surface">{{ t('Password') }}</label>
+                <a href="/forgot-password" class="text-xs text-primary hover:underline">{{ t('Forgot Password?') }}</a>
+            </div>
             <div class="relative">
                 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-tertiary">lock</span>
                 <input type="password" name="password" required class="w-full bg-surface-container-lowest border-2 border-outline-variant focus:border-primary focus:ring-0 rounded-xl py-3 pl-10 pr-4 font-body-md text-on-surface placeholder-on-surface-variant transition-colors shadow-sm" placeholder="{{ t('Enter your password') }}">
