@@ -13,22 +13,22 @@
 <div class="px-container-padding mb-8 flex items-center gap-3">
 <div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold">K</div>
 <div>
-<h1 class="font-headline-md text-headline-md font-bold text-primary">KarmaRide Admin</h1>
-<p class="font-label-sm text-label-sm text-secondary">Community Management</p>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">{{ t('KarmaRide Admin') }}</h1>
+<p class="font-label-sm text-label-sm text-secondary">{{ t('Community Management') }}</p>
 </div>
 </div>
 <nav class="flex-1 px-3 space-y-1">
 <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-secondary font-medium hover:bg-surface-container-high transition-colors" href="/secret-admin-panel">
 <span class="material-symbols-outlined">dashboard</span>
-<span class="font-label-md text-label-md">Dashboard</span>
+<span class="font-label-md text-label-md">{{ t('Dashboard') }}</span>
 </a>
 <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-secondary font-medium hover:bg-surface-container-high transition-colors" href="/secret-admin-panel/members">
 <span class="material-symbols-outlined">group</span>
-<span class="font-label-md text-label-md">Members</span>
+<span class="font-label-md text-label-md">{{ t('Members') }}</span>
 </a>
 <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-secondary font-medium hover:bg-surface-container-high transition-colors" href="/">
 <span class="material-symbols-outlined">home</span>
-<span class="font-label-md text-label-md">Return to App</span>
+<span class="font-label-md text-label-md">{{ t('Return to App') }}</span>
 </a>
 </nav>
 </aside>
@@ -36,14 +36,14 @@
 <div class="flex-1 flex flex-col md:ml-64 relative w-full h-full">
 <!-- TopNavBar -->
 <header class="fixed top-0 right-0 left-0 md:left-64 h-16 z-10 bg-surface/80 backdrop-blur-md shadow-sm flex justify-between items-center px-container-padding w-auto">
-<div class="font-headline-sm text-headline-sm font-bold text-on-surface">KarmaRide Console</div>
+<div class="font-headline-sm text-headline-sm font-bold text-on-surface">{{ t('KarmaRide Console') }}</div>
 <div class="flex items-center gap-4">
 <button class="text-on-surface-variant hover:text-primary transition-colors p-1 rounded-full hover:bg-surface-container">
 <span class="material-symbols-outlined">notifications</span>
 </button>
 <button class="flex items-center gap-2 hover:bg-surface-container p-1 pr-3 rounded-full transition-colors">
 <img alt="Admin Profile Avatar" class="w-8 h-8 rounded-full object-cover" data-alt="A small circular avatar placeholder image showing an abstract blue geometric shape representing a user profile icon." src="https://ui-avatars.com/api/?name=Admin&background=1e00a9&color=fff">
-<span class="font-label-md text-label-md text-on-surface hidden lg:block">Admin</span>
+<span class="font-label-md text-label-md text-on-surface hidden lg:block">{{ t('Admin') }}</span>
 </button>
 </div>
 </header>
@@ -53,15 +53,15 @@
 <div class="mb-8">
 <a class="inline-flex items-center text-secondary hover:text-primary transition-colors mb-2 font-body-sm text-body-sm" href="/secret-admin-panel">
 <span class="material-symbols-outlined text-sm mr-1">arrow_back</span>
-            Back to Dashboard
+            {{ t('Back to Dashboard') }}
         </a>
-<h1 class="font-headline-lg text-headline-lg text-on-surface">Create New Announcement</h1>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">{{ t('Create New Announcement') }}</h1>
 </div>
 
 {% if success %}
 <div class="mb-6 p-4 bg-success/10 border border-success/30 rounded-lg flex items-center gap-3">
     <span class="material-symbols-outlined text-success">check_circle</span>
-    <p class="font-body-md text-body-md text-on-surface">Announcement successfully broadcasted to the community.</p>
+    <p class="font-body-md text-body-md text-on-surface">{{ t('Announcement successfully broadcasted to the community.') }}</p>
 </div>
 {% endif %}
 
@@ -73,17 +73,17 @@
 <form method="POST" action="/secret-admin-panel/announcements" class="flex flex-col gap-6">
 <!-- Title Input -->
 <div>
-<label class="block font-label-md text-label-md text-on-surface mb-2" for="announcement-title">Announcement Title</label>
-<input name="title" required class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-2 font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-colors shadow-sm" id="announcement-title" placeholder="Enter title here" type="text" value="">
+<label class="block font-label-md text-label-md text-on-surface mb-2" for="announcement-title">{{ t('Announcement Title') }}</label>
+<input name="title" required class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-2 font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-colors shadow-sm" id="announcement-title" placeholder="{{ t('Enter title here') }}" type="text" value="">
 </div>
 <!-- Target Audience Dropdown -->
 <div>
-<label class="block font-label-md text-label-md text-on-surface mb-2" for="target-audience">Target Audience</label>
+<label class="block font-label-md text-label-md text-on-surface mb-2" for="target-audience">{{ t('Target Audience') }}</label>
 <div class="relative">
 <select name="audience" class="appearance-none w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-2 pr-10 font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-colors shadow-sm cursor-pointer" id="target-audience">
-<option value="all">All Users</option>
-<option selected="" value="drivers">Active Drivers Only</option>
-<option value="riders">Riders Only</option>
+<option value="all">{{ t('All Users') }}</option>
+<option selected="" value="drivers">{{ t('Active Drivers Only') }}</option>
+<option value="riders">{{ t('Riders Only') }}</option>
 </select>
 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-on-surface-variant">
 <span class="material-symbols-outlined">expand_more</span>
@@ -92,7 +92,7 @@
 </div>
 <!-- Message Body (Rich Text Mockup) -->
 <div>
-<label class="block font-label-md text-label-md text-on-surface mb-2" for="message-body">Message Body</label>
+<label class="block font-label-md text-label-md text-on-surface mb-2" for="message-body">{{ t('Message Body') }}</label>
 <div class="border border-outline-variant rounded-lg shadow-sm overflow-hidden focus-within:border-primary-container focus-within:ring-1 focus-within:ring-primary-container transition-colors">
 <!-- Toolbar -->
 <div class="bg-surface-container-low px-3 py-2 flex items-center gap-2 border-b border-outline-variant">
@@ -106,14 +106,14 @@
 <button class="p-1 rounded text-on-surface-variant hover:bg-surface-container transition-colors" type="button"><span class="material-symbols-outlined text-[18px]">link</span></button>
 </div>
 <!-- Textarea -->
-<textarea name="body" required class="w-full border-none px-4 py-3 font-body-md text-body-md text-on-surface resize-y focus:ring-0" id="message-body" placeholder="Type your message here..." rows="6"></textarea>
+<textarea name="body" required class="w-full border-none px-4 py-3 font-body-md text-body-md text-on-surface resize-y focus:ring-0" id="message-body" placeholder="{{ t('Type your message here...') }}" rows="6"></textarea>
 </div>
 </div>
 <!-- Push Notification Toggle -->
 <div class="flex items-center justify-between py-2 border-t border-surface-variant">
 <div>
-<div class="font-label-md text-label-md text-on-surface">Send Push Notification</div>
-<div class="font-body-sm text-body-sm text-secondary">Notify users immediately on their devices.</div>
+<div class="font-label-md text-label-md text-on-surface">{{ t('Send Push Notification') }}</div>
+<div class="font-body-sm text-body-sm text-secondary">{{ t('Notify users immediately on their devices.') }}</div>
 </div>
 <div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
 <input name="push_notification" value="true" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer border-primary" id="push-toggle" type="checkbox">
@@ -123,11 +123,11 @@
 <!-- Footer Actions -->
 <div class="flex items-center justify-end gap-4 mt-4 pt-4 border-t border-surface-variant">
 <a href="/secret-admin-panel" class="px-6 py-2 rounded-lg font-label-md text-label-md text-secondary hover:bg-surface-container transition-colors bg-transparent border border-transparent">
-                            Cancel
+                            {{ t('Cancel') }}
 </a>
 <button type="submit" class="px-6 py-2 rounded-lg font-label-md text-label-md text-white bg-primary hover:bg-primary-container transition-colors flex items-center gap-2 shadow-sm">
 <span class="material-symbols-outlined text-[18px]">send</span>
-                            Publish Announcement
+                            {{ t('Publish Announcement') }}
                         </button>
 </div>
 </form>

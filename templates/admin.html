@@ -39,26 +39,26 @@
 <div class="px-container-padding mb-8 flex items-center gap-3">
 <div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold">K</div>
 <div>
-<h1 class="font-headline-md text-headline-md font-bold text-primary">KarmaRide Admin</h1>
-<p class="font-label-sm text-label-sm text-secondary">Community Management</p>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">{{ t('KarmaRide Admin') }}</h1>
+<p class="font-label-sm text-label-sm text-secondary">{{ t('Community Management') }}</p>
 </div>
 </div>
 <nav class="flex-1 px-3 space-y-1">
 <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-primary font-bold border-r-4 border-primary bg-primary-container/10 transition-transform scale-[0.98]" href="/secret-admin-panel">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
-<span class="font-label-md text-label-md">Dashboard</span>
+<span class="font-label-md text-label-md">{{ t('Dashboard') }}</span>
 </a>
 <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-secondary font-medium hover:bg-surface-container-high transition-colors" href="/secret-admin-panel/members">
 <span class="material-symbols-outlined">group</span>
-<span class="font-label-md text-label-md">Members</span>
+<span class="font-label-md text-label-md">{{ t('Members') }}</span>
 </a>
 <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-secondary font-medium hover:bg-surface-container-high transition-colors" href="/">
 <span class="material-symbols-outlined">home</span>
-<span class="font-label-md text-label-md">Return to App</span>
+<span class="font-label-md text-label-md">{{ t('Return to App') }}</span>
 </a>
 </nav>
 <div class="px-container-padding mt-auto">
-<a href="/secret-admin-panel/announcements/new" class="block w-full py-2 bg-primary-container text-white text-center rounded-lg font-label-md text-label-md hover:opacity-90 transition-opacity">New Announcement</a>
+<a href="/secret-admin-panel/announcements/new" class="block w-full py-2 bg-primary-container text-white text-center rounded-lg font-label-md text-label-md hover:opacity-90 transition-opacity">{{ t('New Announcement') }}</a>
 </div>
 </aside>
 <!-- Main Content Area -->
@@ -66,12 +66,12 @@
 <!-- TopNavBar -->
 <header class="fixed top-0 right-0 left-0 md:left-64 h-16 z-10 bg-surface/80 backdrop-blur-md shadow-sm flex justify-between items-center px-container-padding w-auto">
 <div class="font-headline-sm text-headline-sm font-bold text-on-surface">
-                KarmaRide Console
+                {{ t('KarmaRide Console') }}
             </div>
 <div class="flex items-center gap-4">
 <div class="relative hidden md:block">
 <span class="material-symbols-outlined absolute left-3 top-1/2 transform -translate-y-1/2 text-outline text-sm">search</span>
-<input class="pl-9 pr-4 py-1.5 bg-surface-container-lowest border border-outline-variant rounded-full font-body-sm text-body-sm focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all outline-none w-64" placeholder="Search..." type="text"/>
+<input class="pl-9 pr-4 py-1.5 bg-surface-container-lowest border border-outline-variant rounded-full font-body-sm text-body-sm focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all outline-none w-64" placeholder="{{ t('Search...') }}" type="text"/>
 </div>
 <button class="text-on-surface-variant hover:text-primary transition-colors p-1 rounded-full hover:bg-surface-container">
 <span class="material-symbols-outlined">notifications</span>
@@ -82,7 +82,7 @@
 <div class="h-6 w-px bg-outline-variant/50 mx-1"></div>
 <button class="flex items-center gap-2 hover:bg-surface-container p-1 pr-3 rounded-full transition-colors">
 <img class="w-8 h-8 rounded-full object-cover" src="https://ui-avatars.com/api/?name=Admin&background=1e00a9&color=fff"/>
-<span class="font-label-md text-label-md text-on-surface hidden lg:block">Admin</span>
+<span class="font-label-md text-label-md text-on-surface hidden lg:block">{{ t('Admin') }}</span>
 </button>
 </div>
 </header>
@@ -92,12 +92,12 @@
 <!-- Page Header -->
 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
 <div>
-<h2 class="font-headline-lg text-headline-lg text-on-surface mb-1">Village Chaupal Overview</h2>
-<p class="font-body-md text-body-md text-secondary">Real-time metrics and community activity monitoring.</p>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-1">{{ t('Village Chaupal Overview') }}</h2>
+<p class="font-body-md text-body-md text-secondary">{{ t('Real-time metrics and community activity monitoring.') }}</p>
 </div>
 <div class="flex gap-3">
 <button class="px-4 py-2 bg-surface-container-lowest border border-outline-variant text-on-surface rounded-lg font-label-md text-label-md hover:bg-surface-container transition-colors flex items-center gap-2">
-<span class="material-symbols-outlined text-[18px]">download</span> Export Report
+<span class="material-symbols-outlined text-[18px]">download</span> {{ t('Export Report') }}
                         </button>
 </div>
 </div>
@@ -109,66 +109,66 @@
 <div class="bento-card flex flex-col gap-2">
 <div class="flex items-center gap-2 text-secondary">
 <span class="material-symbols-outlined text-[20px]">stars</span>
-<span class="font-label-sm text-label-sm uppercase tracking-wider">Total Good Karma</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider">{{ t('Total Good Karma') }}</span>
 </div>
 <div class="font-headline-lg text-headline-lg text-on-surface">{{ total_karma }}</div>
 <div class="font-body-sm text-body-sm font-medium text-secondary flex items-center gap-1">
-<span class="material-symbols-outlined text-[16px]">info</span> Total across platform
+<span class="material-symbols-outlined text-[16px]">info</span> {{ t('Total across platform') }}
                             </div>
 </div>
 <!-- Metric 2 -->
 <div class="bento-card flex flex-col gap-2">
 <div class="flex items-center gap-2 text-secondary">
 <span class="material-symbols-outlined text-[20px]">directions_car</span>
-<span class="font-label-sm text-label-sm uppercase tracking-wider">Active Rides</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider">{{ t('Active Rides') }}</span>
 </div>
 <div class="font-headline-lg text-headline-lg text-on-surface">{{ active_rides_count }}</div>
 <div class="font-body-sm text-body-sm font-medium text-secondary flex items-center gap-1">
-                                Currently En Route
+                                {{ t('Currently En Route') }}
                             </div>
 </div>
 <!-- Metric 3 -->
 <div class="bento-card flex flex-col gap-2">
 <div class="flex items-center gap-2 text-secondary">
 <span class="material-symbols-outlined text-[20px]">verified_user</span>
-<span class="font-label-sm text-label-sm uppercase tracking-wider">Verified Members</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider">{{ t('Verified Members') }}</span>
 </div>
 <div class="font-headline-lg text-headline-lg text-on-surface">{{ total_users }}</div>
 <div class="font-body-sm text-body-sm font-medium text-secondary flex items-center gap-1">
-                                Community Size
+                                {{ t('Community Size') }}
                             </div>
 </div>
 <!-- Metric 4 -->
 <div class="bento-card flex flex-col gap-2">
 <div class="flex items-center gap-2 text-secondary">
 <span class="material-symbols-outlined text-[20px]">badge</span>
-<span class="font-label-sm text-label-sm uppercase tracking-wider">Drivers Approved</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider">{{ t('Drivers Approved') }}</span>
 </div>
 <div class="font-headline-lg text-headline-lg text-on-surface">{{ drivers_approved }}</div>
 <div class="font-body-sm text-body-sm font-medium text-secondary flex items-center gap-1">
-                                Fully Vetted
+                                {{ t('Fully Vetted') }}
                             </div>
 </div>
 <!-- Metric 5 -->
 <div class="bento-card flex flex-col gap-2">
 <div class="flex items-center gap-2 text-secondary">
 <span class="material-symbols-outlined text-[20px]">route</span>
-<span class="font-label-sm text-label-sm uppercase tracking-wider">Total Trips</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider">{{ t('Total Trips') }}</span>
 </div>
 <div class="font-headline-lg text-headline-lg text-on-surface">{{ total_rides }}</div>
 <div class="font-body-sm text-body-sm font-medium text-secondary flex items-center gap-1">
-                                All time
+                                {{ t('All time') }}
                             </div>
 </div>
 <!-- Metric 6 -->
 <div class="bento-card flex flex-col gap-2">
 <div class="flex items-center gap-2 text-secondary">
 <span class="material-symbols-outlined text-[20px]">report_problem</span>
-<span class="font-label-sm text-label-sm uppercase tracking-wider">Total Complaints</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider">{{ t('Total Complaints') }}</span>
 </div>
 <div class="font-headline-lg text-headline-lg text-on-surface">{{ ride_alerts.length }}</div>
 <div class="font-body-sm text-body-sm font-medium text-secondary flex items-center gap-1">
-<span class="material-symbols-outlined text-[16px]">info</span> Logged Issues
+<span class="material-symbols-outlined text-[16px]">info</span> {{ t('Logged Issues') }}
                             </div>
 </div>
 </div>
@@ -176,12 +176,12 @@
 <div class="col-span-1 md:col-span-2 lg:col-span-4 bento-card flex flex-col h-full min-h-[350px]">
 <div class="flex justify-between items-center mb-6 pb-4 border-b border-outline-variant/30">
 <div>
-<h3 class="font-headline-sm text-headline-sm text-on-surface">Activity Trends</h3>
-<p class="font-body-sm text-body-sm text-secondary" id="trend-subtitle">Karma activity over the last 7 days</p>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">{{ t('Activity Trends') }}</h3>
+<p class="font-body-sm text-body-sm text-secondary" id="trend-subtitle">{{ t('Karma activity over the last 7 days') }}</p>
 </div>
 <select id="trend-selector" class="bg-surface-container-lowest border border-outline-variant rounded-md font-body-sm text-body-sm py-1.5 pl-3 pr-8 focus:border-primary-container outline-none">
-<option value="7">Last 7 Days</option>
-<option value="30">Last 30 Days</option>
+<option value="7">{{ t('Last 7 Days') }}</option>
+<option value="30">{{ t('Last 30 Days') }}</option>
 </select>
 </div>
 <div class="flex-1 flex flex-col justify-end relative mt-4">
@@ -208,8 +208,8 @@
 <!-- Alerts Section (Spans 2 columns) -->
 <div class="col-span-1 md:col-span-2 lg:col-span-2 bento-card flex flex-col h-full min-h-[350px]">
 <div class="flex justify-between items-center mb-4 pb-4 border-b border-outline-variant/30">
-<h3 class="font-headline-sm text-headline-sm text-on-surface">Recent Alerts</h3>
-<button class="text-primary hover:text-on-primary-fixed-variant font-label-md text-label-md">View All</button>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">{{ t('Recent Alerts') }}</h3>
+<button class="text-primary hover:text-on-primary-fixed-variant font-label-md text-label-md">{{ t('View All') }}</button>
 </div>
 <div class="flex-1 space-y-4 overflow-y-auto pr-2">
     {% for alert in ride_alerts %}
@@ -218,33 +218,33 @@
     <span class="material-symbols-outlined text-[16px]">{% if alert.status == 'open' %}warning{% else %}check_circle{% endif %}</span>
     </div>
     <div>
-    <p class="font-body-sm text-body-sm font-medium text-on-surface">Ride request: {{ alert.source }} to {{ alert.destination }}</p>
-    <p class="font-label-sm text-label-sm text-secondary mt-1">{{ alert.createdAt.toLocaleString() }} • From {{ alert.seeker.name }}</p>
+    <p class="font-body-sm text-body-sm font-medium text-on-surface">{{ t('Ride request: ') }}{{ alert.source }} to {{ alert.destination }}</p>
+    <p class="font-label-sm text-label-sm text-secondary mt-1">{{ alert.createdAt.toLocaleString() }} • {{ t('From ') }}{{ alert.seeker.name }}</p>
     </div>
     </div>
     {% endfor %}
     {% if ride_alerts.length == 0 %}
-    <p class="text-secondary text-sm text-center my-4">No recent alerts.</p>
+    <p class="text-secondary text-sm text-center my-4">{{ t('No recent alerts.') }}</p>
     {% endif %}
 </div>
 </div>
 <!-- Transactions Table (Spans all columns) -->
 <div class="col-span-1 md:col-span-2 lg:col-span-6 bento-card">
 <div class="flex justify-between items-center mb-6 pb-4 border-b border-outline-variant/30">
-<h3 class="font-headline-sm text-headline-sm text-on-surface">Recent Transactions</h3>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">{{ t('Recent Transactions') }}</h3>
 <button class="px-3 py-1.5 text-secondary hover:text-primary hover:bg-surface-container rounded-md transition-colors font-label-md text-label-md flex items-center gap-1">
-<span class="material-symbols-outlined text-[18px]">filter_list</span> Filter
+<span class="material-symbols-outlined text-[18px]">filter_list</span> {{ t('Filter') }}
                             </button>
 </div>
 <div class="overflow-x-auto">
 <table class="w-full text-left border-collapse">
 <thead>
 <tr class="border-b border-outline-variant/20">
-<th class="py-3 px-4 font-label-md text-label-md text-secondary uppercase tracking-wider font-semibold">Name</th>
-<th class="py-3 px-4 font-label-md text-label-md text-secondary uppercase tracking-wider font-semibold">Karma</th>
-<th class="py-3 px-4 font-label-md text-label-md text-secondary uppercase tracking-wider font-semibold">Method</th>
-<th class="py-3 px-4 font-label-md text-label-md text-secondary uppercase tracking-wider font-semibold">Status</th>
-<th class="py-3 px-4 text-right font-label-md text-label-md text-secondary uppercase tracking-wider font-semibold">Action</th>
+<th class="py-3 px-4 font-label-md text-label-md text-secondary uppercase tracking-wider font-semibold">{{ t('Name') }}</th>
+<th class="py-3 px-4 font-label-md text-label-md text-secondary uppercase tracking-wider font-semibold">{{ t('Karma') }}</th>
+<th class="py-3 px-4 font-label-md text-label-md text-secondary uppercase tracking-wider font-semibold">{{ t('Method') }}</th>
+<th class="py-3 px-4 font-label-md text-label-md text-secondary uppercase tracking-wider font-semibold">{{ t('Status') }}</th>
+<th class="py-3 px-4 text-right font-label-md text-label-md text-secondary uppercase tracking-wider font-semibold">{{ t('Action') }}</th>
 </tr>
 </thead>
 <tbody>
@@ -269,7 +269,7 @@
     </tr>
     {% endfor %}
     {% if recent_transactions.length == 0 %}
-    <tr><td colspan="5" class="py-4 px-4 text-center text-secondary">No transactions yet.</td></tr>
+    <tr><td colspan="5" class="py-4 px-4 text-center text-secondary">{{ t('No transactions yet.') }}</td></tr>
     {% endif %}
 </tbody>
 </table>

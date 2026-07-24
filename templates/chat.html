@@ -17,7 +17,7 @@
                 <div class="font-headline-md text-headline-md text-on-surface leading-tight mb-1">{{ otherPerson.name }}</div>
                 <div class="flex items-center gap-2 flex-wrap">
                     <span class="flex items-center text-on-secondary-container font-label-sm text-label-sm bg-secondary-container px-2 py-0.5 rounded-full shadow-sm">
-                        <span class="material-symbols-outlined text-[14px] mr-1" data-weight="fill" style="font-variation-settings: 'FILL' 1;">local_fire_department</span> {{ otherPerson.trust_rating }} Trust
+                        <span class="material-symbols-outlined text-[14px] mr-1" data-weight="fill" style="font-variation-settings: 'FILL' 1;">local_fire_department</span> {{ otherPerson.trust_rating }} {{ t('Trust') }}
                     </span>
                     <!-- Phone number hidden for privacy -->
                 </div>
@@ -33,7 +33,7 @@
                     <span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">storefront</span>
                 </div>
                 <div class="flex-1">
-                    <div class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Coordinating Ride</div>
+                    <div class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">{{ t('Coordinating Ride') }}</div>
                     <div class="font-label-md text-label-md text-on-surface">{{ ride.source }} ➔ {{ ride.destination }}</div>
                     <div class="font-body-md text-body-md text-tertiary text-[14px]">{{ ride.date_time | formatDate }}</div>
                 </div>
@@ -41,7 +41,7 @@
 
             <!-- Date Separator -->
             <div class="text-center my-2">
-                <span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container-low px-4 py-1.5 rounded-full border border-dashed border-outline-variant inline-block">Secure Chat Started</span>
+                <span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container-low px-4 py-1.5 rounded-full border border-dashed border-outline-variant inline-block">{{ t('Secure Chat Started') }}</span>
             </div>
 
             {% for msg in messages %}
@@ -77,7 +77,7 @@
             <form action="/ride/{{ ride.id }}/chat" method="POST">
                 <div class="flex items-end gap-sm w-full mx-auto">
                     <div class="flex-1 bg-surface-container-lowest rounded-xl border border-outline-variant p-1 flex items-center focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all shadow-sm relative overflow-hidden">
-                        <input type="text" name="content" autocomplete="off" required class="w-full bg-transparent border-none outline-none font-body-md text-body-md text-on-surface py-3 px-4 placeholder:text-outline focus:ring-0" placeholder="Write a message to {{ otherPerson.name }}...">
+                        <input type="text" name="content" autocomplete="off" required class="w-full bg-transparent border-none outline-none font-body-md text-body-md text-on-surface py-3 px-4 placeholder:text-outline focus:ring-0" placeholder="{{ t('Write a message to ') }}{{ otherPerson.name }}...">
                     </div>
                     <button type="submit" class="bg-primary text-on-primary h-14 w-14 rounded-xl flex items-center justify-center hover:bg-surface-tint transition-transform active:scale-95 shrink-0 shadow-[0_4px_12px_rgba(160,63,40,0.2)]">
                         <span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">send</span>
@@ -85,7 +85,7 @@
                 </div>
                 <div class="text-center mt-3">
                     <span class="font-label-sm text-label-sm text-outline flex items-center justify-center gap-1">
-                        <span class="material-symbols-outlined text-[12px]">lock</span> Messages are secured by KarmaRide Community Trust
+                        <span class="material-symbols-outlined text-[12px]">lock</span>{{ t(' Messages are secured by KarmaRide Community Trust') }}
                     </span>
                 </div>
             </form>

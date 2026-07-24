@@ -7,8 +7,8 @@
         <img alt="Rural Indian Village Scene" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAi_Q1DR9ONZwwY9wuvSEmT-aSukbeMFOM79l0kjoJk2v0RT0btpt2CBWALUoKr9dyY6JnEsdQI4ZSop8iMrxRYTLLWKnHdcmHUFkJor81kZUhWTOWOky3rcu4rlti-QF4vrACNySb05U9BP9C6o17H6NDZHHEsMFQgFGw2SeUb0MdVBdz7iiBHo79CUmR1lHAbGXnmjbRnBt4420NCHtSH7O9Q5iczTvdU2RuuLbcPfwyQxzhESOtZ"/>
         <div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/60 to-transparent flex flex-col justify-end p-margin-mobile md:p-lg">
             <div class="max-w-2xl animate-on-scroll">
-                <h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-4">Welcome back, {{ user.name }}</h2>
-                <p class="font-body-lg text-body-lg text-on-surface-variant mb-8 max-w-lg font-medium">Connect with neighbors heading your way. Save time, reduce costs, and build a tighter village.</p>
+                <h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-4">{{ t('Welcome back, ') }}{{ user.name }}</h2>
+                <p class="font-body-lg text-body-lg text-on-surface-variant mb-8 max-w-lg font-medium">{{ t('Connect with neighbors heading your way. Save time, reduce costs, and build a tighter village.') }}</p>
             </div>
         </div>
     </section>
@@ -17,10 +17,10 @@
     <div class="mb-8 border-b border-outline-variant/50 px-margin-mobile md:px-0">
         <nav class="flex gap-6" aria-label="Tabs">
             <button onclick="switchDashboardTab('main')" id="tab-main" class="border-b-2 border-primary text-primary font-headline-md text-[18px] py-4 px-1 focus:outline-none transition-colors">
-                My Dashboard
+                {{ t('My Dashboard') }}
             </button>
             <button onclick="switchDashboardTab('alerts')" id="tab-alerts" class="border-b-2 border-transparent text-on-surface-variant hover:text-on-surface font-headline-md text-[18px] py-4 px-1 focus:outline-none transition-colors">
-                Live Road Conditions
+                {{ t('Live Road Conditions') }}
             </button>
         </nav>
     </div>
@@ -28,13 +28,13 @@
     <div id="section-main">
     <!-- Active Activity Section -->
     <section class="px-margin-mobile md:px-0 mb-12">
-        <h3 class="font-headline-md text-headline-md text-on-surface mb-6">Active Activity</h3>
+        <h3 class="font-headline-md text-headline-md text-on-surface mb-6">{{ t('Active Activity') }}</h3>
         
         {% if not active_rides and not requests_made %}
             <div class="bg-surface-container rounded-xl p-md border border-dashed border-outline-variant text-center">
                 <span class="material-symbols-outlined text-4xl text-on-surface-variant mb-2">directions_walk</span>
-                <p class="font-body-md text-on-surface">No active rides or requests.</p>
-                <p class="font-body-sm text-on-surface-variant mt-2">Help the community to earn Karma!</p>
+                <p class="font-body-md text-on-surface">{{ t('No active rides or requests.') }}</p>
+                <p class="font-body-sm text-on-surface-variant mt-2">{{ t('Help the community to earn Karma!') }}</p>
             </div>
         {% endif %}
 
@@ -43,7 +43,7 @@
             {% for ride in active_rides %}
             <div class="bg-surface-container-low rounded-xl p-md border border-outline-variant shadow-sm flex flex-col relative overflow-hidden transition-transform">
                 <div class="flex justify-between items-start mb-4">
-                    <span class="bg-primary/10 text-primary text-xs px-2 py-1 rounded font-bold uppercase tracking-wide">Offering Ride</span>
+                    <span class="bg-primary/10 text-primary text-xs px-2 py-1 rounded font-bold uppercase tracking-wide">{{ t('Offering Ride') }}</span>
                     <span class="text-secondary-container font-bold flex items-center gap-1">
                         +{{ ride.karma_reward }} <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">spa</span>
                     </span>
@@ -54,7 +54,7 @@
                     {% if ride.status != 'cancelled' %}
                     <form action="/api/rides/{{ ride.id }}/cancel" method="POST" onsubmit="return confirm('Are you sure you want to cancel this ride? Any pending or accepted requests will be refunded.');">
                         <button type="submit" class="text-error font-bold text-sm hover:underline flex items-center gap-1">
-                            <span class="material-symbols-outlined text-[16px]">cancel</span> Cancel Ride
+                            <span class="material-symbols-outlined text-[16px]">cancel</span> {{ t('Cancel Ride') }}
                         </button>
                     </form>
                     {% endif %}
@@ -64,28 +64,28 @@
                     <div class="mt-auto pt-4 border-t border-outline-variant/30 flex flex-col gap-2">
                         <form action="/api/rides/{{ ride.id }}/complete" method="POST" class="w-full" onsubmit="return confirm('Mark this journey as completed? This will finalize the Karma transfer.');">
                             <button type="submit" class="w-full bg-secondary-container text-on-secondary-container font-label-md py-3 rounded-lg shadow-sm flex justify-center items-center gap-2 hover:bg-secondary-container/90 transition-colors">
-                                <span class="material-symbols-outlined text-sm">check_circle</span> Complete Journey
+                                <span class="material-symbols-outlined text-sm">check_circle</span> {{ t('Complete Journey') }}
                             </button>
                         </form>
                         <a href="/ride/{{ ride.id }}/chat" class="w-full bg-primary text-on-primary font-label-md py-3 rounded-lg shadow-sm flex justify-center items-center gap-2 hover:bg-primary/90 transition-colors">
-                            <span class="material-symbols-outlined text-sm">chat</span> Open Secure Chat
+                            <span class="material-symbols-outlined text-sm">chat</span> {{ t('Open Secure Chat') }}
                         </a>
                     </div>
                 {% else %}
                     {% if ride.status != 'cancelled' and ride.requests and ride.requests.length > 0 %}
                         <div class="mt-auto pt-4 border-t border-outline-variant/30">
-                            <p class="text-sm text-on-surface font-semibold mb-3">📥 Pending Requests:</p>
+                            <p class="text-sm text-on-surface font-semibold mb-3">📥 {{ t('Pending Requests:') }}</p>
                             <div class="space-y-3">
                                 {% for req in ride.requests %}
                                     {% if req.status == 'pending' %}
                                     <div class="flex justify-between items-center bg-surface-container p-3 rounded-xl border border-outline-variant/50">
                                         <div>
                                             <p class="font-semibold text-on-surface">{{ req.seeker.name }}</p>
-                                            <p class="text-xs text-on-surface-variant">Trust: ⭐ {{ req.seeker.trust_rating }}</p>
+                                            <p class="text-xs text-on-surface-variant">{{ t('Trust: ⭐ ') }}{{ req.seeker.trust_rating }}</p>
                                         </div>
                                         <form action="/api/request/{{ req.id }}/accept" method="POST">
                                             <button type="submit" class="bg-secondary-container text-on-secondary-container text-sm font-bold py-2 px-4 rounded-lg hover:bg-secondary-container/90 transition-colors shadow-sm">
-                                                Accept
+                                                {{ t('Accept') }}
                                             </button>
                                         </form>
                                     </div>
@@ -102,13 +102,13 @@
             {% for req in requests_made %}
             <div class="bg-surface-container-low rounded-xl p-md border border-outline-variant shadow-sm flex flex-col relative overflow-hidden transition-transform">
                 <div class="flex justify-between items-start mb-4">
-                    <span class="bg-tertiary/10 text-tertiary text-xs px-2 py-1 rounded font-bold uppercase tracking-wide">Seeking Ride</span>
+                    <span class="bg-tertiary/10 text-tertiary text-xs px-2 py-1 rounded font-bold uppercase tracking-wide">{{ t('Seeking Ride') }}</span>
                     <span class="text-primary font-bold flex items-center gap-1">
                         -{{ req.ride.karma_reward }} <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">spa</span> 
                         {% if req.status == 'cancelled' or req.status == 'rejected' %}
-                        (Refunded)
+                        {{ t('(Refunded)') }}
                         {% else %}
-                        (Escrow)
+                        {{ t('(Escrow)') }}
                         {% endif %}
                     </span>
                 </div>
@@ -126,7 +126,7 @@
                 {% if req.status == 'completed' and not req.rating %}
                 <div class="mt-auto pt-4 border-t border-outline-variant/30 bg-surface-container-high p-3 rounded-xl border border-primary/20">
                     <form action="/api/requests/{{ req.id }}/rate" method="POST" class="flex flex-col gap-3">
-                        <p class="text-sm font-semibold text-center text-primary">How was your ride?</p>
+                        <p class="text-sm font-semibold text-center text-primary">{{ t('How was your ride?') }}</p>
                         <div class="flex justify-center gap-3">
                             <label class="cursor-pointer hover:scale-110 transition-transform"><input type="radio" name="rating" value="1" class="hidden peer"><span class="text-2xl peer-checked:grayscale-0 grayscale opacity-50 peer-checked:opacity-100">⭐</span></label>
                             <label class="cursor-pointer hover:scale-110 transition-transform"><input type="radio" name="rating" value="2" class="hidden peer"><span class="text-2xl peer-checked:grayscale-0 grayscale opacity-50 peer-checked:opacity-100">⭐</span></label>
@@ -134,12 +134,12 @@
                             <label class="cursor-pointer hover:scale-110 transition-transform"><input type="radio" name="rating" value="4" class="hidden peer"><span class="text-2xl peer-checked:grayscale-0 grayscale opacity-50 peer-checked:opacity-100">⭐</span></label>
                             <label class="cursor-pointer hover:scale-110 transition-transform"><input type="radio" name="rating" value="5" class="hidden peer" checked><span class="text-2xl peer-checked:grayscale-0 grayscale opacity-50 peer-checked:opacity-100">⭐</span></label>
                         </div>
-                        <button type="submit" class="w-full bg-primary text-on-primary font-label-md py-2 rounded-lg shadow-sm mt-1">Submit Rating</button>
+                        <button type="submit" class="w-full bg-primary text-on-primary font-label-md py-2 rounded-lg shadow-sm mt-1">{{ t('Submit Rating') }}</button>
                     </form>
                 </div>
                 {% elif req.status == 'completed' and req.rating %}
                 <div class="mt-auto pt-4 border-t border-outline-variant/30 text-center">
-                    <p class="text-sm font-bold text-primary bg-primary/10 py-2 rounded-lg">You rated this ride {{ req.rating }} ⭐</p>
+                    <p class="text-sm font-bold text-primary bg-primary/10 py-2 rounded-lg">{{ t('You rated this ride ') }}{{ req.rating }} ⭐</p>
                 </div>
                 {% endif %}
             </div>
@@ -219,10 +219,10 @@
                     <div class="bg-error/20 w-12 h-12 rounded-full flex items-center justify-center mb-4 text-error">
                         <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">construction</span>
                     </div>
-                    <h3 class="font-headline-md text-headline-md mb-2">Report Road Condition</h3>
-                    <p class="font-body-md text-body-md text-error/80 mb-6 flex-grow">Alert the village about landslides, construction, or blockages on the route.</p>
+                    <h3 class="font-headline-md text-headline-md mb-2">{{ t('Report Road Condition') }}</h3>
+                    <p class="font-body-md text-body-md text-error/80 mb-6 flex-grow">{{ t('Alert the village about landslides, construction, or blockages on the route.') }}</p>
                     <button class="bg-error text-white font-label-md text-label-md py-3 px-6 rounded-lg w-full shadow-sm flex justify-center items-center gap-2">
-                        <span>Report Issue</span>
+                        <span>{{ t('Report Issue') }}</span>
                         <span class="material-symbols-outlined text-sm">warning</span>
                     </button>
                 </div>
@@ -241,8 +241,8 @@
                 <span class="material-symbols-outlined text-[32px]">warning</span>
             </div>
             <div>
-                <h3 class="font-headline-lg text-headline-sm md:text-headline-lg text-on-background">Live Road Conditions</h3>
-                <p class="font-body-md text-on-surface-variant">Community-reported alerts for routes in the village.</p>
+                <h3 class="font-headline-lg text-headline-sm md:text-headline-lg text-on-background">{{ t('Live Road Conditions') }}</h3>
+                <p class="font-body-md text-on-surface-variant">{{ t('Community-reported alerts for routes in the village.') }}</p>
             </div>
         </div>
 
@@ -264,7 +264,7 @@
                         <div class="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center text-primary">
                             <span class="material-symbols-outlined text-[14px]">person</span>
                         </div>
-                        <span class="font-label-sm text-on-surface-variant">Reported by {{ update.user.name }}</span>
+                        <span class="font-label-sm text-on-surface-variant">{{ t('Reported by ') }}{{ update.user.name }}</span>
                     </div>
 
                     <!-- Actions -->

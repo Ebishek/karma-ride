@@ -41,19 +41,19 @@
 <main class="flex-grow px-margin-mobile md:px-margin-desktop pt-8 pb-32 max-w-4xl mx-auto w-full rustic-texture">
     <!-- Header Section -->
     <div class="mb-8 text-center md:text-left mt-8">
-        <h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface mb-2">Community Leaders</h2>
-        <p class="font-body-md text-body-md text-on-surface-variant">Celebrating our top riders sharing journeys.</p>
+        <h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface mb-2">{{ t('Community Leaders') }}</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant">{{ t('Celebrating our top riders sharing journeys.') }}</p>
     </div>
 
     <!-- Time Tabs -->
     <div class="flex flex-wrap justify-center md:justify-start gap-4 mb-8">
-        <a href="?period=today" class="px-6 py-2 rounded-full font-label-md text-label-md transition-colors {% if period == 'today' %}bg-secondary-container text-on-secondary-container font-bold shadow-sm{% else %}bg-surface-variant text-on-surface-variant hover:bg-surface-container-high{% endif %}">Today</a>
+        <a href="?period=today" class="px-6 py-2 rounded-full font-label-md text-label-md transition-colors {% if period == 'today' %}bg-secondary-container text-on-secondary-container font-bold shadow-sm{% else %}bg-surface-variant text-on-surface-variant hover:bg-surface-container-high{% endif %}">{{ t('Today') }}</a>
         
-        <a href="?period=week" class="px-6 py-2 rounded-full font-label-md text-label-md transition-colors {% if period == 'week' %}bg-secondary-container text-on-secondary-container font-bold shadow-sm{% else %}bg-surface-variant text-on-surface-variant hover:bg-surface-container-high{% endif %}">This Week</a>
+        <a href="?period=week" class="px-6 py-2 rounded-full font-label-md text-label-md transition-colors {% if period == 'week' %}bg-secondary-container text-on-secondary-container font-bold shadow-sm{% else %}bg-surface-variant text-on-surface-variant hover:bg-surface-container-high{% endif %}">{{ t('This Week') }}</a>
         
-        <a href="?period=month" class="px-6 py-2 rounded-full font-label-md text-label-md transition-colors {% if period == 'month' %}bg-secondary-container text-on-secondary-container font-bold shadow-sm{% else %}bg-surface-variant text-on-surface-variant hover:bg-surface-container-high{% endif %}">This Month</a>
+        <a href="?period=month" class="px-6 py-2 rounded-full font-label-md text-label-md transition-colors {% if period == 'month' %}bg-secondary-container text-on-secondary-container font-bold shadow-sm{% else %}bg-surface-variant text-on-surface-variant hover:bg-surface-container-high{% endif %}">{{ t('This Month') }}</a>
         
-        <a href="?period=all" class="px-6 py-2 rounded-full font-label-md text-label-md transition-colors {% if period == 'all' %}bg-secondary-container text-on-secondary-container font-bold shadow-sm{% else %}bg-surface-variant text-on-surface-variant hover:bg-surface-container-high{% endif %}">All Time</a>
+        <a href="?period=all" class="px-6 py-2 rounded-full font-label-md text-label-md transition-colors {% if period == 'all' %}bg-secondary-container text-on-secondary-container font-bold shadow-sm{% else %}bg-surface-variant text-on-surface-variant hover:bg-surface-container-high{% endif %}">{{ t('All Time') }}</a>
     </div>
 
     <!-- Top 3 Podium (Bento/Card Layout) -->
@@ -140,18 +140,18 @@
                     <img class="w-full h-full object-cover" src="https://ui-avatars.com/api/?name={{ current_user_data.name | urlencode }}&background=random&size=128" />
                 </div>
                 <div>
-                    <p class="font-label-sm text-label-sm text-outline-variant uppercase tracking-wider mb-1">Your Rank</p>
+                    <p class="font-label-sm text-label-sm text-outline-variant uppercase tracking-wider mb-1">{{ t('Your Rank') }}</p>
                     <h4 class="font-headline-md text-headline-md font-bold">
                         {% if current_rank > 0 %}
                             #{{ current_rank }}
                         {% else %}
-                            Unranked
+                            {{ t('Unranked') }}
                         {% endif %}
                     </h4>
                 </div>
             </div>
             <div class="text-right">
-                <p class="font-label-sm text-label-sm text-outline-variant mb-1">Karma Points</p>
+                <p class="font-label-sm text-label-sm text-outline-variant mb-1">{{ t('Karma Points') }}</p>
                 <div class="flex items-center justify-end gap-1 font-label-md text-label-md text-inverse-primary">
                     {{ current_user_data.score }} <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">spa</span>
                 </div>

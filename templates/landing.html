@@ -30,19 +30,19 @@
 </div>
 <div class="max-w-4xl mx-auto text-center md:text-left flex flex-col items-center md:items-start gap-md w-full">
 <h2 class="font-headline-lg text-headline-lg md:text-[48px] md:leading-[56px] text-on-background tracking-tight">
-                    Shared Journeys,<br/>
-<span class="text-primary italic">Stronger Bonds</span>
+                    {{ t('Shared Journeys,') }}<br/>
+<span class="text-primary italic">{{ t('Stronger Bonds') }}</span>
 </h2>
 <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
-                    Discover a new way to travel where neighbors help neighbors. No money involved—just goodwill, mutual trust, and a shared journey on the rural roads we all call home.
+                    {{ t('Discover a new way to travel where neighbors help neighbors. No money involved—just goodwill, mutual trust, and a shared journey on the rural roads we all call home.') }}
                 </p>
 <div class="flex flex-col sm:flex-row gap-sm mt-sm w-full sm:w-auto">
 <a href="/register" class="bg-primary text-on-primary font-label-md text-label-md px-6 py-3 rounded-full shadow-[0_4px_12px_rgba(75,61,51,0.15)] hover:scale-95 transition-transform duration-150 flex items-center justify-center gap-xs">
-                        Join the Village
+                        {{ t('Join the Village') }}
                         <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
 </a>
 <a href="/login" class="border-2 border-tertiary text-tertiary font-label-md text-label-md px-6 py-3 rounded-full hover:bg-tertiary-container/20 transition-colors flex items-center justify-center gap-xs">
-                        Log In
+                        {{ t('Log In') }}
 </a>
 </div>
 </div>
@@ -57,45 +57,20 @@
 <span class="material-symbols-outlined text-[32px]">menu_book</span>
 </div>
 
-<!-- Language Toggle -->
-<div class="flex items-center justify-center gap-3 mb-6">
-    <span class="font-label-md text-primary font-bold" id="label-en">English</span>
-    <button id="lang-toggle" class="w-14 h-7 bg-surface-variant rounded-full relative flex items-center p-1 cursor-pointer transition-colors focus:outline-none border border-outline-variant/50 shadow-inner">
-        <div id="lang-toggle-thumb" class="w-5 h-5 bg-primary rounded-full shadow-md transform transition-transform duration-300"></div>
-    </button>
-    <span class="font-label-md text-on-surface-variant opacity-70" id="label-hi">हिन्दी</span>
-</div>
-
 <!-- Content Grid (Preserves max height of both languages) -->
 <div class="grid relative">
-    <!-- English Content -->
+    <!-- Story Content -->
     <div id="story-en" class="col-start-1 row-start-1 transition-opacity duration-500 opacity-100">
-        <h3 class="font-headline-lg text-headline-lg text-on-background mb-6">Why We Built KarmaRide</h3>
+        <h3 class="font-headline-lg text-headline-lg text-on-background mb-6">{{ t('Why We Built KarmaRide') }}</h3>
         <div class="font-body-lg text-on-surface-variant leading-relaxed text-left md:text-center space-y-4">
         <p>
-            In many of our villages, owning a personal vehicle is a luxury, and public transport is often sparse or non-existent. For many, the places they call home are beautiful but disconnected, connected only by roads that are sometimes tough to navigate.
+            {{ t('In many of our villages, owning a personal vehicle is a luxury, and public transport is often sparse or non-existent. For many, the places they call home are beautiful but disconnected, connected only by roads that are sometimes tough to navigate.') }}
         </p>
         <p>
-            Every day, neighbors face urgent situations—needing to reach a clinic, a market, or family—but find themselves stranded simply because there is no reliable commute. We realized that while not everyone has a vehicle, <strong class="text-primary">someone in the village is often heading that way.</strong>
+            {{ t('Every day, neighbors face urgent situations—needing to reach a clinic, a market, or family—but find themselves stranded simply because there is no reliable commute. We realized that while not everyone has a vehicle, ') }}<strong class="text-primary">{{ t('someone in the village is often heading that way.') }}</strong>
         </p>
         <p class="font-headline-sm text-secondary italic border-l-4 border-secondary-container pl-6 py-2 md:border-none md:pl-0 md:py-0">
-            "KarmaRide was created to bridge this gap. By sharing the empty seats on our vehicles, we turn every everyday journey into a lifeline for a neighbor in need."
-        </p>
-        </div>
-    </div>
-
-    <!-- Hindi Content -->
-    <div id="story-hi" class="col-start-1 row-start-1 transition-opacity duration-500 opacity-0 pointer-events-none z-0">
-        <h3 class="font-headline-lg text-headline-lg text-on-background mb-6">हमने कर्मा-राइड क्यों बनाया?</h3>
-        <div class="font-body-lg text-on-surface-variant leading-relaxed text-left md:text-center space-y-4">
-        <p>
-            हमारे कई गाँवों में, अपना निजी वाहन होना एक विलासिता है, और सार्वजनिक परिवहन अक्सर बहुत कम या न के बराबर होता है। बहुत से लोगों के लिए, उनका सुंदर घर बाकी दुनिया से कटा हुआ है, जो केवल उन रास्तों से जुड़ा है जिन पर चलना कभी-कभी बहुत मुश्किल होता है।
-        </p>
-        <p>
-            हर दिन, लोगों को कई बार आपात स्थिति का सामना करना पड़ता है - जैसे क्लिनिक, बाज़ार, या परिवार तक पहुँचना - लेकिन वे फँसे रह जाते हैं क्योंकि यात्रा का कोई साधन नहीं होता। हमने महसूस किया कि भले ही हर किसी के पास वाहन न हो, लेकिन <strong class="text-primary">गाँव में कोई न कोई अक्सर उसी दिशा में जा रहा होता है।</strong>
-        </p>
-        <p class="font-headline-sm text-secondary italic border-l-4 border-secondary-container pl-6 py-2 md:border-none md:pl-0 md:py-0">
-            "कर्मा-राइड को इसी दूरी को मिटाने के लिए बनाया गया था। अपने वाहनों की खाली सीटों को साझा करके, हम हर रोज़ की यात्रा को किसी जरूरतमंद पड़ोसी के लिए जीवनरेखा में बदल देते हैं।"
+            "{{ t('KarmaRide was created to bridge this gap. By sharing the empty seats on our vehicles, we turn every everyday journey into a lifeline for a neighbor in need.') }}"
         </p>
         </div>
     </div>
@@ -103,57 +78,11 @@
 </div>
 </section>
 
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const toggleBtn = document.getElementById('lang-toggle');
-        const toggleThumb = document.getElementById('lang-toggle-thumb');
-        const enStory = document.getElementById('story-en');
-        const hiStory = document.getElementById('story-hi');
-        const labelEn = document.getElementById('label-en');
-        const labelHi = document.getElementById('label-hi');
-        
-        let showEnglish = true;
-
-        toggleBtn.addEventListener('click', () => {
-            showEnglish = !showEnglish;
-            if (showEnglish) {
-                // UI changes for English
-                toggleThumb.classList.remove('translate-x-7');
-                labelEn.classList.add('text-primary', 'font-bold');
-                labelEn.classList.remove('opacity-70');
-                labelHi.classList.remove('text-primary', 'font-bold');
-                labelHi.classList.add('opacity-70');
-
-                // Content changes
-                hiStory.classList.replace('opacity-100', 'opacity-0');
-                hiStory.classList.add('pointer-events-none');
-                
-                enStory.classList.replace('opacity-0', 'opacity-100');
-                enStory.classList.remove('pointer-events-none');
-            } else {
-                // UI changes for Hindi
-                toggleThumb.classList.add('translate-x-7');
-                labelHi.classList.add('text-primary', 'font-bold');
-                labelHi.classList.remove('opacity-70');
-                labelEn.classList.remove('text-primary', 'font-bold');
-                labelEn.classList.add('opacity-70');
-
-                // Content changes
-                enStory.classList.replace('opacity-100', 'opacity-0');
-                enStory.classList.add('pointer-events-none');
-                
-                hiStory.classList.replace('opacity-0', 'opacity-100');
-                hiStory.classList.remove('pointer-events-none');
-            }
-        });
-    });
-</script>
-
 <!-- 2. The Mission Section -->
 <section class="py-xl px-margin-mobile md:px-margin-desktop bg-surface-container-low relative">
 <div class="max-w-6xl mx-auto">
 <div class="text-center mb-lg">
-<h3 class="font-headline-md text-headline-md text-on-background">The Heart of KarmaRide</h3>
+<h3 class="font-headline-md text-headline-md text-on-background">{{ t('The Heart of KarmaRide') }}</h3>
 <div class="h-1 w-16 bg-secondary-container mx-auto mt-2 rounded-full"></div>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-md">
@@ -162,9 +91,9 @@
 <div class="w-16 h-16 rounded-full bg-primary-container/20 flex items-center justify-center text-primary mb-2">
 <span class="material-symbols-outlined text-[32px]">diversity_3</span>
 </div>
-<h4 class="font-headline-md text-[20px] text-on-surface">Community First</h4>
+<h4 class="font-headline-md text-[20px] text-on-surface">{{ t('Community First') }}</h4>
 <p class="font-body-md text-on-surface-variant">
-                            Strengthening local ties by connecting those going the same way. It's about being a good neighbor before being a commuter.
+                            {{ t('Strengthening local ties by connecting those going the same way. It\'s about being a good neighbor before being a commuter.') }}
                         </p>
 </div>
 <!-- Chaupal Card 2 -->
@@ -172,9 +101,9 @@
 <div class="w-16 h-16 rounded-full bg-secondary-container/20 flex items-center justify-center text-secondary mb-2">
 <span class="material-symbols-outlined text-[32px]">spa</span>
 </div>
-<h4 class="font-headline-md text-[20px] text-on-surface">The Karma Economy</h4>
+<h4 class="font-headline-md text-[20px] text-on-surface">{{ t('The Karma Economy') }}</h4>
 <p class="font-body-md text-on-surface-variant">
-                            Leave your wallet behind. Earn Karma points for giving rides, and spend them when you need one. A true shared economy.
+                            {{ t('Leave your wallet behind. Earn Karma points for giving rides, and spend them when you need one. A true shared economy.') }}
                         </p>
 </div>
 <!-- Chaupal Card 3 -->
@@ -182,9 +111,9 @@
 <div class="w-16 h-16 rounded-full bg-tertiary-container/20 flex items-center justify-center text-tertiary mb-2">
 <span class="material-symbols-outlined text-[32px]">verified_user</span>
 </div>
-<h4 class="font-headline-md text-[20px] text-on-surface">Safe &amp; Trusted</h4>
+<h4 class="font-headline-md text-[20px] text-on-surface">{{ t('Safe & Trusted') }}</h4>
 <p class="font-body-md text-on-surface-variant">
-                            Travel with peace of mind. Every rider and driver is a verified member of the village network, building a secure travel web.
+                            {{ t('Travel with peace of mind. Every rider and driver is a verified member of the village network, building a secure travel web.') }}
                         </p>
 </div>
 </div>
@@ -193,14 +122,14 @@
 <!-- 3. How it Works (Bento Layout) -->
 <section class="py-xl px-margin-mobile md:px-margin-desktop bg-surface-container-highest">
 <div class="max-w-6xl mx-auto">
-<h3 class="font-headline-md text-headline-md text-on-background mb-lg text-center md:text-left">How the Journey Unfolds</h3>
+<h3 class="font-headline-md text-headline-md text-on-background mb-lg text-center md:text-left">{{ t('How the Journey Unfolds') }}</h3>
 <div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-sm md:h-[500px]">
 <!-- Step 1: Offer -->
 <div class="md:col-span-2 md:row-span-2 bg-surface rounded-xl overflow-hidden relative group shadow-[0_4px_12px_rgba(75,61,51,0.08)] border border-outline-variant/50">
 <div class="absolute inset-0 bg-gradient-to-t from-surface-tint/90 to-transparent z-10 flex flex-col justify-end p-md">
 <div class="w-10 h-10 rounded-full bg-surface text-primary flex items-center justify-center font-bold text-lg mb-xs">1</div>
-<h4 class="font-headline-lg text-[24px] text-on-primary">Offer a Ride</h4>
-<p class="font-body-md text-on-primary/80 mt-1">Got an empty seat on your scooter? Post your route to the village board.</p>
+<h4 class="font-headline-lg text-[24px] text-on-primary">{{ t('Offer a Ride') }}</h4>
+<p class="font-body-md text-on-primary/80 mt-1">{{ t('Got an empty seat on your scooter? Post your route to the village board.') }}</p>
 </div>
 <img alt="Scooter on rural road" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A warm, cinematic wide shot of a classic rustic scooter parked on a dusty rural Indian path at golden hour, surrounded by tall golden wheat fields. Terracotta and mustard tones, soft natural lighting, light mode aesthetic, inviting and authentic." src="/static/img/how_it_works.png"/>
 </div>
@@ -209,10 +138,10 @@
 <div class="w-12 h-12 rounded-full bg-surface/50 text-on-secondary-container flex items-center justify-center font-bold text-lg shrink-0">2</div>
 <div>
 <h4 class="font-headline-md text-[20px] text-on-secondary-container flex items-center gap-2">
-                                Earn Karma
+                                {{ t('Earn Karma') }}
                                 <span class="material-symbols-outlined text-secondary-fixed">generating_tokens</span>
 </h4>
-<p class="font-body-md text-on-secondary-container/80 mt-1">Help a neighbor reach the market or clinic, and watch your Karma pool grow.</p>
+<p class="font-body-md text-on-secondary-container/80 mt-1">{{ t('Help a neighbor reach the market or clinic, and watch your Karma pool grow.') }}</p>
 </div>
 </div>
 <!-- Step 3: Build Rep -->
@@ -221,8 +150,8 @@
 <span class="material-symbols-outlined text-[120px]">military_tech</span>
 </div>
 <div class="w-12 h-12 rounded-full bg-surface/20 text-on-tertiary flex items-center justify-center font-bold text-lg mb-xs relative z-10">3</div>
-<h4 class="font-headline-md text-[20px] text-on-tertiary relative z-10">Build Reputation</h4>
-<p class="font-body-md text-on-tertiary-container mt-1 relative z-10 text-white/80">Become a pillar of your community. Higher karma means prioritized ride requests.</p>
+<h4 class="font-headline-md text-[20px] text-on-tertiary relative z-10">{{ t('Build Reputation') }}</h4>
+<p class="font-body-md text-on-tertiary-container mt-1 relative z-10 text-white/80">{{ t('Become a pillar of your community. Higher karma means prioritized ride requests.') }}</p>
 </div>
 </div>
 </div>
@@ -232,9 +161,9 @@
 <div class="absolute top-0 right-0 w-64 h-64 bg-secondary-container/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
 <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-lg">
 <div class="flex-1 space-y-md">
-<h3 class="font-headline-lg text-headline-lg text-on-background">Rise to <span class="text-secondary">Karma Hero</span></h3>
+<h3 class="font-headline-lg text-headline-lg text-on-background">{{ t('Rise to ') }}<span class="text-secondary">{{ t('Karma Hero') }}</span></h3>
 <p class="font-body-lg text-on-surface-variant">
-                        Karma isn't just points; it's gratitude materialized. The more you give, the brighter your status shines on the village leaderboard. 
+                        {{ t("Karma isn't just points; it's gratitude materialized. The more you give, the brighter your status shines on the village leaderboard.") }} 
                     </p>
 <div class="flex flex-col gap-sm">
 <div class="flex items-center gap-sm bg-surface-container p-sm rounded-lg border border-outline-variant/30">
@@ -242,8 +171,8 @@
 <span class="material-symbols-outlined">emoji_events</span>
 </div>
 <div>
-<h5 class="font-label-md text-on-surface">Weekly Honors</h5>
-<p class="font-body-md text-sm text-on-surface-variant">Top contributors get featured on the community board.</p>
+<h5 class="font-label-md text-on-surface">{{ t('Weekly Honors') }}</h5>
+<p class="font-body-md text-sm text-on-surface-variant">{{ t('Top contributors get featured on the community board.') }}</p>
 </div>
 </div>
 <div class="flex items-center gap-sm bg-surface-container p-sm rounded-lg border border-outline-variant/30">
@@ -251,8 +180,8 @@
 <span class="material-symbols-outlined">favorite</span>
 </div>
 <div>
-<h5 class="font-label-md text-on-surface">Priority Requests</h5>
-<p class="font-body-md text-sm text-on-surface-variant">Karma Heroes get their ride requests answered first.</p>
+<h5 class="font-label-md text-on-surface">{{ t('Priority Requests') }}</h5>
+<p class="font-body-md text-sm text-on-surface-variant">{{ t('Karma Heroes get their ride requests answered first.') }}</p>
 </div>
 </div>
 </div>
@@ -260,8 +189,8 @@
 <!-- Leaderboard Illustration Mockup -->
 <div class="flex-1 w-full max-w-sm">
 <div class="bg-surface-container-low p-sm rounded-xl border-2 border-outline-variant/50 shadow-[0_8px_24px_rgba(75,61,51,0.12)] relative">
-<div class="absolute -top-4 -left-4 bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full font-label-sm shadow-md transform -rotate-6">Live Leaderboard</div>
-<h4 class="font-headline-md text-center text-on-surface mb-sm mt-2">Village Top Samaritans</h4>
+<div class="absolute -top-4 -left-4 bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full font-label-sm shadow-md transform -rotate-6">{{ t('Live Leaderboard') }}</div>
+<h4 class="font-headline-md text-center text-on-surface mb-sm mt-2">{{ t('Village Top Samaritans') }}</h4>
 <div class="space-y-xs">
 {% for hero in topHeroes %}
 <div class="flex items-center gap-xs p-2 bg-surface rounded-md border {% if loop.index == 1 %}border-secondary-container/30{% else %}border-outline-variant/20{% endif %} {% if loop.index == 3 %}opacity-70{% endif %}">
@@ -279,7 +208,7 @@
 <span class="font-label-md {% if loop.index == 1 %}text-secondary{% else %}text-on-surface-variant{% endif %} flex items-center"><span class="material-symbols-outlined text-[16px] mr-1">spa</span> {{ hero.karma_balance }}</span>
 </div>
 {% else %}
-<div class="text-center text-sm text-on-surface-variant py-4">No heroes yet!</div>
+<div class="text-center text-sm text-on-surface-variant py-4">{{ t('No heroes yet!') }}</div>
 {% endfor %}
 </div>
 </div>
@@ -290,11 +219,11 @@
 <section class="py-xl px-margin-mobile md:px-margin-desktop bg-surface-container text-center mb-8">
 <div class="max-w-2xl mx-auto space-y-md">
 <span class="material-symbols-outlined text-[48px] text-primary">signpost</span>
-<h3 class="font-headline-lg text-headline-lg text-on-surface">Ready to share the road?</h3>
-<p class="font-body-lg text-on-surface-variant">Whether you have an empty seat or need a lift to the nearest town, the village is waiting for you.</p>
+<h3 class="font-headline-lg text-headline-lg text-on-surface">{{ t('Ready to share the road?') }}</h3>
+<p class="font-body-lg text-on-surface-variant">{{ t('Whether you have an empty seat or need a lift to the nearest town, the village is waiting for you.') }}</p>
 <div class="flex justify-center gap-sm pt-sm">
 <a href="/register" class="bg-primary text-on-primary font-label-md px-8 py-4 rounded-full shadow-[0_4px_12px_rgba(75,61,51,0.15)] hover:scale-95 transition-transform duration-150">
-                        Start Offering Rides
+                        {{ t('Start Offering Rides') }}
 </a>
 </div>
 </div>

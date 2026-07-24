@@ -3,8 +3,8 @@
 {% block content %}
 <main class="flex-1 px-margin-mobile md:px-margin-desktop pb-24 md:pb-16 flex flex-col justify-center items-center w-full max-w-lg mx-auto relative z-20 mt-8 min-h-[70vh]">
     <div class="text-center mb-8">
-        <h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-2">Create Account</h1>
-        <p class="font-body-md text-on-surface-variant">Join the community. Earn <span class="text-primary font-bold">50 Karma</span> instantly!</p>
+        <h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-2">{{ t('Create Account') }}</h1>
+        <p class="font-body-md text-on-surface-variant">{{ t('Join the community. Earn ') }}<span class="text-primary font-bold">{{ t('50 Karma') }}</span>{{ t(' instantly!') }}</p>
     </div>
 
     <form action="/register" method="POST" class="w-full bg-surface-container rounded-2xl p-6 md:p-8 shadow-[0_4px_12px_rgba(75,61,51,0.08)] border border-outline-variant/30 space-y-5">
@@ -15,43 +15,43 @@
         {% endif %}
 
         <div>
-            <label class="block font-label-md text-on-surface mb-1">Full Name</label>
+            <label class="block font-label-md text-on-surface mb-1">{{ t('Full Name') }}</label>
             <div class="relative">
                 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-tertiary">person</span>
-                <input type="text" name="name" required class="w-full bg-surface-container-lowest border-2 border-outline-variant focus:border-primary focus:ring-0 rounded-xl py-3 pl-10 pr-4 font-body-md text-on-surface placeholder-on-surface-variant transition-colors shadow-sm" placeholder="e.g. Alex Helper">
+                <input type="text" name="name" required class="w-full bg-surface-container-lowest border-2 border-outline-variant focus:border-primary focus:ring-0 rounded-xl py-3 pl-10 pr-4 font-body-md text-on-surface placeholder-on-surface-variant transition-colors shadow-sm" placeholder="{{ t('e.g. Alex Helper') }}">
             </div>
         </div>
 
         <div>
-            <label class="block font-label-md text-on-surface mb-1">Phone Number</label>
+            <label class="block font-label-md text-on-surface mb-1">{{ t('Phone Number') }}</label>
             <div class="relative">
                 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-tertiary">phone_iphone</span>
-                <input type="tel" name="phone" required class="w-full bg-surface-container-lowest border-2 border-outline-variant focus:border-primary focus:ring-0 rounded-xl py-3 pl-10 pr-4 font-body-md text-on-surface placeholder-on-surface-variant transition-colors shadow-sm" placeholder="Enter your phone">
+                <input type="tel" name="phone" required class="w-full bg-surface-container-lowest border-2 border-outline-variant focus:border-primary focus:ring-0 rounded-xl py-3 pl-10 pr-4 font-body-md text-on-surface placeholder-on-surface-variant transition-colors shadow-sm" placeholder="{{ t('Enter your phone') }}">
             </div>
         </div>
 
         <div>
-            <label class="block font-label-md text-on-surface mb-1">Email (Optional)</label>
+            <label class="block font-label-md text-on-surface mb-1">{{ t('Email (Optional)') }}</label>
             <div class="relative">
                 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-tertiary">mail</span>
-                <input type="email" name="email" class="w-full bg-surface-container-lowest border-2 border-outline-variant focus:border-primary focus:ring-0 rounded-xl py-3 pl-10 pr-4 font-body-md text-on-surface placeholder-on-surface-variant transition-colors shadow-sm" placeholder="Enter your email">
+                <input type="email" name="email" class="w-full bg-surface-container-lowest border-2 border-outline-variant focus:border-primary focus:ring-0 rounded-xl py-3 pl-10 pr-4 font-body-md text-on-surface placeholder-on-surface-variant transition-colors shadow-sm" placeholder="{{ t('Enter your email') }}">
             </div>
         </div>
 
         <div>
-            <label class="block font-label-md text-on-surface mb-1">Password</label>
+            <label class="block font-label-md text-on-surface mb-1">{{ t('Password') }}</label>
             <div class="relative">
                 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-tertiary">lock</span>
-                <input type="password" name="password" required class="w-full bg-surface-container-lowest border-2 border-outline-variant focus:border-primary focus:ring-0 rounded-xl py-3 pl-10 pr-4 font-body-md text-on-surface placeholder-on-surface-variant transition-colors shadow-sm" placeholder="Create a password">
+                <input type="password" name="password" required class="w-full bg-surface-container-lowest border-2 border-outline-variant focus:border-primary focus:ring-0 rounded-xl py-3 pl-10 pr-4 font-body-md text-on-surface placeholder-on-surface-variant transition-colors shadow-sm" placeholder="{{ t('Create a password') }}">
             </div>
         </div>
 
         <button type="submit" class="w-full bg-primary text-on-primary font-label-md text-lg py-4 rounded-xl shadow-md hover:bg-primary/90 transition-colors mt-6">
-            Create Account
+            {{ t('Create Account') }}
         </button>
 
         <p class="text-center text-on-surface-variant text-sm mt-6 font-body-md">
-            Already have an account? <a href="/login" class="text-primary font-bold hover:underline">Sign In</a>
+            {{ t('Already have an account? ') }}<a href="/login" class="text-primary font-bold hover:underline">{{ t('Sign In') }}</a>
         </p>
     </form>
 </main>
