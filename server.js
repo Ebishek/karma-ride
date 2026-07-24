@@ -156,6 +156,15 @@ app.use(async (req, res, next) => {
         return locales[key] || key; // Fallback to English key if not translated
     };
     
+    // Check for mandatory email
+    if (user && !user.email) {
+        const allowedPaths = ['/add-email', '/logout'];
+        // Let them access static files and the allowed paths
+        if (!allowedPaths.includes(req.path) && !req.path.startsWith('/static')) {
+            return res.redirect('/add-email');
+        }
+    }
+    
     next();
 });
 
@@ -246,6 +255,30 @@ app.post('/register', async (req, res) => {
     res.redirect('/dashboard');
 });
 
+app.get('/add-email', requireAuth, (req, res) => {
+    // If they already have an email, they shouldn't be here
+    if (res.locals.user && res.locals.user.email) {
+        return res.redirect('/dashboard');
+    }
+    res.render('add_email.html');
+});
+
+app.post('/add-email', requireAuth, async (req, res) => {
+    const { email } = req.body;
+    
+    if (!email || email.trim() === '') {
+        return res.render('add_email.html', { error: 'Email address is required' });
+    }
+
+    const existingEmail = await User.findOne({ where: { email: email.trim() } });
+    if (existingEmail) {
+        return res.render('add_email.html', { error: 'Email is already in use by another account' });
+    }
+    
+    await User.update({ email: email.trim() }, { where: { id: req.session.userId } });
+    res.redirect('/dashboard');
+});
+
 app.get('/logout', (req, res) => {
     req.session.destroy();
     res.redirect('/login');
@@ -276,6 +309,9 @@ app.post('/forgot-password', async (req, res) => {
             html: `
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #f9f9f9; padding: 30px; border-radius: 10px; border: 1px solid #eaeaea;">
                 <h1 style="color: #4CAF50; text-align: center; margin-bottom: 10px;">KarmaRide</h1>
+                <div style="text-align: center; margin-bottom: 15px;">
+                    <img src="https://karmaride.in/scoo.gif" alt="KarmaRide Scooter" style="max-width: 150px; height: auto;">
+                </div>
                 <p style="text-align: center; color: #555; font-style: italic; margin-top: 0; margin-bottom: 30px;">"Share your journey, build your karma."</p>
                 
                 <div style="background-color: #ffffff; padding: 20px; border-radius: 8px; text-align: center;">
