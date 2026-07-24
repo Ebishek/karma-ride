@@ -109,6 +109,7 @@ const PushSubscription = sequelize.define('PushSubscription', {
 const RoadUpdate = sequelize.define('RoadUpdate', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     user_id: { type: DataTypes.INTEGER, references: { model: User, key: 'id' } },
+    issue_type: { type: DataTypes.STRING, allowNull: true, defaultValue: 'Other' },
     location: { type: DataTypes.STRING, allowNull: false },
     description: { type: DataTypes.TEXT, allowNull: false },
     image_url: { type: DataTypes.STRING, allowNull: true },
@@ -125,6 +126,15 @@ const SafetyReport = sequelize.define('SafetyReport', {
     reported_user_id: { type: DataTypes.INTEGER, allowNull: true, references: { model: User, key: 'id' } },
     timestamp: { type: DataTypes.DATE, defaultValue: Sequelize.NOW }
 }, { tableName: 'safety_reports', timestamps: false });
+
+const RideTemplate = sequelize.define('RideTemplate', {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    user_id: { type: DataTypes.INTEGER, references: { model: User, key: 'id' } },
+    name: { type: DataTypes.STRING, allowNull: false },
+    source: { type: DataTypes.STRING, allowNull: false },
+    destination: { type: DataTypes.STRING, allowNull: false },
+    timestamp: { type: DataTypes.DATE, defaultValue: Sequelize.NOW }
+}, { tableName: 'ride_templates', timestamps: false });
 
 // Relationships
 User.hasMany(Ride, { foreignKey: 'helper_id', as: 'rides_offered' });
@@ -158,4 +168,7 @@ User.hasMany(SafetyReport, { foreignKey: 'reporter_id', as: 'safety_reports' });
 SafetyReport.belongsTo(User, { foreignKey: 'reporter_id', as: 'reporter' });
 SafetyReport.belongsTo(User, { foreignKey: 'reported_user_id', as: 'reported_user' });
 
-module.exports = { sequelize, User, Ride, RideRequest, KarmaTransaction, Message, Notification, RideAlert, Announcement, PushSubscription, RoadUpdate, SafetyReport };
+User.hasMany(RideTemplate, { foreignKey: 'user_id', as: 'ride_templates' });
+RideTemplate.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
+
+module.exports = { sequelize, User, Ride, RideRequest, KarmaTransaction, Message, Notification, RideAlert, Announcement, PushSubscription, RoadUpdate, SafetyReport, RideTemplate };

@@ -119,7 +119,7 @@
   "Reckless Driving": "लापरवाह ड्राइविंग",
   "Suspicious Behavior": "संदिग्ध व्यवहार",
   "Harassment": "उत्पीड़न",
-  "Other": "अन्य",
+  "Other": "अन्य (Other)",
   "Description": "विवरण",
   "Please describe what happened in detail...": "कृपया विस्तार से बताएं कि क्या हुआ...",
   "Related User (Optional)": "संबंधित उपयोगकर्ता (वैकल्पिक)",
@@ -319,5 +319,10 @@
   "Publish Announcement": "घोषणा प्रकाशित करें",
   "Announcement successfully broadcasted to the community.": "समुदाय में घोषणा सफलतापूर्वक प्रसारित की गई।",
   "Admin": "एडमिन",
-  "Processing...": "प्रोसेसिंग..."
+  "Processing...": "प्रोसेसिंग...",
+  "Landslide": "भूस्खलन (Landslide)",
+  "Severe Weather": "खराब मौसम (Severe Weather)",
+  "Forest Fire": "जंगल की आग (Forest Fire)",
+  "Black Ice": "बर्फबारी / Black Ice",
+  "Construction": "निर्माण कार्य (Construction)"
 }

@@ -20,6 +20,20 @@
         </div>
     </div>
 
+    {% if templates and templates.length > 0 %}
+    <div class="mb-4">
+        <p class="font-label-sm text-on-surface-variant mb-2">{{ t('Quick Select Saved Route:') }}</p>
+        <div class="flex flex-wrap gap-2">
+            {% for template in templates %}
+            <button type="button" onclick="applyTemplate('{{ template.source }}', '{{ template.destination }}')" class="bg-surface-container border border-outline-variant rounded-full px-4 py-2 font-label-md text-on-surface hover:bg-primary/10 hover:text-primary hover:border-primary transition-colors shadow-sm flex items-center gap-1">
+                <span class="material-symbols-outlined text-[16px]">route</span>
+                {{ template.name }}
+            </button>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
     <form action="/api/rides" method="POST" class="bg-surface-container rounded-2xl p-6 md:p-8 shadow-[0_4px_12px_rgba(75,61,51,0.08)] border border-outline-variant/30 space-y-6">
         
         <!-- Map Container -->
@@ -28,7 +42,10 @@
         </div>
         
         <!-- Form Fields -->
-        <div class="space-y-4">
+        <div class="space-y-4 relative">
+            <button type="button" onclick="swapLocations()" title="{{ t('Swap locations') }}" class="absolute right-4 top-[32%] z-10 bg-surface border-2 border-outline-variant rounded-full p-1.5 text-on-surface-variant hover:text-primary hover:border-primary transition-all shadow-sm hover:shadow-md flex items-center justify-center transform active:scale-95">
+                <span class="material-symbols-outlined text-[22px]">swap_vert</span>
+            </button>
             <div>
                 <label class="block font-label-md text-on-surface mb-1">{{ t('Source location') }}</label>
                 <div class="relative">
@@ -269,6 +286,81 @@
 
     setupAutocomplete('source-input', 'source-suggestions', true);
     setupAutocomplete('dest-input', 'dest-suggestions', false);
+
+    // Template Quick Select Function
+    async function applyTemplate(source, dest) {
+        document.getElementById('source-input').value = source;
+        document.getElementById('dest-input').value = dest;
+        
+        // Helper to geocode and set marker
+        async function geocodeAndSet(query, isSource) {
+            try {
+                const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1`);
+                const data = await res.json();
+                if (data.length > 0) {
+                    const lat = parseFloat(data[0].lat);
+                    const lon = parseFloat(data[0].lon);
+                    
+                    if (isSource) {
+                        if (sourceMarker) map.removeLayer(sourceMarker);
+                        sourceMarker = L.marker([lat, lon]).addTo(map).bindPopup("Source").openPopup();
+                        document.getElementById('source_lat').value = lat;
+                        document.getElementById('source_lng').value = lon;
+                    } else {
+                        if (destMarker) map.removeLayer(destMarker);
+                        destMarker = L.marker([lat, lon]).addTo(map).bindPopup("Destination").openPopup();
+                        document.getElementById('dest_lat').value = lat;
+                        document.getElementById('dest_lng').value = lon;
+                    }
+                    
+                    if (sourceMarker && destMarker) {
+                        L.polyline([sourceMarker.getLatLng(), destMarker.getLatLng()], {color: '#a03f28', weight: 4, dashArray: '5, 10'}).addTo(map);
+                        map.fitBounds([sourceMarker.getLatLng(), destMarker.getLatLng()], {padding: [30, 30]});
+                    } else {
+                        map.setView([lat, lon], 14);
+                    }
+                }
+            } catch (err) {
+                console.error("Geocoding failed for template", err);
+            }
+        }
+
+        await geocodeAndSet(source, true);
+        await geocodeAndSet(dest, false);
+    }
+
+    // Swap Locations Function
+    function swapLocations() {
+        const sourceVal = sourceInput.value;
+        const destVal = destInput.value;
+        const sourceLat = document.getElementById('source_lat').value;
+        const sourceLng = document.getElementById('source_lng').value;
+        const destLat = document.getElementById('dest_lat').value;
+        const destLng = document.getElementById('dest_lng').value;
+
+        sourceInput.value = destVal;
+        destInput.value = sourceVal;
+        document.getElementById('source_lat').value = destLat;
+        document.getElementById('source_lng').value = destLng;
+        document.getElementById('dest_lat').value = sourceLat;
+        document.getElementById('dest_lng').value = sourceLng;
+
+        // Swap map markers
+        if (sourceMarker && destMarker) {
+            const sLatLng = sourceMarker.getLatLng();
+            const dLatLng = destMarker.getLatLng();
+            sourceMarker.setLatLng(dLatLng);
+            destMarker.setLatLng(sLatLng);
+        } else if (sourceMarker) {
+            destMarker = L.marker(sourceMarker.getLatLng()).addTo(map).bindPopup("Destination").openPopup();
+            map.removeLayer(sourceMarker);
+            sourceMarker = null;
+        } else if (destMarker) {
+            sourceMarker = L.marker(destMarker.getLatLng()).addTo(map).bindPopup("Source").openPopup();
+            map.removeLayer(destMarker);
+            destMarker = null;
+        }
+    }
 
 </script>
 {% endblock %}

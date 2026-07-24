@@ -256,7 +256,18 @@
                 {% endif %}
                 <div class="p-5 flex flex-col flex-grow">
                     <div class="flex justify-between items-start mb-2">
-                        <span class="bg-error/10 text-error font-label-sm px-2 py-1 rounded-md">{{ update.location }}</span>
+                        <div class="flex flex-wrap gap-2">
+                            {% if update.issue_type and update.issue_type != 'Other' %}
+                                {% set type_color = 'bg-primary/10 text-primary' %}
+                                {% set type_icon = '⛈️' %}
+                                {% if update.issue_type == 'Landslide' %}{% set type_color = 'bg-error/10 text-error' %}{% set type_icon = '⛰️' %}{% endif %}
+                                {% if update.issue_type == 'Forest Fire' %}{% set type_color = 'bg-error/10 text-error' %}{% set type_icon = '🔥' %}{% endif %}
+                                {% if update.issue_type == 'Black Ice' %}{% set type_color = 'bg-secondary/10 text-secondary' %}{% set type_icon = '❄️' %}{% endif %}
+                                {% if update.issue_type == 'Construction' %}{% set type_color = 'bg-tertiary/10 text-tertiary' %}{% set type_icon = '🚧' %}{% endif %}
+                                <span class="{{ type_color }} font-bold font-label-sm px-2 py-1 rounded-md">{{ type_icon }} {{ t(update.issue_type) }}</span>
+                            {% endif %}
+                            <span class="bg-surface-variant text-on-surface font-label-sm px-2 py-1 rounded-md">{{ update.location }}</span>
+                        </div>
                         <span class="text-xs text-on-surface-variant opacity-70">{{ update.timestamp | formatDate }}</span>
                     </div>
                     <p class="font-body-md text-on-surface mb-4 flex-grow">{{ update.description }}</p>

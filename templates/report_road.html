@@ -16,6 +16,49 @@
         <div class="bg-surface-container rounded-3xl p-6 md:p-8 shadow-lg border border-outline-variant/30">
             <form id="reportForm" action="/api/road-updates" method="POST" enctype="multipart/form-data" class="flex flex-col gap-6">
                 
+                <!-- Issue Type -->
+                <div>
+                    <label class="block font-label-lg text-on-surface mb-3">{{ t('Type of Issue') }}</label>
+                    <div class="flex flex-wrap gap-2">
+                        <label class="cursor-pointer">
+                            <input type="radio" name="issue_type" value="Landslide" class="peer hidden" required>
+                            <div class="px-4 py-2 rounded-full border border-outline-variant text-on-surface peer-checked:bg-error peer-checked:text-white peer-checked:border-error transition-colors font-body-md shadow-sm">
+                                ⛰️ {{ t('Landslide') }}
+                            </div>
+                        </label>
+                        <label class="cursor-pointer">
+                            <input type="radio" name="issue_type" value="Severe Weather" class="peer hidden" required>
+                            <div class="px-4 py-2 rounded-full border border-outline-variant text-on-surface peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary transition-colors font-body-md shadow-sm">
+                                ⛈️ {{ t('Severe Weather') }}
+                            </div>
+                        </label>
+                        <label class="cursor-pointer">
+                            <input type="radio" name="issue_type" value="Forest Fire" class="peer hidden" required>
+                            <div class="px-4 py-2 rounded-full border border-outline-variant text-on-surface peer-checked:bg-error peer-checked:text-white peer-checked:border-error transition-colors font-body-md shadow-sm">
+                                🔥 {{ t('Forest Fire') }}
+                            </div>
+                        </label>
+                        <label class="cursor-pointer">
+                            <input type="radio" name="issue_type" value="Black Ice" class="peer hidden" required>
+                            <div class="px-4 py-2 rounded-full border border-outline-variant text-on-surface peer-checked:bg-secondary peer-checked:text-white peer-checked:border-secondary transition-colors font-body-md shadow-sm">
+                                ❄️ {{ t('Black Ice') }}
+                            </div>
+                        </label>
+                        <label class="cursor-pointer">
+                            <input type="radio" name="issue_type" value="Construction" class="peer hidden" required>
+                            <div class="px-4 py-2 rounded-full border border-outline-variant text-on-surface peer-checked:bg-tertiary peer-checked:text-white peer-checked:border-tertiary transition-colors font-body-md shadow-sm">
+                                🚧 {{ t('Construction') }}
+                            </div>
+                        </label>
+                        <label class="cursor-pointer">
+                            <input type="radio" name="issue_type" value="Other" class="peer hidden" required>
+                            <div class="px-4 py-2 rounded-full border border-outline-variant text-on-surface peer-checked:bg-on-surface-variant peer-checked:text-white peer-checked:border-on-surface-variant transition-colors font-body-md shadow-sm">
+                                ⚠️ {{ t('Other') }}
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
                 <!-- Location -->
                 <div>
                     <label for="location" class="block font-label-lg text-on-surface mb-2">{{ t('Location (e.g. Village Name, Landmark)') }}</label>

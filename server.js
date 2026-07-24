@@ -5,7 +5,7 @@ const path = require('path');
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
 const { Op } = require('sequelize');
-const { sequelize, User, Ride, RideRequest, KarmaTransaction, Message, Notification, RideAlert, Announcement, PushSubscription, RoadUpdate, SafetyReport } = require('./models');
+const { sequelize, User, Ride, RideRequest, KarmaTransaction, Message, Notification, RideAlert, Announcement, PushSubscription, RoadUpdate, SafetyReport, RideTemplate } = require('./models');
 const multer = require('multer');
 const fs = require('fs');
 
@@ -125,7 +125,16 @@ async function getCurrentUser(req) {
 
 // Pass user to all templates
 app.use(async (req, res, next) => {
-    res.locals.user = await getCurrentUser(req);
+    const user = await getCurrentUser(req);
+    res.locals.user = user;
+    if (user) {
+        res.locals.templates = await RideTemplate.findAll({
+            where: { user_id: user.id },
+            order: [['timestamp', 'DESC']]
+        });
+    } else {
+        res.locals.templates = [];
+    }
     res.locals.vapidPublicKey = process.env.VAPID_PUBLIC_KEY;
     
     // Localization
@@ -838,6 +847,36 @@ app.get('/leaderboard', requireAuth, async (req, res) => {
 });
 
 
+// --- RIDE TEMPLATES ---
+app.post('/api/templates', requireAuth, async (req, res) => {
+    try {
+        const { name, source, destination } = req.body;
+        await RideTemplate.create({
+            user_id: req.session.userId,
+            name: name,
+            source: source,
+            destination: destination
+        });
+        res.redirect('/profile');
+    } catch (err) {
+        console.error("Error creating template:", err);
+        res.status(500).send("Error saving route template.");
+    }
+});
+
+app.post('/api/templates/:id/delete', requireAuth, async (req, res) => {
+    try {
+        const template = await RideTemplate.findByPk(req.params.id);
+        if (template && template.user_id === req.session.userId) {
+            await template.destroy();
+        }
+        res.redirect('/profile');
+    } catch (err) {
+        console.error("Error deleting template:", err);
+        res.status(500).send("Error deleting route template.");
+    }
+});
+
 // --- ADMIN ROUTES ---
 app.get('/secret-admin-panel', requireAdmin, async (req, res) => {
     const users = await User.findAll({ order: [['id', 'DESC']] });
@@ -969,11 +1008,12 @@ app.post('/report-issue', requireAuth, async (req, res) => {
 
 app.post('/api/road-updates', requireAuth, upload.single('image'), async (req, res) => {
     try {
-        const { location, description } = req.body;
+        const { location, description, issue_type } = req.body;
         const image_url = req.file ? `/static/uploads/road-updates/${req.file.filename}` : null;
         
         await RoadUpdate.create({
             user_id: req.session.userId,
+            issue_type: issue_type || 'Other',
             location: location,
             description: description,
             image_url: image_url
