@@ -318,5 +318,6 @@
   "Notify users immediately on their devices.": "उपयोगकर्ताओं को उनके उपकरणों पर तुरंत सूचित करें।",
   "Publish Announcement": "घोषणा प्रकाशित करें",
   "Announcement successfully broadcasted to the community.": "समुदाय में घोषणा सफलतापूर्वक प्रसारित की गई।",
-  "Admin": "एडमिन"
+  "Admin": "एडमिन",
+  "Processing...": "प्रोसेसिंग..."
 }

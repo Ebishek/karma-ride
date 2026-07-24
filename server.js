@@ -382,10 +382,10 @@ app.post('/api/ride-alerts/:id/fulfill', requireAuth, async (req, res) => {
         user_id: alert.seeker_id,
         type: 'ride_fulfilled',
         content: `${user.name} has accepted your ride request!`,
-        link: `/rides/${newRide.id}`
+        link: `/ride/${newRide.id}/chat`
     });
 
-    res.redirect(`/rides/${newRide.id}`);
+    res.redirect(`/ride/${newRide.id}/chat`);
 });
 
 app.post('/api/rides/:ride_id/cancel', requireAuth, async (req, res) => {

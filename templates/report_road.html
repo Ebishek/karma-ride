@@ -14,7 +14,7 @@
         </div>
 
         <div class="bg-surface-container rounded-3xl p-6 md:p-8 shadow-lg border border-outline-variant/30">
-            <form action="/api/road-updates" method="POST" enctype="multipart/form-data" class="flex flex-col gap-6">
+            <form id="reportForm" action="/api/road-updates" method="POST" enctype="multipart/form-data" class="flex flex-col gap-6">
                 
                 <!-- Location -->
                 <div>
@@ -134,5 +134,17 @@
             uploadPlaceholder.classList.remove('hidden');
         }
     });
+
+    document.getElementById('reportForm').addEventListener('submit', function() {
+        const btn = this.querySelector('button[type="submit"]');
+        if (btn) {
+            btn.disabled = true;
+            btn.classList.add('opacity-75', 'cursor-not-allowed');
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin" style="animation: spin 1s linear infinite;">sync</span> {{ t("Processing...") }}';
+        }
+    });
 </script>
+<style>
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+</style>
 {% endblock %}
